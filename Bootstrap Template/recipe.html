@@ -70,8 +70,6 @@
       <option value="5">Five Stars</option>
     </select>
   
-    
-  
     <button type="submit" class="btn btn-primary my-1">Submit</button>
   </form>
 
@@ -86,38 +84,98 @@
             <h4 class="card-title">Recipe 1</h4>
             <p class="card-text">Description</p>
           </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Difficulty</li>
+            <li class="list-group-item">Time</li>
+            <li class="list-group-item">Rating</li>
+          </ul>
           <div class="card-footer">
+            <!--TODO: ADD HIDDEN FORM W/ RECIPE ID-->
+            <form action="#">
+              <input type="hidden" value="recipeid">
+            </form>
             <button type="submit" class="btn btn-primary my-1">Add to Cart</button>
           </div>
         </div>
       </div>
+
       <div class="col-md-4 mb-5">
         <div class="card h-100">
           <div class="card-body">
             <h4 class="card-title">Recipe 2</h4>
             <p class="card-text">Description</p>
           </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Difficulty</li>
+            <li class="list-group-item">Time</li>
+            <li class="list-group-item">Rating</li>
+          </ul>
           <div class="card-footer">
             <button type="submit" class="btn btn-primary my-1">Add to Cart</button>
           </div>
         </div>
       </div>
+
       <div class="col-md-4 mb-5">
         <div class="card h-100">
           <div class="card-body">
             <h4 class="card-title">Recipe 3</h4>
             <p class="card-text">Description</p>
           </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Difficulty</li>
+            <li class="list-group-item">Time</li>
+            <li class="list-group-item">Rating</li>
+          </ul>
           <div class="card-footer">
             <button type="submit" class="btn btn-primary my-1">Add to Cart</button>
           </div>
         </div>
       </div>
+      
     </div>
     <!-- /.row -->
 
   </div>
   <!-- /.container -->
+
+  <div id="admin">
+    <form>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="recipetitle">Recipe Title</label>
+          <input type="text" class="form-control" id="recipetitle" placeholder="Recipe Title">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="ingredients">Ingredients</label>
+        <input type="text" class="form-control" id="ingredients" placeholder="Ingredients (comma separated)">
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="time">Total Preparation Time</label>
+          <input type="text" class="form-control" id="time" placeholder="">
+        </div>
+        <div class="form-group col-md-4">
+          <label for="difficulty">Difficulty Rating</label>
+          <select class="custom-select" id="inlineFormCustomSelectPref">
+            <option selected>Choose...</option>
+            <option value="easy">Easy</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="hard">Hard</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="directions">Directions</label>
+          <input type="text" class="form-control" id="directions">
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Add Recipe</button>
+    </form>
+  </div>
 
   <!--Form Template-From https://getbootstrap.com/docs/4.0/components/forms/-->
   <form>
