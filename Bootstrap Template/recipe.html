@@ -201,12 +201,14 @@
 
   <!--TODO: Center, make larger, add onclick event to make order, address, and payment tables appear-->
   <button type="submit" class="btn btn-primary my-1">Checkout</button>
+  <h3>Tables below are hidden until 'Checkout' button is pressed</h3>
 
   <br></br>
 
   <div id="order-table">
     <!--TODO: Table rows should be added after customer selects 'checkout' button, query Orders_in_Recipes table-->
     <h2>Your Order</h2>
+    <h3>Lines are created after querying Recipes_in_Orders table</h3>
     <table class="table">
       <thead>
         <tr>
@@ -230,6 +232,7 @@
   <!--TODO: Update so placeholders are pre-populated, query Addresses with customer_id session variable-->
   <div id="address-verify">
     <h2>Verify your Address</h2>
+    <h3>Will be pre-populated via a query on Addresses table, Customer can change any value, Submit Edit button writes to Addresses table</h3>
     <form>
       <div class="form-group">
         <label for="street_1">Street 1</label>
@@ -261,6 +264,7 @@
   <!--TODO: Update so fields are pre-populated, query Payment_Informations with customer_id session variable-->
   <div id="payment-verify">
     <h2>Verify your Payment Information</h2>
+    <h3>Will be pre-populated via a query on Payments table, Customer can change any value, Submit Edit button writes to Payment_Informations table</h3>
     <form>
       <div class="form-group">
         <label for="card_num">Card Number</label>
@@ -283,6 +287,7 @@
   <br></br>
 
   <h2>Recipe Admin Form</h2>
+  <h3>This is where new Recipes are added to the Recipes Table</h3>
   <div id="admin">
     <form>
       <div class="form-row">
