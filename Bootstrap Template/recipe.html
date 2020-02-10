@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<!--ADAPTED BOOTSTRAP HTML TEMPLATE FROM https://startbootstrap.com/templates/business-frontpage/-->
+
 <head>
 
   <meta charset="utf-8">
@@ -47,17 +49,32 @@
   </nav>
 
   <!-- Header -->
-  <header class="bg-primary py-5 mb-5">
+	<header class="bg-primary py-5 mb-5" style="background-image: url('images/banner.jpg'); background-repeat: no-repeat; background-size: cover;">
     <div class="container h-100">
-      <div class="row h-100 align-items-center">
-        <div class="col-lg-12">
-          <h1 class="display-4 text-white mt-5 mb-2">Select Your Recipes</h1>
-          <p class="lead mb-5 text-white-50">Add a recipe to your order by clicking the 'Add to Cart' button below. You can search for Recipes based on average customer rating.</p>
+      <div class="row h-100 align-items-start">
+        <div class="col-lg-4 order-2">
+        </div>
+        <div class="col order-1">
+          <h1 class="display-4 text-white mt-5 mb-2" style="font-weight: 400">Freedom Meals</h1>
+          <p class="lead mb-5 text-white-50" style="font-weight: 400"><font color="white">Meal planning, your way.</font></p>
         </div>
       </div>
     </div>
   </header>
 
+  <!-- Recipe Cards -->
+  <div class="container">
+  
+    <div class="row">
+      <div class="col-md-8 mb-5">
+        <h2>Select Your Recipes</h2>
+        <hr>
+        <p>Add a recipe to your order by clicking the 'Add to Cart' button below. You can search for Recipes based on average customer rating.</p>
+      </div>
+    </div>
+	<br>
+    <!-- /.row -->
+	
   <!--Search Boxes-->
   <form class="form-inline d-flex justify-content-center">
     <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Average Rating</label>
@@ -69,14 +86,10 @@
       <option value="4">Four Stars</option>
       <option value="5">Five Stars</option>
     </select>
-  
     <button type="submit" class="btn btn-primary my-1">Submit</button>
   </form>
-
-  <br></br>
-
-  <!-- Recipe Cards -->
-  <div class="container">
+  <br><br>
+  
     <!--Copy row div to add another row of Recipes-->
     <div class="row">
       <div class="col-md-4 mb-5">
@@ -219,6 +232,17 @@
 	  </tbody>
 	</table>
 	</div>
+	<button type="submit" class="btn btn-primary my-1">Checkout</button>
+	<span>Write JavaScript code that displays the Address and Payment Information sections below when 'Checkout' button is clicked.</span>
+	<br><br><br>
+	
+    <div class="row">
+      <div class="col-md-8 mb-5">
+        <h2>Review Your Order</h2>
+        <hr>
+        <p>Please verify your address and payment information before placing your order.</p>
+      </div>
+    </div>
 
 	<!--TODO: Update so placeholders are pre-populated, query Addresses with customer_id session variable-->
 	<div id="addressInformation">
@@ -279,8 +303,10 @@
 	<br><br>
 	
 	<!--TODO: Center, make larger, add onclick event to make order, address, and payment tables appear-->
-	<button type="submit" class="btn btn-primary my-1">Checkout</button>
-	<h6>Order Confirmation table is hidden until 'Checkout' button is pressed</h6>
+	<div style="text-align: center">
+		<button type="submit" class="btn btn-primary my-1" style="width: 250px; height: 50px;">Place Your Order</button>
+	</div>
+	<span>Order Confirmation table is hidden until 'Place Your Order' button is pressed. On click, send INSERT command to Orders table.</span>
 
 	<br></br>
 

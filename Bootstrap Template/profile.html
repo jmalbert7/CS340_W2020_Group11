@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<!--ADAPTED BOOTSTRAP HTML TEMPLATE FROM https://startbootstrap.com/templates/business-frontpage/-->
+
 <head>
 
   <meta charset="utf-8">
@@ -48,17 +50,15 @@
   </nav>
 
   <!-- Header -->
-  <header class="bg-primary py-5 mb-5">
+  <!--Exercpted code on inserting background image from https://www.w3schools.com/html/html_images_background.asp -->
+	<header class="bg-primary py-5 mb-5" style="background-image: url('images/banner.jpg'); background-repeat: no-repeat; background-size: cover;">
     <div class="container h-100">
       <div class="row h-100 align-items-start">
         <div class="col-lg-4 order-2">
-          <!--TODO: Make image prettier-->
-          <!--Image courtesy of https://chartwell.com/en/our-services/dining-experience-->
-          <!--<img alt="High-Quality Food" class="img-fluid" src="images/banner.jpg">-->
         </div>
         <div class="col order-1">
-          <h1 class="display-4 text-white mt-5 mb-2">Freedom Meals</h1>
-          <p class="lead mb-5 text-white-50">Meal planning, your way.</p>
+          <h1 class="display-4 text-white mt-5 mb-2" style="font-weight: 400">Freedom Meals</h1>
+          <p class="lead mb-5 text-white-50" style="font-weight: 400"><font color="white">Meal planning, your way.</font></p>
         </div>
       </div>
     </div>
@@ -66,6 +66,16 @@
 
   <!-- Page Content -->
   <div class="container">
+
+    <div class="row">
+      <div class="col-md-8 mb-5">
+        <h2>View Your Account Information</h2>
+        <hr>
+        <p>Manage your account information, order history, and rating history.</p>
+      </div>
+    </div>
+	<br>
+    <!-- /.row -->
 
     <div class="row">
       <div class="col-md-8 mb-5">
