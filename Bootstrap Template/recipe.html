@@ -87,7 +87,7 @@
           </div>
           <ul class="list-group list-group-flush">
             <li class="list-group-item">Difficulty</li>
-            <li class="list-group-item">Time</li>
+            <li class="list-group-item">Prep + Cook Time (in minutes)</li>
             <li class="list-group-item">Rating</li>
           </ul>
           <div class="card-footer">
@@ -108,7 +108,7 @@
           </div>
           <ul class="list-group list-group-flush">
             <li class="list-group-item">Difficulty</li>
-            <li class="list-group-item">Time</li>
+            <li class="list-group-item">Prep + Cook Time (in minutes)</li>
             <li class="list-group-item">Rating</li>
           </ul>
           <div class="card-footer">
@@ -125,7 +125,7 @@
           </div>
           <ul class="list-group list-group-flush">
             <li class="list-group-item">Difficulty</li>
-            <li class="list-group-item">Time</li>
+            <li class="list-group-item">Prep + Cook Time (in minutes)</li>
             <li class="list-group-item">Rating</li>
           </ul>
           <div class="card-footer">
@@ -146,7 +146,7 @@
           </div>
           <ul class="list-group list-group-flush">
             <li class="list-group-item">Difficulty</li>
-            <li class="list-group-item">Time</li>
+            <li class="list-group-item">Prep + Cook Time (in minutes)</li>
             <li class="list-group-item">Rating</li>
           </ul>
           <div class="card-footer">
@@ -167,7 +167,7 @@
           </div>
           <ul class="list-group list-group-flush">
             <li class="list-group-item">Difficulty</li>
-            <li class="list-group-item">Time</li>
+            <li class="list-group-item">Prep + Cook Time (in minutes)</li>
             <li class="list-group-item">Rating</li>
           </ul>
           <div class="card-footer">
@@ -184,7 +184,7 @@
           </div>
           <ul class="list-group list-group-flush">
             <li class="list-group-item">Difficulty</li>
-            <li class="list-group-item">Time</li>
+            <li class="list-group-item">Prep + Cook Time (in minutes)</li>
             <li class="list-group-item">Rating</li>
           </ul>
           <div class="card-footer">
@@ -196,141 +196,134 @@
     </div>
     <!-- /.row -->
 	
-	<!--TODO: Center, make larger, add onclick event to make order, address, and payment tables appear-->
-	<button type="submit" class="btn btn-primary my-1">Checkout</button>
-	<h5>Tables below are hidden until 'Checkout' button is pressed</h5>
-
-	<br></br>
-
-	<div id="order-table">
+	<div>
 	<!--TODO: Table rows should be added after customer selects 'checkout' button, query Orders_in_Recipes table-->
-	<h2>Your Order</h2>
-	<h5>Lines are created after querying Recipes_in_Orders table</h5>
+	<h2>Your Cart</h2>
+	<h6>Write JavaScript code that displays the recipe(s) customer selects from above. Hypothetical example below.</h6>
 	<table class="table">
 	  <thead>
 		<tr>
-		  <th scope="col">#</th>
 		  <th scope="col">Recipe</th>
-		  <th scope="col"></th>
 		</tr>
 	  </thead>
 	  <tbody>
 		<tr>
-		  <th scope="row">1</th>
 		  <td>Recipe 1</td>
-		  <td><button type="submit" class="btn btn-primary my-1">Remove</button></td>
+		</tr>
+		<tr>
+		  <td>Recipe 2</td>
+		</tr>
+		<tr>
+		  <td>Recipe 5</td>
 		</tr>
 	  </tbody>
 	</table>
 	</div>
 
-	<br></br>
-
 	<!--TODO: Update so placeholders are pre-populated, query Addresses with customer_id session variable-->
-	<div id="address-verify">
-	<h2>Verify your Address</h2>
-	<h5>Will be pre-populated via a query on Addresses table, Customer can change any value, Submit Edit button writes to Addresses table</h5>
+	<div id="addressInformation">
+	<h2>Address Information</h2>
+	<h6>Values in this form will be populated with data extracted from JSON string received from backend server via SELECT command on Addresses table.</h6>
 	<form>
 	  <div class="form-group">
-		<label for="street_1">Street 1</label>
-		<input type="text" class="form-control" id="street_1" placeholder="">
+		<label for="inputStreet1">Street 1</label>
+		<input type="text" class="form-control" id="street_1" placeholder="123 Main St">
 	  </div>
 	  <div class="form-group">
-		<label for="street_2">Street 2</label>
-		<input type="text" class="form-control" id="street_2" placeholder="">
+		<label for="inputStreet2">Street 2</label>
+		<input type="text" class="form-control" id="street_2" placeholder="Apartment, studio, or floor">
 	  </div>
 	  <div class="form-group">
-		<label for="city">City</label>
-		<input type="text" class="form-control" id="city" placeholder="">
+		<label for="inputCity">City</label>
+		<input type="text" class="form-control" id="city" placeholder="Chicago">
 	  </div>
 	  <div class="form-group">
-		<label for="state">State</label>
-		<input type="text" class="form-control" id="state" placeholder="">
+		<label for="inputState">State</label>
+		<input type="text" class="form-control" id="state" placeholder="IL">
 	  </div>
 	  <div class="form-group">
-		<label for="zip">Zip</label>
-		<input type="text" class="form-control" id="zip" placeholder="">
+		<label for="inputZip">Zip</label>
+		<input type="text" class="form-control" id="zip" placeholder="60606">
 	  </div>
 	  <!--TODO: edit buttom should be a POST to Addresses-->
-	  <button type="submit" class="btn btn-primary">Submit Edit</button>
+	  <button type="submit" class="btn btn-primary">Modify My Address</button>
+	  <span>When button is clicked, popup form will appear where user can modify the address field(s). On click, send UPDATE command to Addresses table WHERE customer_id = this.customer_id.</span>
 	</form>
 	</div>
 
 	<br></br>
 
 	<!--TODO: Update so fields are pre-populated, query Payment_Informations with customer_id session variable-->
-	<div id="payment-verify">
-	<h2>Verify your Payment Information</h2>
-	<h5>Will be pre-populated via a query on Payments table, Customer can change any value, Submit Edit button writes to Payment_Informations table</h5>
-	<form>
+	<div id="paymentInformation">
+	<h2>Payment Information</h2>
+	<h6>Values in this form will be populated with data extracted from JSON string received from backend server via a SELECT command on Payment_Informations table.</h6>
 	  <div class="form-group">
-		<label for="card_num">Card Number</label>
+		<label for="inpptCardNum">Card Number</label>
 		<input type="text" class="form-control" id="card_num" placeholder="">
 	  </div>
 	  <div class="form-group">
-		<label for="exp_date">Expiration Date</label>
+		<label for="inputExpDate">Expiration Date</label>
 		<!--TODO: Figure out how to do date w/ only mm/yyyy-->
 		<input type="date" class="form-control" id="exp_date" placeholder="">
 	  </div>
 	  <div class="form-group">
-		<label for="pin">CVV</label>
+		<label for="inputPin">CVV</label>
 		<input type="text" class="form-control" id="pin" placeholder="">
 	  </div>
 	  <!--TODO: edit buttom should be a POST to Payment_Informations-->
-	  <button type="submit" class="btn btn-primary">Submit Edit</button>
+	  <button type="submit" class="btn btn-primary">Modify My Payment</button>
+	  <span>When button is clicked, popup form will appear where user can modify the payment field(s). On click, send UPDATE command to Payment_Informations table WHERE customer_id = this.customer_id.</span>
 	</form>
+	</div>
+
+	<br><br>
+	
+	<!--TODO: Center, make larger, add onclick event to make order, address, and payment tables appear-->
+	<button type="submit" class="btn btn-primary my-1">Checkout</button>
+	<h6>Order Confirmation table is hidden until 'Checkout' button is pressed</h6>
+
+	<br></br>
+
+	<div>
+	<!--TODO: Table rows should be added after customer selects 'checkout' button, query Orders_in_Recipes table-->
+	<h2>Order Confirmation</h2>
+	<h6>Table will be built using JavaScript. Table will be populated with data extracted from JSON string received from backend server via a SELECT command on Recipes_in_Orders table. This is executed after customer places an order. Hypothetical example below.</h6>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Order Number</th>
+					<th>Ordered Date</th>
+					<th>Recipe Name</th>
+					<th>Order Status</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>A10000</td>
+					<td>02/10/2020</td>
+					<td>Recipe 1</td>
+					<td>PROCESSED</td>
+				</tr>
+				<tr>
+					<td>A10000</td>
+					<td>02/10/2020</td>
+					<td>Recipe 2</td>
+					<td>PROCESSED</td>
+				</tr>
+				<tr>
+					<td>A10000</td>
+					<td>02/10/2020</td>
+					<td>Recipe 5</td>
+					<td>PROCESSED</td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 
 	<br></br>
 
-	<!--Form Template-From https://getbootstrap.com/docs/4.0/components/forms/-->
-	<form>
-	<div class="form-row">
-	  <div class="form-group col-md-6">
-		<label for="inputEmail4">Email</label>
-		<input type="email" class="form-control" id="inputEmail4" placeholder="Email">
-	  </div>
-	</div>
-	<div class="form-group">
-	  <label for="inputAddress">Address 1</label>
-	  <input type="text" class="form-control" id="inputAddress" placeholder="123 Main St">
-	</div>
-	<div class="form-group">
-	  <label for="inputAddress2">Address 2</label>
-	  <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-	</div>
-	<div class="form-row">
-	  <div class="form-group col-md-6">
-		<label for="inputCity">City</label>
-		<input type="text" class="form-control" id="inputCity">
-	  </div>
-	  <div class="form-group col-md-4">
-		<label for="inputState">State</label>
-		<select id="inputState" class="form-control">
-		  <option selected>Choose...</option>
-		  <option>...</option>
-		</select>
-	  </div>
-	  <div class="form-group col-md-2">
-		<label for="inputZip">Zip</label>
-		<input type="text" class="form-control" id="inputZip">
-	  </div>
-	</div>
-	<div class="form-group">
-	  <div class="form-check">
-		<input class="form-check-input" type="checkbox" id="gridCheck">
-		<label class="form-check-label" for="gridCheck">
-		  Check me out
-		</label>
-	  </div>
-	</div>
-	<button type="submit" class="btn btn-primary">Sign in</button>
-	</form>
-
-	<br><br>
-
 	<h2>Add Recipe</h2>
-	<h5>This is where new Recipes are added to the Recipes Table</h5>
+	<h6>This is where administrator can add recipes to the Recipes Table. This section is only visible to the administrator.</h6>
 	<div id="admin">
 	<form>
 	  <div class="form-row">
@@ -339,35 +332,34 @@
 		  <input type="text" class="form-control" id="recipetitle" placeholder="Recipe Title">
 		</div>
 	  </div>
-	  <div class="form-group">
-		<label for="ingredients">Ingredients</label>
-		<input type="text" class="form-control" id="ingredients" placeholder="Ingredients (comma separated)">
-	  </div>
 	  <div class="form-row">
 		<div class="form-group col-md-6">
-		  <label for="time">Total Preparation Time</label>
+		  <label for="inputTime">Prep + Cook Time (in minutes)</label>
 		  <input type="text" class="form-control" id="time" placeholder="">
 		</div>
 		<div class="form-group col-md-4">
-		  <label for="difficulty">Difficulty Rating</label>
+		  <label for="inputDifficulty">Difficulty Rating</label>
 		  <select class="custom-select" id="inlineFormCustomSelectPref">
 			<option selected>Choose...</option>
-			<option value="easy">Easy</option>
-			<option value="intermediate">Intermediate</option>
-			<option value="hard">Hard</option>
+			<option value="1">Easy</option>
+			<option value="2">Intermediate</option>
+			<option value="3">Hard</option>
 		  </select>
 		</div>
 	  </div>
 	  
 	  <div class="form-row">
 		<div class="form-group col-md-6">
-		  <label for="directions">Directions</label>
-		  <input type="text" class="form-control" id="directions">
+		  <label for="inputDirections">Directions</label>
+		  <input type="text" class="form-control" id="directions" placeholder="Include ingredients, steps, and gotchas here.">
 		</div>
 	  </div>
 	  <button type="submit" class="btn btn-primary">Add Recipe</button>
+	  <span>On click, send INSERT command to Payment_Informations table.</span>
 	</form>
 	</div>
+	
+	<br><br>
 
   </div>
   <!-- /.container -->

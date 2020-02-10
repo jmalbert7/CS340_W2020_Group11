@@ -70,8 +70,8 @@
     <div class="row">
       <div class="col-md-8 mb-5">
         <h2>Account Information</h2>
-		<h6>Table will be built using JavaScript. Table will be populated with data extracted from JSON string received from backend server.</h6>
-		<table>
+		<h6>Table will be built using JavaScript. Table will be populated with data extracted from JSON string received from backend server via a SELECT command Customers table WHERE customer_id = this.customer_id.</h6>
+		<table class="table">
 			<thead>
 				<tr>
 					<th>First Name</th>
@@ -92,8 +92,8 @@
 		<br>
 		<!--Change <a></a> to <button></button>. When button is clicked, open a popup form. 
 		SOURCE: https://www.w3docs.com/snippets/javascript/how-to-create-a-popup-form-with-css-and-javascript.html-->
-		<a class="btn btn-primary" href="#">Update</a>
-		<span>When button is clicked, popup form will appear where user can update his/her name, email, and/or phone number.</span>
+		<a class="btn btn-primary" href="#">Update My Information</a>
+		<span>When button is clicked, popup form will appear where user can update his/her name, email, and/or phone number. On click, send UPDATE command to Customers table WHERE customer_id = this.customer_id.</span>
       </div>
     </div>
     <!-- /.row -->
@@ -101,8 +101,8 @@
     <div class="row">
       <div class="col-md-8 mb-5">
         <h2>Order History</h2>
-		<h6>Table will be built using JavaScript. Table will be populated with data extracted from JSON string received from backend server.</h6>
-		<table>
+		<h6>Table will be built using JavaScript. Table will be populated with data extracted from JSON string received from backend server. Send SELECT command to Orders table WHERE customer_id = this.customer_id.</h6>
+		<table class="table">
 			<thead>
 				<tr>
 					<th>Order Number</th>
@@ -114,19 +114,19 @@
 			<tbody>
 				<tr>
 					<td>A12345</td>
-					<td>January 15, 2020</td>
-					<td>January 19, 2020</td>
+					<td>01/15/2020</td>
+					<td>01/19/2020</td>
 					<td>DELIVERED</td>
 				</tr>
 				<tr>
 					<td>A12350</td>
-					<td>February 01, 2020</td>
-					<td>February 05, 2020</td>
+					<td>02/01/2020</td>
+					<td>02/05/2020</td>
 					<td>DELIVERED</td>
 				</tr>
 				<tr>
 					<td>A12355</td>
-					<td>February 10, 2020</td>
+					<td>02/10/2020</td>
 					<td></td>
 					<td>SHIPPED</td>
 				</tr>
@@ -135,8 +135,8 @@
 		<br>
 		<!--Change <a></a> to <button></button>. When button is clicked, open a popup form. 
 		SOURCE: https://www.w3docs.com/snippets/javascript/how-to-create-a-popup-form-with-css-and-javascript.html-->
-		<a class="btn btn-primary" href="#">Cancel</a>
-		<span>When button is clicked, popup form will appear where user can specify order number he/she wants cancelled.</span>
+		<a class="btn btn-primary" href="#">Cancel an Order</a>
+		<span>When button is clicked, popup form will appear where user can specify order number he/she wants cancelled. On click, send DELETE command to Customers table WHERE order_id = this.order_id AND customer_id = this.customer_id.</span>
       </div>
     </div>
     <!-- /.row -->
@@ -144,8 +144,8 @@
     <div class="row">
       <div class="col-md-8 mb-5">
         <h2>Rating History</h2>
-		<h6>Table will be built using JavaScript. Table will be populated with data extracted from JSON string received from backend server.</h6>
-		<table>
+		<h6>Table will be built using JavaScript. Table will be populated with data extracted from JSON string received from backend server. Send SELECT command to Recipe_Ratings table WHERE customer_id = this.customer_id.</h6>
+		<table class="table">
 			<thead>
 				<tr>
 					<th>Recipe Name</th>
@@ -157,25 +157,25 @@
 				<tr>
 					<td>Sausage, Beans and Broccoli Rabe Soup</td>
 					<td>5</td>
-					<td>January 25, 2020</td>
+					<td>01/25/2020</td>
 				</tr>
 				<tr>
 					<td>Chicken with Brussels Sprouts and Apple Cider Sauce</td>
 					<td></td>
-					<td>February 05, 2020</td>
+					<td>02/05/2020</td>
 				</tr>
 				<tr>
 					<td>Speedy Teriyaki Salmon</td>
 					<td></td>
-					<td>February 10, 2020</td>
+					<td>02/10/2020</td>
 				</tr>				
 			</tbody>
 		</table>
 		<br>
 		<!--Change <a></a> to <button></button>. When button is clicked, open a popup form. 
 		SOURCE: https://www.w3docs.com/snippets/javascript/how-to-create-a-popup-form-with-css-and-javascript.html-->
-		<a class="btn btn-primary" href="#">Modify</a>
-		<span>When button is clicked, popup form will appear where user can specify recipe name he/she wants to modify his/her rating.</span>
+		<a class="btn btn-primary" href="#">Modify My Rating</a>
+		<span>When button is clicked, popup form will appear where user can specify recipe name he/she wants to modify his/her rating. On click, send UPDATE command to Customers table WHERE customer_id = this.customer_id AND recipe_id = this.recipe_id.</span>
       </div>
     </div>
     <!-- /.row -->
