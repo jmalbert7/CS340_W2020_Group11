@@ -92,7 +92,9 @@
     <div class="row">
       <div class="col-md-8 mb-5">
         <h2>Sign Up Here!</h2>
+		<br>
 		  <form> <!--Form modifed from a template at https://getbootstrap.com/docs/4.0/components/forms/-->
+			<h5>Customer Information</h5>
 			<div class="form-row">
 			  <div class="form-group col-md-6">
 				<label for="inputFirstName">First Name</label>
@@ -119,6 +121,44 @@
 				<input type="password" class="form-control" id="password" placeholder="Password">
 			  </div>
 			</div>
+			<br>
+			<h5>Address Information</h5>
+			  <div class="form-group">
+				<label for="inputStreet1">Street 1</label>
+				<input type="text" class="form-control" id="street_1" placeholder="123 Main St">
+			  </div>
+			  <div class="form-group">
+				<label for="inputStreet2">Street 2</label>
+				<input type="text" class="form-control" id="street_2" placeholder="Apartment, studio, or floor">
+			  </div>
+			  <div class="form-group">
+				<label for="inputCity">City</label>
+				<input type="text" class="form-control" id="city" placeholder="Chicago">
+			  </div>
+			  <div class="form-group">
+				<label for="inputState">State</label>
+				<input type="text" class="form-control" id="state" placeholder="IL">
+			  </div>
+			  <div class="form-group">
+				<label for="inputZip">Zip</label>
+				<input type="text" class="form-control" id="zip" placeholder="60606">
+			  </div>
+			  <br>
+			  <h5>Payment Information</h5>
+			  <div class="form-group">
+				<label for="inpptCardNum">Card Number</label>
+				<input type="text" class="form-control" id="card_num" placeholder="">
+			  </div>
+			  <div class="form-group">
+				<label for="inputExpDate">Expiration Date</label>
+				<!--TODO: Figure out how to do date w/ only mm/yyyy-->
+				<input type="date" class="form-control" id="exp_date" placeholder="">
+			  </div>
+			  <div class="form-group">
+				<label for="inputPin">CVV</label>
+				<input type="text" class="form-control" id="pin" placeholder="">
+			  </div>
+			  <br>
 			<button type="submit" class="btn btn-primary">Sign Up</button>
 			<span>NEED TO CODE: On click, send INSERT command to Customers table. Then, redirects customer to 'Browse Recipes' page.</span>
 		  </form>
