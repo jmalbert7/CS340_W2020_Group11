@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Browse Recipes</title>
+  <title>Freedom Meals - Browse Recipes</title>
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -38,7 +38,7 @@
             <span class="sr-only">(current)</span>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Customer Profile</a>
+            <a class="nav-link" href="profile.html">Your Profile</a>
           </li>
           
         </ul>
@@ -201,14 +201,14 @@
 
   <!--TODO: Center, make larger, add onclick event to make order, address, and payment tables appear-->
   <button type="submit" class="btn btn-primary my-1">Checkout</button>
-  <h3>Tables below are hidden until 'Checkout' button is pressed</h3>
+  <h5>Tables below are hidden until 'Checkout' button is pressed</h5>
 
   <br></br>
 
   <div id="order-table">
     <!--TODO: Table rows should be added after customer selects 'checkout' button, query Orders_in_Recipes table-->
     <h2>Your Order</h2>
-    <h3>Lines are created after querying Recipes_in_Orders table</h3>
+    <h5>Lines are created after querying Recipes_in_Orders table</h5>
     <table class="table">
       <thead>
         <tr>
@@ -232,7 +232,7 @@
   <!--TODO: Update so placeholders are pre-populated, query Addresses with customer_id session variable-->
   <div id="address-verify">
     <h2>Verify your Address</h2>
-    <h3>Will be pre-populated via a query on Addresses table, Customer can change any value, Submit Edit button writes to Addresses table</h3>
+    <h5>Will be pre-populated via a query on Addresses table, Customer can change any value, Submit Edit button writes to Addresses table</h5>
     <form>
       <div class="form-group">
         <label for="street_1">Street 1</label>
@@ -264,7 +264,7 @@
   <!--TODO: Update so fields are pre-populated, query Payment_Informations with customer_id session variable-->
   <div id="payment-verify">
     <h2>Verify your Payment Information</h2>
-    <h3>Will be pre-populated via a query on Payments table, Customer can change any value, Submit Edit button writes to Payment_Informations table</h3>
+    <h5>Will be pre-populated via a query on Payments table, Customer can change any value, Submit Edit button writes to Payment_Informations table</h5>
     <form>
       <div class="form-group">
         <label for="card_num">Card Number</label>
@@ -286,8 +286,58 @@
 
   <br></br>
 
-  <h2>Recipe Admin Form</h2>
-  <h3>This is where new Recipes are added to the Recipes Table</h3>
+  <!--Form Template-From https://getbootstrap.com/docs/4.0/components/forms/-->
+  <form>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inputEmail4">Email</label>
+        <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="inputPassword4">Password</label>
+        <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="inputAddress">Address</label>
+      <input type="text" class="form-control" id="inputAddress" placeholder="123 Main St">
+    </div>
+    <div class="form-group">
+      <label for="inputAddress2">Address 2</label>
+      <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inputCity">City</label>
+        <input type="text" class="form-control" id="inputCity">
+      </div>
+      <div class="form-group col-md-4">
+        <label for="inputState">State</label>
+        <select id="inputState" class="form-control">
+          <option selected>Choose...</option>
+          <option>...</option>
+        </select>
+      </div>
+      <div class="form-group col-md-2">
+        <label for="inputZip">Zip</label>
+        <input type="text" class="form-control" id="inputZip">
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="gridCheck">
+        <label class="form-check-label" for="gridCheck">
+          Check me out
+        </label>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Sign in</button>
+  </form>
+  
+  <br><br>
+  
+    <h2>Add Recipe</h2>
+  <h5>This is where new Recipes are added to the Recipes Table</h5>
   <div id="admin">
     <form>
       <div class="form-row">
@@ -325,54 +375,6 @@
       <button type="submit" class="btn btn-primary">Add Recipe</button>
     </form>
   </div>
-
-  <!--Form Template-From https://getbootstrap.com/docs/4.0/components/forms/-->
-  <form>
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="inputEmail4">Email</label>
-        <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
-      </div>
-      <div class="form-group col-md-6">
-        <label for="inputPassword4">Password</label>
-        <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="inputAddress">Address</label>
-      <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-    </div>
-    <div class="form-group">
-      <label for="inputAddress2">Address 2</label>
-      <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-    </div>
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="inputCity">City</label>
-        <input type="text" class="form-control" id="inputCity">
-      </div>
-      <div class="form-group col-md-4">
-        <label for="inputState">State</label>
-        <select id="inputState" class="form-control">
-          <option selected>Choose...</option>
-          <option>...</option>
-        </select>
-      </div>
-      <div class="form-group col-md-2">
-        <label for="inputZip">Zip</label>
-        <input type="text" class="form-control" id="inputZip">
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="gridCheck">
-        <label class="form-check-label" for="gridCheck">
-          Check me out
-        </label>
-      </div>
-    </div>
-    <button type="submit" class="btn btn-primary">Sign in</button>
-  </form>
  
 
   <!-- Bootstrap core JavaScript -->
