@@ -40,9 +40,9 @@
           <li class="nav-item">
             <a class="nav-link" href="profile.html">Your Profile</a>
           </li>
-          
         </ul>
       </div>
+	  <a class="btn btn-primary" href="login.html">Log In</a>
     </div>
   </nav>
 
@@ -70,7 +70,7 @@
       <option value="5">Five Stars</option>
     </select>
   
-    <button type="submit" class="btn btn-primary my-1">Search</button>
+    <button type="submit" class="btn btn-primary my-1">Submit</button>
   </form>
 
   <br></br>
@@ -205,7 +205,7 @@
 
   <br></br>
 
-  <div class="px-5" id="order-table">
+  <div id="order-table">
     <!--TODO: Table rows should be added after customer selects 'checkout' button, query Orders_in_Recipes table-->
     <h2>Your Order</h2>
     <h5>Lines are created after querying Recipes_in_Orders table</h5>
@@ -233,7 +233,7 @@
   <div id="address-verify">
     <h2>Verify your Address</h2>
     <h5>Will be pre-populated via a query on Addresses table, Customer can change any value, Submit Edit button writes to Addresses table</h5>
-    <form class="px-5">
+    <form>
       <div class="form-group">
         <label for="street_1">Street 1</label>
         <input type="text" class="form-control" id="street_1" placeholder="">
@@ -256,7 +256,7 @@
       </div>
       <!--TODO: edit buttom should be a POST to Addresses-->
       <button type="submit" class="btn btn-primary">Submit Edit</button>
-    </form class="px-5" >
+    </form>
   </div>
 
   <br></br>
@@ -265,7 +265,7 @@
   <div id="payment-verify">
     <h2>Verify your Payment Information</h2>
     <h5>Will be pre-populated via a query on Payments table, Customer can change any value, Submit Edit button writes to Payment_Informations table</h5>
-    <form class="px-5">
+    <form>
       <div class="form-group">
         <label for="card_num">Card Number</label>
         <input type="text" class="form-control" id="card_num" placeholder="">
@@ -286,42 +286,6 @@
 
   <br></br>
 
-  <h2>Add Recipe</h2>
-  <h5>This is where new Recipes are added to the Recipes Table</h5>
-  <div id="admin">
-    <form class="px-5">
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="recipetitle">Recipe Title</label>
-          <input type="text" class="form-control" id="recipetitle" placeholder="Recipe Title">
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="time">Total Preparation Time</label>
-          <input type="text" class="form-control" id="time" placeholder="">
-        </div>
-        <div class="form-group col-md-4">
-          <label for="difficulty">Difficulty Rating</label>
-          <select class="custom-select" id="inlineFormCustomSelectPref">
-            <option selected>Choose...</option>
-            <option value="easy">Easy</option>
-            <option value="intermediate">Intermediate</option>
-            <option value="hard">Hard</option>
-          </select>
-        </div>
-      </div>
-      
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="directions">Directions</label>
-          <input type="text" class="form-control" id="directions">
-        </div>
-      </div>
-      <button type="submit" class="btn btn-primary">Add Recipe</button>
-    </form>
-  </div>
-
   <!--Form Template-From https://getbootstrap.com/docs/4.0/components/forms/-->
   <form>
     <div class="form-row">
@@ -329,13 +293,9 @@
         <label for="inputEmail4">Email</label>
         <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
       </div>
-      <div class="form-group col-md-6">
-        <label for="inputPassword4">Password</label>
-        <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
-      </div>
     </div>
     <div class="form-group">
-      <label for="inputAddress">Address</label>
+      <label for="inputAddress">Address 1</label>
       <input type="text" class="form-control" id="inputAddress" placeholder="123 Main St">
     </div>
     <div class="form-group">
@@ -372,7 +332,46 @@
   
   <br><br>
   
-  
+    <h2>Add Recipe</h2>
+  <h5>This is where new Recipes are added to the Recipes Table</h5>
+  <div id="admin">
+    <form>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="recipetitle">Recipe Title</label>
+          <input type="text" class="form-control" id="recipetitle" placeholder="Recipe Title">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="ingredients">Ingredients</label>
+        <input type="text" class="form-control" id="ingredients" placeholder="Ingredients (comma separated)">
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="time">Total Preparation Time</label>
+          <input type="text" class="form-control" id="time" placeholder="">
+        </div>
+        <div class="form-group col-md-4">
+          <label for="difficulty">Difficulty Rating</label>
+          <select class="custom-select" id="inlineFormCustomSelectPref">
+            <option selected>Choose...</option>
+            <option value="easy">Easy</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="hard">Hard</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="directions">Directions</label>
+          <input type="text" class="form-control" id="directions">
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Add Recipe</button>
+    </form>
+  </div>
+ 
 
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
