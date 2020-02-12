@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<!--ADAPTED BOOTSTRAP HTML TEMPLATE FROM https://startbootstrap.com/templates/business-frontpage/-->
+
 <head>
 
   <meta charset="utf-8">
@@ -48,17 +50,15 @@
   </nav>
 
   <!-- Header -->
-  <header class="bg-primary py-5 mb-5">
+  <!--Exercpted code on inserting background image from https://www.w3schools.com/html/html_images_background.asp -->
+	<header class="bg-primary py-5 mb-5" style="background-image: url('images/banner.jpg'); background-repeat: no-repeat; background-size: cover;">
     <div class="container h-100">
       <div class="row h-100 align-items-start">
         <div class="col-lg-4 order-2">
-          <!--TODO: Make image prettier-->
-          <!--Image courtesy of https://chartwell.com/en/our-services/dining-experience-->
-          <!--<img alt="High-Quality Food" class="img-fluid" src="images/banner.jpg">-->
         </div>
         <div class="col order-1">
-          <h1 class="display-4 text-white mt-5 mb-2">Freedom Meals</h1>
-          <p class="lead mb-5 text-white-50">Meal planning, your way.</p>
+          <h1 class="display-4 text-white mt-5 mb-2" style="font-weight: 400">Freedom Meals</h1>
+          <p class="lead mb-5 text-white-50" style="font-weight: 400"><font color="white">Meal planning, your way.</font></p>
         </div>
       </div>
     </div>
@@ -69,15 +69,26 @@
 
     <div class="row">
       <div class="col-md-8 mb-5">
+        <h2>View Your Account Information</h2>
+        <hr>
+        <p>Manage your account information, order history, and rating history.</p>
+      </div>
+    </div>
+	<br>
+    <!-- /.row -->
+
+    <div class="row">
+      <div class="col-md-8 mb-5">
         <h2>Account Information</h2>
-		<h6>Table will be built using JavaScript. Table will be populated with data extracted from JSON string received from backend server.</h6>
-		<table>
+		<h6>Table will be built using JavaScript. Table will be populated with data extracted from JSON string received from backend server via a SELECT command to Customers table WHERE customer_id = this.customer_id.</h6>
+		<table class="table">
 			<thead>
 				<tr>
 					<th>First Name</th>
 					<th>Last Name</th>
 					<th>Email Address</th>
 					<th>Phone Number</th>
+					<th>Admin?</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -86,14 +97,15 @@
 					<td>Doe</td>
 					<td>janedoe@oregonstate.edu</td>
 					<td>9197731234</td>
+					<td>No</td>
 				</tr>
 			</tbody>
 		</table>
 		<br>
 		<!--Change <a></a> to <button></button>. When button is clicked, open a popup form. 
 		SOURCE: https://www.w3docs.com/snippets/javascript/how-to-create-a-popup-form-with-css-and-javascript.html-->
-		<a class="btn btn-primary" href="#">Update</a>
-		<span>When button is clicked, popup form will appear where user can update his/her name, email, and/or phone number.</span>
+		<a class="btn btn-primary" href="#">Update My Information</a>
+		<span>NEED TO CODE: When button is clicked, popup form will appear where user can update his/her name, email, and/or phone number. On click, send UPDATE command to Customers table WHERE customer_id = this.customer_id.</span>
       </div>
     </div>
     <!-- /.row -->
@@ -101,8 +113,8 @@
     <div class="row">
       <div class="col-md-8 mb-5">
         <h2>Order History</h2>
-		<h6>Table will be built using JavaScript. Table will be populated with data extracted from JSON string received from backend server.</h6>
-		<table>
+		<h6>Table will be built using JavaScript. Table will be populated with data extracted from JSON string received from backend server. Send SELECT command to Orders table WHERE customer_id = this.customer_id.</h6>
+		<table class="table">
 			<thead>
 				<tr>
 					<th>Order Number</th>
@@ -114,19 +126,19 @@
 			<tbody>
 				<tr>
 					<td>A12345</td>
-					<td>January 15, 2020</td>
-					<td>January 19, 2020</td>
+					<td>01/15/2020</td>
+					<td>01/19/2020</td>
 					<td>DELIVERED</td>
 				</tr>
 				<tr>
 					<td>A12350</td>
-					<td>February 01, 2020</td>
-					<td>February 05, 2020</td>
+					<td>02/01/2020</td>
+					<td>02/05/2020</td>
 					<td>DELIVERED</td>
 				</tr>
 				<tr>
 					<td>A12355</td>
-					<td>February 10, 2020</td>
+					<td>02/10/2020</td>
 					<td></td>
 					<td>SHIPPED</td>
 				</tr>
@@ -135,8 +147,8 @@
 		<br>
 		<!--Change <a></a> to <button></button>. When button is clicked, open a popup form. 
 		SOURCE: https://www.w3docs.com/snippets/javascript/how-to-create-a-popup-form-with-css-and-javascript.html-->
-		<a class="btn btn-primary" href="#">Cancel</a>
-		<span>When button is clicked, popup form will appear where user can specify order number he/she wants cancelled.</span>
+		<a class="btn btn-primary" href="#">Cancel an Order</a>
+		<span>NEED TO CODE: When button is clicked, popup form will appear where user can specify order number he/she wants cancelled. On click, send DELETE command to Customers table WHERE order_id = this.order_id AND customer_id = this.customer_id.</span>
       </div>
     </div>
     <!-- /.row -->
@@ -144,8 +156,8 @@
     <div class="row">
       <div class="col-md-8 mb-5">
         <h2>Rating History</h2>
-		<h6>Table will be built using JavaScript. Table will be populated with data extracted from JSON string received from backend server.</h6>
-		<table>
+		<h6>Table will be built using JavaScript. Table will be populated with data extracted from JSON string received from backend server. Send SELECT DISTINCT command to Recipes_in_Orders table JOIN Recipe_Ratings table ON recipe_id WHERE customer_id = this.customer_id.</h6>
+		<table class="table">
 			<thead>
 				<tr>
 					<th>Recipe Name</th>
@@ -157,25 +169,25 @@
 				<tr>
 					<td>Sausage, Beans and Broccoli Rabe Soup</td>
 					<td>5</td>
-					<td>January 25, 2020</td>
+					<td>01/25/2020</td>
 				</tr>
 				<tr>
 					<td>Chicken with Brussels Sprouts and Apple Cider Sauce</td>
 					<td></td>
-					<td>February 05, 2020</td>
+					<td></td>
 				</tr>
 				<tr>
 					<td>Speedy Teriyaki Salmon</td>
 					<td></td>
-					<td>February 10, 2020</td>
+					<td></td>
 				</tr>				
 			</tbody>
 		</table>
 		<br>
 		<!--Change <a></a> to <button></button>. When button is clicked, open a popup form. 
 		SOURCE: https://www.w3docs.com/snippets/javascript/how-to-create-a-popup-form-with-css-and-javascript.html-->
-		<a class="btn btn-primary" href="#">Modify</a>
-		<span>When button is clicked, popup form will appear where user can specify recipe name he/she wants to modify his/her rating.</span>
+		<a class="btn btn-primary" href="#">Modify My Rating</a>
+		<span>NEED TO CODE: When button is clicked, popup form will appear where user can specify recipe name he/she wants to modify his/her rating, or add a rating for a recipe they have not yet rated. IF rating was null, on click, send INSERT command to Recipe_Ratings table WHERE customer_id = this.customer_id AND recipe_id = this.recipe_id. ELSE, send UPDATE command to Recipe_Ratings table WHERE customer_id = this.customer_id AND recipe_id = this.recipe_id.</span>
       </div>
     </div>
     <!-- /.row -->
@@ -187,6 +199,9 @@
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  
+  <!--Freedom Meals JavaScript -->
+  <script src="js/profile.js"></script>
 
 </body>
 

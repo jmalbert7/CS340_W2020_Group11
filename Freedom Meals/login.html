@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<!--ADAPTED BOOTSTRAP HTML TEMPLATE FROM https://startbootstrap.com/templates/business-frontpage/-->
+
 <head>
 
   <meta charset="utf-8">
@@ -45,17 +47,15 @@
   </nav>
 
   <!-- Header -->
-  <header class="bg-primary py-5 mb-5">
+  <!--Exercpted code on inserting background image from https://www.w3schools.com/html/html_images_background.asp -->
+	<header class="bg-primary py-5 mb-5" style="background-image: url('images/banner.jpg'); background-repeat: no-repeat; background-size: cover;">
     <div class="container h-100">
       <div class="row h-100 align-items-start">
         <div class="col-lg-4 order-2">
-          <!--TODO: Make image prettier-->
-          <!--Image courtesy of https://chartwell.com/en/our-services/dining-experience-->
-          <!--<img alt="High-Quality Food" class="img-fluid" src="images/banner.jpg">-->
         </div>
         <div class="col order-1">
-          <h1 class="display-4 text-white mt-5 mb-2">Freedom Meals</h1>
-          <p class="lead mb-5 text-white-50">Meal planning, your way.</p>
+          <h1 class="display-4 text-white mt-5 mb-2" style="font-weight: 400">Freedom Meals</h1>
+          <p class="lead mb-5 text-white-50" style="font-weight: 400"><font color="white">Meal planning, your way.</font></p>
         </div>
       </div>
     </div>
@@ -69,18 +69,19 @@
 		  <form> <!--Form modifed from a template at https://getbootstrap.com/docs/4.0/components/forms/-->
 			<div class="form-row">
 			  <div class="form-group col-md-6">
-				<label for="inputEmail4">Email</label>
-				<input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+				<label for="inputEmail">Email</label>
+				<input type="email" class="form-control" id="email" placeholder="Email">
 				<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
 			  </div>
 			</div>
 			<div class="form-row">
 			  <div class="form-group col-md-6">
-				<label for="inputPassword4">Password</label>
-				<input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+				<label for="inputPassword">Password</label>
+				<input type="password" class="form-control" id="password" placeholder="Password">
 			  </div>
 			</div>
-			<button type="submit" class="btn btn-primary">Sign in</button>
+			<button type="submit" class="btn btn-primary">Sign In</button>
+			<span>NEED TO CODE: On click, send SELECT command to Customers table where email = this.email AND password = password. IF match, get customer_id, save as session id and redirect customer to 'Browse Recipes' page. ELSE, display error message.</span>
 		  </form>
       </div>
     </div>
@@ -91,7 +92,9 @@
     <div class="row">
       <div class="col-md-8 mb-5">
         <h2>Sign Up Here!</h2>
+		<br>
 		  <form> <!--Form modifed from a template at https://getbootstrap.com/docs/4.0/components/forms/-->
+			<h5>Customer Information</h5>
 			<div class="form-row">
 			  <div class="form-group col-md-6">
 				<label for="inputFirstName">First Name</label>
@@ -118,7 +121,46 @@
 				<input type="password" class="form-control" id="password" placeholder="Password">
 			  </div>
 			</div>
-			<button type="submit" class="btn btn-primary">Sign up</button>
+			<br>
+			<h5>Address Information</h5>
+			  <div class="form-group">
+				<label for="inputStreet1">Street 1</label>
+				<input type="text" class="form-control" id="street_1" placeholder="123 Main St">
+			  </div>
+			  <div class="form-group">
+				<label for="inputStreet2">Street 2</label>
+				<input type="text" class="form-control" id="street_2" placeholder="Apartment, studio, or floor">
+			  </div>
+			  <div class="form-group">
+				<label for="inputCity">City</label>
+				<input type="text" class="form-control" id="city" placeholder="Chicago">
+			  </div>
+			  <div class="form-group">
+				<label for="inputState">State</label>
+				<input type="text" class="form-control" id="state" placeholder="IL">
+			  </div>
+			  <div class="form-group">
+				<label for="inputZip">Zip</label>
+				<input type="text" class="form-control" id="zip" placeholder="60606">
+			  </div>
+			  <br>
+			  <h5>Payment Information</h5>
+			  <div class="form-group">
+				<label for="inputCardNum">Card Number</label>
+				<input type="text" class="form-control" id="card_num" placeholder="">
+			  </div>
+			  <div class="form-group">
+				<label for="inputExpDate">Expiration Date</label>
+				<!--TODO: Figure out how to do date w/ only mm/yyyy-->
+				<input type="date" class="form-control" id="exp_date" placeholder="">
+			  </div>
+			  <div class="form-group">
+				<label for="inputPin">CVV</label>
+				<input type="text" class="form-control" id="pin" placeholder="">
+			  </div>
+			  <br>
+			<button type="submit" class="btn btn-primary">Sign Up</button>
+			<span>NEED TO CODE: On click, send INSERT command to Customers, Addresses, and Payment_Informations tables. Then, redirects customer to 'Browse Recipes' page.</span>
 		  </form>
       </div>
     </div>
