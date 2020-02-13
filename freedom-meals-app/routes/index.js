@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', (req, res) =>{
-    res.send('It works!');
+    res.render('home', {title:'Freedom Meals - Home'});
 });
 
 module.exports = router;
