@@ -8,7 +8,38 @@ router.get('/', (req, res) =>{
 });
 
 router.get('/recipes', (req, res) =>{
-    res.render('recipes', {title:'Browse Recipes'});
+    //TODO: Replace object with query to database
+    let recipes = [
+        {
+            name: "lasagne",
+            description: "meaty, cheesy",
+            difficulty: "intermediate",
+            time: 120,
+            id: 1
+        },
+        {
+            name: "panini",
+            description: "meaty, cheesy, bready ",
+            difficulty: "easy",
+            time: 15,
+            id: 2
+        },
+        {
+            name: "panini",
+            description: "meaty, cheesy",
+            difficulty: "easy",
+            time: 15,
+            id: 3
+        },
+        {
+            name: "panini",
+            description: "meaty, cheesy",
+            difficulty: "easy",
+            time: 15,
+            id: 4
+        }
+    ];
+    res.render('recipes', {title:'Browse Recipes', recipes});
 });
 
 module.exports = router;

@@ -36,4 +36,61 @@
         </div>
       </div>
     </div>
-  </header>
+    </header>
+
+    <!-- Recipe Cards -->
+  <div class="container">
+  
+    <div class="row">
+      <div class="col-md-8 mb-5">
+        <h2>Select Your Recipes</h2>
+        <hr>
+        <p>Add a recipe to your order by clicking the 'Add to Cart' button below. You can search for Recipes based on average customer rating.</p>
+      </div>
+    </div>
+	  <br>
+    <!-- /.row -->
+	
+  <!--Search Boxes-->
+    <form class="form-inline d-flex justify-content-center">
+      <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Average Rating</label>
+      <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
+        <option selected>Choose...</option>
+        <option value="1">One Stars</option>
+        <option value="2">Two Stars</option>
+        <option value="3">Three Stars</option>
+        <option value="4">Four Stars</option>
+        <option value="5">Five Stars</option>
+      </select>
+      <button type="submit" class="btn btn-primary my-1">Submit</button>
+    </form>
+    <br><br>
+
+    <!--Three recipe cards per row-->
+    <div id="recipe-row" class="row">
+      {{#each recipes}}
+        {{#if name}}
+        <div id="recipe-col" class="col-md-4 mb-5">
+          <div class="card h-100">
+            <div class="card-body">
+              <h4 class="card-title">{{name}}</h4>
+              <p class="card-text">{{description}}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">{{difficulty}}</li>
+              <li class="list-group-item">{{time}}</li>
+              <!--TODO: get rating from recipe_ratings-->
+              <li class="list-group-item">Rating</li>
+            </ul>
+            <div class="card-footer">
+              <!--TODO: ADD HIDDEN FORM W/ RECIPE ID, add recipe_id to an array -->
+              <button type="submit" class="btn btn-primary my-1" onclick="addRecipeToOrder({{id}})">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+        {{/if}}
+      {{/each}}
+    </div>
+
+  <!--Freedom Meals JavaScript -->
+  <script src="js/recipe.js"></script>
