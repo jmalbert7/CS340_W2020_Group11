@@ -1,4 +1,5 @@
 const express = require('express');
+var mysql = require('../dbcon.js');
 
 //router responds to any requests from the root url
 const router = express.Router();
@@ -9,7 +10,7 @@ router.get('/', (req, res) =>{
 
 router.get('/recipes', (req, res) =>{
     //TODO: Replace object with query to database
-    let recipes = [
+    /*let recipes = [
         {
             name: "lasagne",
             description: "meaty, cheesy",
@@ -38,8 +39,17 @@ router.get('/recipes', (req, res) =>{
             time: 15,
             id: 4
         }
-    ];
-    res.render('recipes', {title:'Browse Recipes', recipes});
+    ];*/
+    var recipes = [];
+    mysql.pool.query('SELECT * FROM Recipes', function(err, rows, fields){
+        if(err){
+            next(err);
+            return; 
+        }
+        let recipes = rows;
+        res.render('recipes', {title:'Browse Recipes', recipes});
+    });
 });
+
 
 module.exports = router;

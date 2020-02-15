@@ -38,7 +38,7 @@
     </div>
     </header>
 
-    <!-- Recipe Cards -->
+  <!-- Recipe Cards -->
   <div class="container">
   
     <div class="row">
@@ -69,12 +69,12 @@
     <!--Three recipe cards per row-->
     <div id="recipe-row" class="row">
       {{#each recipes}}
-        {{#if name}}
+        {{#if recipe_name}}
         <div id="recipe-col" class="col-md-4 mb-5">
           <div class="card h-100">
             <div class="card-body">
-              <h4 class="card-title">{{name}}</h4>
-              <p class="card-text">{{description}}</p>
+              <h4 class="card-title">{{recipe_name}}</h4>
+              <!--<p class="card-text">{{description}}</p>-->
             </div>
             <ul class="list-group list-group-flush">
               <li class="list-group-item">{{difficulty}}</li>
@@ -84,7 +84,7 @@
             </ul>
             <div class="card-footer">
               <!--TODO: ADD HIDDEN FORM W/ RECIPE ID, add recipe_id to an array -->
-              <button type="submit" class="btn btn-primary my-1" onclick="addRecipeToOrder({{id}})">Add to Cart</button>
+              <button type="submit" class="btn btn-primary my-1" onclick="addRecipeToOrder({{recipe_id}})">Add to Cart</button>
             </div>
           </div>
         </div>
