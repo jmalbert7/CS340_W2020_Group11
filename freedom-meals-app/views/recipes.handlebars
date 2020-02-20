@@ -1,0 +1,96 @@
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">Freedom Meals</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home
+            </a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Browse Recipes</a>
+            <span class="sr-only">(current)</span>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="profile.html">Your Profile</a>
+          </li>
+        </ul>
+      </div>
+	  <a class="btn btn-primary" href="login.html">Log In</a>
+    </div>
+  </nav>
+
+  <!-- Header -->
+	<header class="bg-primary py-5 mb-5" style="background-image: url('images/banner.jpg'); background-repeat: no-repeat; background-size: cover;">
+    <div class="container h-100">
+      <div class="row h-100 align-items-start">
+        <div class="col-lg-4 order-2">
+        </div>
+        <div class="col order-1">
+          <h1 class="display-4 text-white mt-5 mb-2" style="font-weight: 400">Freedom Meals</h1>
+          <p class="lead mb-5 text-white-50" style="font-weight: 400"><font color="white">Meal planning, your way.</font></p>
+        </div>
+      </div>
+    </div>
+    </header>
+
+  <!-- Recipe Cards -->
+  <div class="container">
+  
+    <div class="row">
+      <div class="col-md-8 mb-5">
+        <h2>Select Your Recipes</h2>
+        <hr>
+        <p>Add a recipe to your order by clicking the 'Add to Cart' button below. You can search for Recipes based on average customer rating.</p>
+      </div>
+    </div>
+	  <br>
+    <!-- /.row -->
+	
+  <!--Search Boxes-->
+    <form class="form-inline d-flex justify-content-center">
+      <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Average Rating</label>
+      <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
+        <option selected>Choose...</option>
+        <option value="1">One Stars</option>
+        <option value="2">Two Stars</option>
+        <option value="3">Three Stars</option>
+        <option value="4">Four Stars</option>
+        <option value="5">Five Stars</option>
+      </select>
+      <button type="submit" class="btn btn-primary my-1">Submit</button>
+    </form>
+    <br><br>
+
+    <!--Three recipe cards per row-->
+    <div id="recipe-row" class="row">
+      {{#each recipes}}
+        {{#if recipe_name}}
+        <div id="recipe-col" class="col-md-4 mb-5">
+          <div class="card h-100">
+            <div class="card-body">
+              <h4 class="card-title">{{recipe_name}}</h4>
+              <!--<p class="card-text">{{description}}</p>-->
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Difficulty: {{difficulty}} out of 3</li>
+              <li class="list-group-item">Time: {{time}} minutes</li>
+              <!--TODO: get rating from recipe_ratings-->
+              <li class="list-group-item">Rating</li>
+            </ul>
+            <div class="card-footer">
+              <!--TODO: ADD HIDDEN FORM W/ RECIPE ID, add recipe_id to an array -->
+              <button type="submit" class="btn btn-primary my-1" onclick="addRecipeToOrder({{recipe_id}})">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+        {{/if}}
+      {{/each}}
+    </div>
+
+  <!--Freedom Meals JavaScript -->
+  <script src="js/recipe.js"></script>
