@@ -29,20 +29,6 @@
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="index.html">Home
-              <span class="sr-only">(current)</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="recipe.html">Browse Recipes</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="profile.html">Your Profile</a>
-        </ul>
-      </div>
     </div>
   </nav>
 
@@ -60,10 +46,11 @@
       </div>
     </div>
   </header>
-
+  
   <!-- Page Content -->
   <div class="container">
-    <div class="row">
+
+    <div class="row" id="loginSection">
       <div class="col-md-8 mb-5">
         <h2>Welcome Back!</h2>       
 		  <form> <!--Form modifed from a template at https://getbootstrap.com/docs/4.0/components/forms/-->
@@ -71,7 +58,6 @@
 			  <div class="form-group col-md-6">
 				<label for="inputEmail">Email</label>
 				<input type="email" class="form-control" id="email" placeholder="Email">
-				<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
 			  </div>
 			</div>
 			<div class="form-row">
@@ -80,16 +66,21 @@
 				<input type="password" class="form-control" id="password" placeholder="Password">
 			  </div>
 			</div>
-			<button type="submit" class="btn btn-primary">Sign In</button>
-			<span>NEED TO CODE: On click, send SELECT command to Customers table where email = this.email AND password = password. IF match, get customer_id, save as session id and redirect customer to 'Browse Recipes' page. ELSE, display error message.</span>
+			<br>
+			<button type="submit" class="btn btn-primary" id="loginButton">Log In</button>
+			<span>NEED TO CODE: On click, send SELECT command to Customers table where email = this.email AND password = password. IF match, display checkout page. ELSE, display error message.</span>
 		  </form>
       </div>
     </div>
-    <!-- /.row -->
-	
-	<br><br><br>
-	
-    <div class="row">
+    <!-- /.row -->  
+
+	<div class="row" id="signuphereSection">
+		<div class="col-md-8 mb-5">
+			<button type="submit" class="btn btn-primary" id="signuphereButton">Sign Up Here!</button>
+		</div>
+	</div>
+
+    <div class="row" id="signupSection">
       <div class="col-md-8 mb-5">
         <h2>Sign Up Here!</h2>
 		<br>
@@ -109,6 +100,7 @@
 			  <div class="form-group col-md-6">
 				<label for="inputEmail">Email</label>
 				<input type="email" class="form-control" id="email" placeholder="Email">
+			    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
 			  </div>
 			  <div class="form-group col-md-6">
 				<label for="inputPhoneNumber">Phone Number</label>
@@ -121,50 +113,19 @@
 				<input type="password" class="form-control" id="password" placeholder="Password">
 			  </div>
 			</div>
-			<br>
-			<h5>Address Information</h5>
-			  <div class="form-group">
-				<label for="inputStreet1">Street 1</label>
-				<input type="text" class="form-control" id="street_1" placeholder="123 Main St">
-			  </div>
-			  <div class="form-group">
-				<label for="inputStreet2">Street 2</label>
-				<input type="text" class="form-control" id="street_2" placeholder="Apartment, studio, or floor">
-			  </div>
-			  <div class="form-group">
-				<label for="inputCity">City</label>
-				<input type="text" class="form-control" id="city" placeholder="Chicago">
-			  </div>
-			  <div class="form-group">
-				<label for="inputState">State</label>
-				<input type="text" class="form-control" id="state" placeholder="IL">
-			  </div>
-			  <div class="form-group">
-				<label for="inputZip">Zip</label>
-				<input type="text" class="form-control" id="zip" placeholder="60606">
-			  </div>
-			  <br>
-			  <h5>Payment Information</h5>
-			  <div class="form-group">
-				<label for="inputCardNum">Card Number</label>
-				<input type="text" class="form-control" id="card_num" placeholder="">
-			  </div>
-			  <div class="form-group">
-				<label for="inputExpDate">Expiration Date</label>
-				<!--TODO: Figure out how to do date w/ only mm/yyyy-->
-				<input type="date" class="form-control" id="exp_date" placeholder="">
-			  </div>
-			  <div class="form-group">
-				<label for="inputPin">CVV</label>
-				<input type="text" class="form-control" id="pin" placeholder="">
-			  </div>
-			  <br>
-			<button type="submit" class="btn btn-primary">Sign Up</button>
-			<span>NEED TO CODE: On click, send INSERT command to Customers, Addresses, and Payment_Informations tables. Then, redirects customer to 'Browse Recipes' page.</span>
+			<button type="submit" class="btn btn-primary" id="signupButton">Sign Up</button>
+			<span>NEED TO CODE: On click, send INSERT command to Customers table.</span>
 		  </form>
       </div>
-    </div>
+	</div>
     <!-- /.row -->
+	
+	<div id="adminSection">
+	<a href="admin.html">Admin?</a>
+	</div>
+	
+	<br><br>
+  
   </div>
   <!-- /.container -->
 
@@ -172,6 +133,7 @@
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="js/login.js"></script>
 
 </body>
 

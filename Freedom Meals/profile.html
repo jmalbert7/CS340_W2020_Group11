@@ -33,19 +33,22 @@
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
             <a class="nav-link" href="index.html">Home
-              <span class="sr-only">(current)</span>
+				<span class="sr-only">(current)</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="recipe.html">Browse Recipes</a>
+            <a class="nav-link" href="order.html">Your Orders</a>
           </li>
+		  <li class="nav-item">
+            <a class="nav-link" href="rating.html">Your Ratings</a>
+          </li>
+		  </li>
           <li class="nav-item active">
             <a class="nav-link" href="#">Your Profile</a>
           </li>
-          </li>
+		  </li>
         </ul>
       </div>
-	  <a class="btn btn-primary" href="login.html">Log In</a>
     </div>
   </nav>
 
@@ -66,27 +69,25 @@
 
   <!-- Page Content -->
   <div class="container">
-
-    <div class="row">
+  
+    <div class="row" id="header">
       <div class="col-md-8 mb-5">
-        <h2>View Your Account Information</h2>
+        <h2>View and Manage Your Profile Information</h2>
         <hr>
-        <p>Manage your account information, order history, and rating history.</p>
-      </div>
+		<p>Table will be built using JavaScript. Table will be populated with data extracted from JSON string received from backend server via a SELECT command to Customers table WHERE customer_id = this.customer_id.</p>
+	  </div>
     </div>
-	<br>
     <!-- /.row -->
 
-    <div class="row">
+    <div class="row" id="customerInformationSection">
       <div class="col-md-8 mb-5">
-        <h2>Account Information</h2>
-		<h6>Table will be built using JavaScript. Table will be populated with data extracted from JSON string received from backend server via a SELECT command to Customers table WHERE customer_id = this.customer_id.</h6>
 		<table class="table">
 			<thead>
 				<tr>
 					<th>First Name</th>
 					<th>Last Name</th>
 					<th>Email Address</th>
+					<th>Password</th>
 					<th>Phone Number</th>
 					<th>Admin?</th>
 				</tr>
@@ -96,100 +97,55 @@
 					<td>Jane</td>
 					<td>Doe</td>
 					<td>janedoe@oregonstate.edu</td>
+					<td>********</td>
 					<td>9197731234</td>
 					<td>No</td>
 				</tr>
 			</tbody>
 		</table>
-		<br>
 		<!--Change <a></a> to <button></button>. When button is clicked, open a popup form. 
 		SOURCE: https://www.w3docs.com/snippets/javascript/how-to-create-a-popup-form-with-css-and-javascript.html-->
-		<a class="btn btn-primary" href="#">Update My Information</a>
-		<span>NEED TO CODE: When button is clicked, popup form will appear where user can update his/her name, email, and/or phone number. On click, send UPDATE command to Customers table WHERE customer_id = this.customer_id.</span>
-      </div>
+		<button class="btn btn-primary" id="editCustomerButton">Edit My Information</button>
+      	<br><br>
+		<p><strong>NOTE: </strong>If you are wanting to update your address or payment information, please send an email to the administrator at nelson@freedommeals.com.</p>
+	  </div>
     </div>
     <!-- /.row -->
 
-    <div class="row">
-      <div class="col-md-8 mb-5">
-        <h2>Order History</h2>
-		<h6>Table will be built using JavaScript. Table will be populated with data extracted from JSON string received from backend server. Send SELECT command to Orders table WHERE customer_id = this.customer_id.</h6>
-		<table class="table">
-			<thead>
-				<tr>
-					<th>Order Number</th>
-					<th>Order Date</th>
-					<th>Delivery Date</th>
-					<th>Order Status</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>A12345</td>
-					<td>01/15/2020</td>
-					<td>01/19/2020</td>
-					<td>DELIVERED</td>
-				</tr>
-				<tr>
-					<td>A12350</td>
-					<td>02/01/2020</td>
-					<td>02/05/2020</td>
-					<td>DELIVERED</td>
-				</tr>
-				<tr>
-					<td>A12355</td>
-					<td>02/10/2020</td>
-					<td></td>
-					<td>SHIPPED</td>
-				</tr>
-			</tbody>
-		</table>
-		<br>
-		<!--Change <a></a> to <button></button>. When button is clicked, open a popup form. 
-		SOURCE: https://www.w3docs.com/snippets/javascript/how-to-create-a-popup-form-with-css-and-javascript.html-->
-		<a class="btn btn-primary" href="#">Cancel an Order</a>
-		<span>NEED TO CODE: When button is clicked, popup form will appear where user can specify order number he/she wants cancelled. On click, send DELETE command to Customers table WHERE order_id = this.order_id AND customer_id = this.customer_id.</span>
-      </div>
-    </div>
-    <!-- /.row -->
-	
-    <div class="row">
-      <div class="col-md-8 mb-5">
-        <h2>Rating History</h2>
-		<h6>Table will be built using JavaScript. Table will be populated with data extracted from JSON string received from backend server. Send SELECT DISTINCT command to Recipes_in_Orders table JOIN Recipe_Ratings table ON recipe_id WHERE customer_id = this.customer_id.</h6>
-		<table class="table">
-			<thead>
-				<tr>
-					<th>Recipe Name</th>
-					<th>Rating</th>
-					<th>Date Rated</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>Sausage, Beans and Broccoli Rabe Soup</td>
-					<td>5</td>
-					<td>01/25/2020</td>
-				</tr>
-				<tr>
-					<td>Chicken with Brussels Sprouts and Apple Cider Sauce</td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>Speedy Teriyaki Salmon</td>
-					<td></td>
-					<td></td>
-				</tr>				
-			</tbody>
-		</table>
-		<br>
-		<!--Change <a></a> to <button></button>. When button is clicked, open a popup form. 
-		SOURCE: https://www.w3docs.com/snippets/javascript/how-to-create-a-popup-form-with-css-and-javascript.html-->
-		<a class="btn btn-primary" href="#">Modify My Rating</a>
-		<span>NEED TO CODE: When button is clicked, popup form will appear where user can specify recipe name he/she wants to modify his/her rating, or add a rating for a recipe they have not yet rated. IF rating was null, on click, send INSERT command to Recipe_Ratings table WHERE customer_id = this.customer_id AND recipe_id = this.recipe_id. ELSE, send UPDATE command to Recipe_Ratings table WHERE customer_id = this.customer_id AND recipe_id = this.recipe_id.</span>
-      </div>
-    </div>
+	<div class="row" id="editCustomerForm">
+	  <form> <!--Form modifed from a template at https://getbootstrap.com/docs/4.0/components/forms/-->
+		<h5>Your Information</h5>
+		<div class="form-row">
+		  <div class="form-group col-md-6">
+			<label for="inputFirstName">First Name</label>
+			<input type="text" class="form-control" id="firstName">
+		  </div>
+		  <div class="form-group col-md-6">
+			<label for="inputLastName">Last Name</label>
+			<input type="text" class="form-control" id="lastName">
+		  </div>
+		</div>
+		<div class="form-row">
+		  <div class="form-group col-md-6">
+			<label for="inputEmail">Email</label>
+			<input type="email" class="form-control" id="email">
+		  </div>
+		  <div class="form-group col-md-6">
+			<label for="inputPhoneNumber">Phone Number</label>
+			<input type="text" class="form-control" id="phoneNumber">
+		  </div>
+		</div>
+		<div class="form-row">
+		  <div class="form-group col-md-6">
+			<label for="inputPassword">Change Your Password</label>
+			<input type="password" class="form-control" id="password" placeholder="Type in current password if you do not want to change your password.">
+		  </div>
+		</div>
+		<button type="submit" class="btn btn-primary" id="updateCustomerButton">Update My Information</button>
+		<span>On click, send UPDATE command to Customers table WHERE customer_id = this.customer_id. The above table repopulates with updated information.</span>
+	  </form>
+	  <br><br>
+	</div>
     <!-- /.row -->
 
   </div>
