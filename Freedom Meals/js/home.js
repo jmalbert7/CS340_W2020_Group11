@@ -1,6 +1,9 @@
-/* Redirect user to Orders page after "Place Your Order" button is clicked. */
-document.getElementById("placeOrderButton").addEventListener("click", function(appear)
-{
-	location.href="order.html";
+/* On load, make Add Recipe section hidden. */
+document.getElementById("addRecipeSection").style.display = "none";
+
+/* Make Add Recipe section appear after "Add Recipe" button is clicked. */
+document.getElementById("adminAddRecipeButton").addEventListener("click", function(appear)
+{	
+	document.getElementById("addRecipeSection").style.display = "block";
 	appear.preventDefault();
 });
