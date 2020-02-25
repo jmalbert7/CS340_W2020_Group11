@@ -26,27 +26,28 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
       <a class="navbar-brand" href="index.html">Freedom Meals</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
             <a class="nav-link" href="index.html">Home
-				<span class="sr-only">(current)</span>
+              <span class="sr-only">(current)</span>
             </a>
           </li>
           <li class="nav-item active">
             <a class="nav-link" href="#">Your Orders</a>
           </li>
-		  <li class="nav-item">
+          <li class="nav-item">
             <a class="nav-link" href="rating.html">Your Ratings</a>
           </li>
-		  </li>
+          </li>
           <li class="nav-item">
             <a class="nav-link" href="profile.html">Your Profile</a>
           </li>
-		  </li>
+          </li>
         </ul>
       </div>
     </div>
@@ -54,14 +55,17 @@
 
   <!-- Header -->
   <!--Exercpted code on inserting background image from https://www.w3schools.com/html/html_images_background.asp -->
-  <header class="bg-primary py-5 mb-5" style="background-image: url('images/banner.jpg'); background-repeat: no-repeat; background-size: cover;">
+  <header class="bg-primary py-5 mb-5"
+    style="background-image: url('images/banner.jpg'); background-repeat: no-repeat; background-size: cover;">
     <div class="container h-100">
       <div class="row h-100 align-items-start">
         <div class="col-lg-4 order-2">
         </div>
         <div class="col order-1">
           <h1 class="display-4 text-white mt-5 mb-2" style="font-weight: 400">Freedom Meals</h1>
-          <p class="lead mb-5 text-white-50" style="font-weight: 400"><font color="white">Meal planning, your way.</font></p>
+          <p class="lead mb-5 text-white-50" style="font-weight: 400">
+            <font color="white">Meal planning, your way.</font>
+          </p>
         </div>
       </div>
     </div>
@@ -70,74 +74,116 @@
   <!-- Page Content -->
   <div class="container">
 
-    <div class="row">
-      <div class="col-md-8 mb-5">
-        <h2>View and Manage Your Orders</h2>
-        <hr>
-		<p>Table will be built using JavaScript. Table will be populated with data extracted from JSON string received from backend server. Send SELECT command to Recipes_in_Orders table JOIN Recipe_Ratings table ON recipe_id WHERE customer_id = this.customer_id AND order_id = this.order_id ORDER BY order_date DESC.</p>
-      </div>
-    </div>
-    <!-- /.row -->
+    <!--TODO: Table rows should be added after customer selects 'checkout' button, query Orders_in_Recipes table-->
+    <h2>Your Cart</h2>
+    <span>NEED TO CODE: Write JavaScript code that displays the recipe(s) customer selects from above. Hypothetical
+      example below.</span>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Recipe</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Recipe 1</td>
+          <td><button type="submit" class="btn btn-primary my-1" id="remove">Remove</button></td>
+        </tr>
+        <tr>
+          <td>Recipe 2</td>
+          <td><button type="submit" class="btn btn-primary my-1" id="remove">Remove</button></td>
+        </tr>
+        <tr>
+          <td>Recipe 5</td>
+          <td><button type="submit" class="btn btn-primary my-1" id="remove">Remove</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-	<div>
-	<!--TODO: Table rows should be added after customer clicks "Checkout" button; query Order and Recipes_in_Orders tables.-->
-		<table class="table">
-			<thead>
-				<tr>
-					<th>Order Number</th>
-					<th>Recipe Name</th>
-					<th>Order Date</th>
-					<th>Delivery Date</th>
-					<th>Order Status</th>
-					<th>Action</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>1005</td>
-					<td>Recipe 1</td>
-					<td>02/10/2020</td>
-					<td></td>
-					<td>PROCESSED</td>
-					<td><a class="btn btn-primary" href="#">Cancel</a></td>
-				</tr>
-				<tr>
-					<td>1005</td>
-					<td>Recipe 2</td>
-					<td>02/10/2020</td>
-					<td></td>
-					<td>PROCESSED</td>
-					<td><a class="btn btn-primary" href="#">Cancel</a></td>
-				</tr>
-				<tr>
-					<td>10005</td>
-					<td>Recipe 5</td>
-					<td>02/10/2020</td>
-					<td></td>
-					<td>PROCESSED</td>
-					<td><a class="btn btn-primary" href="#">Cancel</a></td>
-				</tr>
-				<tr>
-					<td>1002</td>
-					<td>Recipe 4</td>
-					<td>02/01/2020</td>
-					<td>02/05/2020</td>
-					<td>DELIVERED</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>1001</td>
-					<td>Recipe 3</td>
-					<td>01/15/2020</td>
-					<td>01/19/2020</td>
-					<td>DELIVERED</td>
-					<td></td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-	<!-- /.row -->
-	
+  <div style="text-align: center">
+    <button type="submit" class="btn btn-primary my-1" style="width: 250px; height: 50px;" id="placeOrderButton">Place
+      Your Order</button>
+  </div>
+  <span>On click, send INSERT command to Orders table. The order along with the recipe(s) orders will be added to the
+    Orders and Recipes_in_Orders table, which can be viewed in the "Your Orders" page.</span>
+
+  <br></br>
+  
+  <br></br>
+
+
+  <div class="row">
+    <div class="col-md-8 mb-5">
+      <h2>View and Manage Your Orders</h2>
+      <hr>
+      <p>Table will be built using JavaScript. Table will be populated with data extracted from JSON string received
+        from backend server. Send SELECT command to Recipes_in_Orders table JOIN Recipe_Ratings table ON recipe_id WHERE
+        customer_id = this.customer_id AND order_id = this.order_id ORDER BY order_date DESC.</p>
+    </div>
+  </div>
+  <!-- /.row -->
+
+  <div>
+    <!--TODO: Table rows should be added after customer clicks "Checkout" button; query Order and Recipes_in_Orders tables.-->
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Order Number</th>
+          <th>Recipe Name</th>
+          <th>Order Date</th>
+          <th>Delivery Date</th>
+          <th>Order Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1005</td>
+          <td>Recipe 1</td>
+          <td>02/10/2020</td>
+          <td></td>
+          <td>PROCESSED</td>
+          <td><a class="btn btn-primary" href="#">Cancel</a></td>
+        </tr>
+        <tr>
+          <td>1005</td>
+          <td>Recipe 2</td>
+          <td>02/10/2020</td>
+          <td></td>
+          <td>PROCESSED</td>
+          <td><a class="btn btn-primary" href="#">Cancel</a></td>
+        </tr>
+        <tr>
+          <td>10005</td>
+          <td>Recipe 5</td>
+          <td>02/10/2020</td>
+          <td></td>
+          <td>PROCESSED</td>
+          <td><a class="btn btn-primary" href="#">Cancel</a></td>
+        </tr>
+        <tr>
+          <td>1002</td>
+          <td>Recipe 4</td>
+          <td>02/01/2020</td>
+          <td>02/05/2020</td>
+          <td>DELIVERED</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>1001</td>
+          <td>Recipe 3</td>
+          <td>01/15/2020</td>
+          <td>01/19/2020</td>
+          <td>DELIVERED</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- /.row -->
+
   </div>
   <!-- /.container -->
 
@@ -145,7 +191,7 @@
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  
+
   <!--Freedom Meals JavaScript -->
   <script src="js/order.js"></script>
 
