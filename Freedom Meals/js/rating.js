@@ -1,0 +1,1 @@
+/* Insert code here for rating.html page. */
