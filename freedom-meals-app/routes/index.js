@@ -5,10 +5,6 @@ var mysql = require('../dbcon.js');
 const router = express.Router();
 
 router.get('/', (req, res) =>{
-    res.render('recipes', {title:'Freedom Meals - Home'});
-});
-
-router.get('/recipes', (req, res) =>{
     //TODO: Replace object with query to database
     /*let recipes = [
         {
