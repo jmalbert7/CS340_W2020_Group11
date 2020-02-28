@@ -5,7 +5,7 @@ var mysql = require('../dbcon.js');
 const router = express.Router();
 
 router.get('/', (req, res) =>{
-    res.render('home', {title:'Freedom Meals - Home'});
+    res.render('recipes', {title:'Freedom Meals - Home'});
 });
 
 router.get('/recipes', (req, res) =>{
@@ -17,27 +17,6 @@ router.get('/recipes', (req, res) =>{
             difficulty: "intermediate",
             time: 120,
             id: 1
-        },
-        {
-            name: "panini",
-            description: "meaty, cheesy, bready ",
-            difficulty: "easy",
-            time: 15,
-            id: 2
-        },
-        {
-            name: "panini",
-            description: "meaty, cheesy",
-            difficulty: "easy",
-            time: 15,
-            id: 3
-        },
-        {
-            name: "panini",
-            description: "meaty, cheesy",
-            difficulty: "easy",
-            time: 15,
-            id: 4
         }
     ];*/
     var recipes = [];
