@@ -1,27 +1,27 @@
 
-/* On load, make Review Order Section and Order Confirmation Table disappear. */
-//document.getElementById("reviewOrderSection").style.display = "none";
-//document.getElementById("orderConfirmationTable").style.display = "none";
+/* On load, make Add Recipe section hidden. */
+document.getElementById("addRecipeSection").style.display = "none";
 
-/* Make Review Order Section appear after "Checkout" button is clicked. */
-/*document.getElementById("checkoutButton").addEventListener("click", function(appear)
+/* Make Add Recipe section appear after "Add Recipe" button is clicked. */
+document.getElementById("adminAddRecipeButton").addEventListener("click", function(appear)
 {	
-	document.getElementById("reviewOrderSection").style.display = "block";
+	document.getElementById("addRecipeSection").style.display = "block";
 	appear.preventDefault();
-});*/
-
-/* Make Order Confirmation Table appear after "Place Order" button is clicked. */
-/*document.getElementById("placeOrderButton").addEventListener("click", function(appear)
-{	
-	document.getElementById("orderConfirmationTable").style.display = "block";
-	appear.preventDefault();
-});*/
+});
 
 //This function handles creating the request string for the Search recipes feature by getting 
 //the user-entered time variable from the form, creating the link string, and finally
 //setting the href of the Search button anchor equal to the link created.
-document.getElementById("searchByTime").addEventListener("click", links);
-function links(){
+document.getElementById("searchByTime").addEventListener("click", searchLinks);
+function searchLinks(){
+	var timeSelected = document.getElementById("time").value;
+	var link = "/" + timeSelected;
+	document.getElementById("searchByTime").setAttribute("href", link);
+}
+
+//TODO: fix below to get and assign all form elements
+document.getElementById("addRecipe").addEventListener("click", addRecipeLink);
+function addRecipeLink(){
 	var timeSelected = document.getElementById("time").value;
 	var link = "/" + timeSelected;
 	document.getElementById("searchByTime").setAttribute("href", link);
