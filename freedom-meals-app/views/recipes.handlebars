@@ -45,7 +45,7 @@
     </header>
 
   <!-- Page Content -->
-  <div class="container">
+  <div id="container" class="container">
   
     <div class="row">
       <div class="col-md-8 mb-5">
@@ -58,17 +58,17 @@
     <!-- /.row -->
 	
   <!--Search Boxes-->
-    <form class="form-inline d-flex justify-content-center">
-      <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Average Rating</label>
-      <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
-        <option selected>Choose...</option>
-        <option value="1">One Stars</option>
-        <option value="2">Two Stars</option>
-        <option value="3">Three Stars</option>
-        <option value="4">Four Stars</option>
-        <option value="5">Five Stars</option>
+    <form id="searchForm" class="form-inline d-flex justify-content-center">
+      <label class="my-1 mr-2" for="time">Total Time</label>
+      <select class="custom-select my-1 mr-sm-2" id="time">
+        <option value="1000000000000"selected>Choose...</option>
+        <option value="20">Under 20 minutes</option>
+        <option value="30">Under 30 minutes</option>
+        <option value="45">Under 45 minutes</option>
+        <option value="60">Under 60 minutes</option>
+        <option value="120">Under 120 minutes</option>
       </select>
-      <button type="submit" class="btn btn-primary my-1">Submit</button>
+      <a id="searchByTime" class="btn btn-success">Search</a>
     </form>
     <br><br>
 

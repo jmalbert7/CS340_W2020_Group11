@@ -17,6 +17,16 @@
 	appear.preventDefault();
 });*/
 
+document.getElementById("searchByTime").addEventListener("click", links);
+
+function links(){
+
+	var timeSelected = document.getElementById("time").value;
+	var link = "/" + timeSelected;
+	console.log(link);
+	document.getElementById("searchByTime").setAttribute("href", link);
+}
+
 //When user clicks 'Add to Cart' in a recipe card, the recipe_id is pushed onto the orderArr array. 
 //'Add to Cart' should not INSERT to Recipes_In_Order because order has not yet been placed
 var orderArr = [];
@@ -24,3 +34,4 @@ function addRecipeToOrder(id){
 	orderArr.push(id);
 	console.log(orderArr);
 }
+
