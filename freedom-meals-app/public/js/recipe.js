@@ -17,13 +17,13 @@
 	appear.preventDefault();
 });*/
 
+//This function handles creating the request string for the Search recipes feature by getting 
+//the user-entered time variable from the form, creating the link string, and finally
+//setting the href of the Search button anchor equal to the link created.
 document.getElementById("searchByTime").addEventListener("click", links);
-
 function links(){
-
 	var timeSelected = document.getElementById("time").value;
 	var link = "/" + timeSelected;
-	console.log(link);
 	document.getElementById("searchByTime").setAttribute("href", link);
 }
 

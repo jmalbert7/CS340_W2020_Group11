@@ -32,7 +32,6 @@ homepage.get('/', (req, res) =>{
 homepage.get('/:time', (req, res) =>{
     var recipes = [];
     var timeCriteria = req.params.time;
-    console.log(timeCriteria);
     //TODO: Add WHERE clause to query
     mysql.pool.query('SELECT * FROM Recipes WHERE time <= ?', [timeCriteria], function(err, rows, fields){
         if(err){
