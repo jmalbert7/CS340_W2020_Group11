@@ -53,8 +53,8 @@ homepage.get('/:time', (req, res) => {
 });
 
 //homepage router to post a new recipe to the recipes table
-homepage.post('/', (req, res) => {
-    
+homepage.post('/add', (req, res) => {
+    console.log('inside add recipe route, customer_id = ' + req.session.customer_id);
 
 });
 app.use('/recipes', homepage);
@@ -90,9 +90,12 @@ loginpage.post('/auth', (req, res) => {
     if(userEmail && password){
         mysql.pool.query(sql, [userEmail, password], function(err, rows, fields){
             if(rows.length > 0){
+                console.log(rows);
+                const context = rows;
+                console.log(context[0]);
                 req.session.loggedin = true;
-                req.session.customer_id = rows.customer_id;
-                console.log('req.session.id');
+                req.session.customer_id = context[0].customer_id;
+                console.log(req.session.customer_id);
                 //TODO: change to /orders page
                 res.redirect('/recipes');
             } else{

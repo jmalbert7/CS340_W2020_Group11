@@ -113,21 +113,21 @@
     <div>
       <h2>Add Recipe</h2>
       <p>This is where administrator can add recipes to the Recipes Table.</p>
-      <form>
+      <form action="/recipes/add" method = "POST">
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="recipetitle">Recipe Title</label>
-            <input type="text" class="form-control" id="recipetitle" placeholder="Recipe Title">
+            <input type="text" class="form-control" name="recipetitle" placeholder="Recipe Title">
           </div>
         </div>
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="inputTime">Prep + Cook Time (in minutes)</label>
-            <input type="text" class="form-control" id="time" placeholder="50">
+            <input type="text" class="form-control" name="inputTime" placeholder="50">
           </div>
           <div class="form-group col-md-4">
             <label for="inputDifficulty">Difficulty Rating</label>
-            <select class="custom-select" id="inlineFormCustomSelectPref">
+            <select class="custom-select" id="inlineFormCustomSelectPref" name="inputDifficulty">
               <option selected>Choose...</option>
               <option value="1">Easy</option>
               <option value="2">Intermediate</option>
@@ -139,11 +139,11 @@
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="inputDirections">Directions</label>
-            <input type="text" class="form-control" id="directions"
+            <input type="text" class="form-control" name="inputDirections"
               placeholder="Include ingredients, steps, and gotchas here.">
           </div>
         </div>
-        <a id="addRecipe" class="btn btn-success">Add Recipe</a>
+        <input type="submit" id="addRecipe" class="btn btn-success">Add Recipe</a>
         <span>On click, send INSERT command to Recipes table.</span>
       </form>
     </div>
