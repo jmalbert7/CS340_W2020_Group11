@@ -1,6 +1,15 @@
 const express = require('express');
 var mysql = require('../dbcon.js');
+var session = require('express-session');
+var bodyParser = require('body-parser');
+
 var app = express();
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
+// parse application/json
+app.use(bodyParser.json());
+app.use(session({secret:'SuperSecretPassword'}));
 
 //router responds to any requests from the root url
 var homepage = express.Router();
@@ -45,7 +54,7 @@ homepage.get('/:time', (req, res) => {
 
 //homepage router to post a new recipe to the recipes table
 homepage.post('/', (req, res) => {
-
+    
 
 });
 app.use('/recipes', homepage);
@@ -73,6 +82,30 @@ loginpage.get('/', (req, res) =>{
     console.log('in the login router');
     res.render('login', { title: 'Login'})
 });
+loginpage.post('/auth', (req, res) => {
+    console.log(req.body);
+    var userEmail = req.body.email;
+    var password = req.body.password;
+    var sql = "SELECT `customer_id` FROM `Customers` WHERE `email` = ? AND `password` = ?";
+    if(userEmail && password){
+        mysql.pool.query(sql, [userEmail, password], function(err, rows, fields){
+            if(rows.length > 0){
+                req.session.loggedin = true;
+                req.session.customer_id = rows.customer_id;
+                console.log('req.session.id');
+                //TODO: change to /orders page
+                res.redirect('/recipes');
+            } else{
+                res.send('Incorrect username and or password');
+            }
+            res.end();
+        });
+    } else {
+        res.send('Please enter your email and password');
+        res.end();
+    }
+});
 app.use('/login', loginpage);
+
 
 module.exports = app;

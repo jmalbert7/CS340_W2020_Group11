@@ -29,21 +29,21 @@
     <div class="row" id="loginSection">
       <div class="col-md-8 mb-5">
         <h2>Welcome Back!</h2>       
-		  <form> <!--Form modifed from a template at https://getbootstrap.com/docs/4.0/components/forms/-->
+		  <form action="login/auth" method="POST"> <!--Form modifed from a template at https://getbootstrap.com/docs/4.0/components/forms/-->
 			<div class="form-row">
 			  <div class="form-group col-md-6">
-				<label for="inputEmail">Email</label>
-				<input type="email" class="form-control" id="email" placeholder="Email">
+				<label for="email">Email</label>
+				<input type="email" class="form-control" id="email" name="email" placeholder="Email">
 			  </div>
 			</div>
 			<div class="form-row">
 			  <div class="form-group col-md-6">
-				<label for="inputPassword">Password</label>
-				<input type="password" class="form-control" id="password" placeholder="Password">
+				<label for="password">Password</label>
+				<input type="password" class="form-control" id="password" name="password" placeholder="Password">
 			  </div>
 			</div>
 			<br>
-			<button type="submit" class="btn btn-primary" id="loginButton">Log In</button>
+			<input type="submit" class="btn btn-primary" id="loginButton">Log In</button>
 			<span>NEED TO CODE: On click, send SELECT command to Customers table where email = this.email AND password = password. IF match, display checkout page. ELSE, display error message.</span>
 		  </form>
       </div>
