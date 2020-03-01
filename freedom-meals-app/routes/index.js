@@ -7,7 +7,6 @@ var homepage = express.Router();
 
 //homepage router will retrieve all recipes from the Recipes table
 homepage.get('/', (req, res) => {
-    //TODO: Replace object with query to database
     /*let recipes = [
         {
             name: "lasagne",
@@ -17,6 +16,7 @@ homepage.get('/', (req, res) => {
             id: 1
         }
     ];*/
+    console.log('in the homepage / router')
     var recipes = [];
     mysql.pool.query('SELECT * FROM Recipes', function (err, rows, fields) {
         if (err) {
@@ -32,7 +32,7 @@ homepage.get('/', (req, res) => {
 homepage.get('/:time', (req, res) => {
     var recipes = [];
     var timeCriteria = req.params.time;
-    //TODO: Add WHERE clause to query
+    console.log('in the homepage /time router');
     mysql.pool.query('SELECT * FROM Recipes WHERE time <= ?', [timeCriteria], function (err, rows, fields) {
         if (err) {
             next(err);
@@ -48,7 +48,7 @@ homepage.post('/', (req, res) => {
 
 
 });
-app.use('/', homepage);
+app.use('/recipes', homepage);
 
 /*Begin Order handlers*/
 var orderpage = express.Router();
@@ -69,8 +69,10 @@ app.use('/orders', orderpage);
 
 /*Begin Login Handlers*/
 var loginpage = express.Router();
-loginpage.get('login', (req, res) =>{
-    
+loginpage.get('/', (req, res) =>{
+    console.log('in the login router');
+    res.render('login', { title: 'Login'})
 });
+app.use('/login', loginpage);
 
 module.exports = app;

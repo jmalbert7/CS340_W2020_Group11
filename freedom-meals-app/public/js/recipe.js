@@ -15,7 +15,7 @@ document.getElementById("adminAddRecipeButton").addEventListener("click", functi
 document.getElementById("searchByTime").addEventListener("click", searchLinks);
 function searchLinks(){
 	var timeSelected = document.getElementById("time").value;
-	var link = "/" + timeSelected;
+	var link = "/recipes/" + timeSelected;
 	document.getElementById("searchByTime").setAttribute("href", link);
 }
 
@@ -23,7 +23,7 @@ function searchLinks(){
 document.getElementById("addRecipe").addEventListener("click", addRecipeLink);
 function addRecipeLink(){
 	var timeSelected = document.getElementById("time").value;
-	var link = "/" + timeSelected;
+	var link = "/recipes/" + timeSelected;
 	document.getElementById("searchByTime").setAttribute("href", link);
 }
 

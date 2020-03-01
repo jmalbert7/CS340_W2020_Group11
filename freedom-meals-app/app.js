@@ -3,6 +3,8 @@ const express = require('express');
 const path = require('path');   //for working with file directory
 const routes = require('./routes/index');
 var mysql = require('./dbcon.js');
+var session = require('express-session');
+var bodyParser = require('body-parser');
 
 //Create the express application
 const app = express();
@@ -15,9 +17,12 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'handlebars');
 app.set('mysql', mysql);
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(session({secret:'SuperSecretPassword'}));
+
 //When any request to app is received, use the routes file
 app.use('/', routes);
-app.use(express.static('public'));
+app.use(express.static(__dirname + "/public"));
 
 app.use(function(req,res){
     res.status(404);
