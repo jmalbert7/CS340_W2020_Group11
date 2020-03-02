@@ -60,36 +60,36 @@
       <div class="col-md-8 mb-5">
         <h2>Sign Up Here!</h2>
 		<br>
-		  <form> <!--Form modifed from a template at https://getbootstrap.com/docs/4.0/components/forms/-->
+		  <form action="login/" method="POST"> <!--Form modifed from a template at https://getbootstrap.com/docs/4.0/components/forms/-->
 			<h5>Customer Information</h5>
 			<div class="form-row">
 			  <div class="form-group col-md-6">
 				<label for="inputFirstName">First Name</label>
-				<input type="text" class="form-control" id="firstName" placeholder="Jane">
+				<input type="text" class="form-control" name="inputFirstName" placeholder="Jane">
 			  </div>
 			  <div class="form-group col-md-6">
 				<label for="inputLastName">Last Name</label>
-				<input type="text" class="form-control" id="lastName" placeholder="Doe">
+				<input type="text" class="form-control" name="inputLastName" placeholder="Doe">
 			  </div>
 			</div>
 			<div class="form-row">
 			  <div class="form-group col-md-6">
 				<label for="inputEmail">Email</label>
-				<input type="email" class="form-control" id="email" placeholder="Email">
+				<input type="email" class="form-control" name="inputEmail" placeholder="Email">
 			    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
 			  </div>
 			  <div class="form-group col-md-6">
 				<label for="inputPhoneNumber">Phone Number</label>
-				<input type="text" class="form-control" id="phoneNumber" placeholder="9197731234">
+				<input type="text" class="form-control" name="inputPhoneNumber" placeholder="9197731234">
 			  </div>
 			</div>
 			<div class="form-row">
 			  <div class="form-group col-md-6">
 				<label for="inputPassword">Password</label>
-				<input type="password" class="form-control" id="password" placeholder="Password">
+				<input type="password" class="form-control" name="inputPassword" placeholder="Password">
 			  </div>
 			</div>
-			<button type="submit" class="btn btn-primary" id="signupButton">Sign Up</button>
+			<input type="submit" class="btn btn-primary" id="signupButton">Sign Up</button>
 			<span>NEED TO CODE: On click, send INSERT command to Customers table.</span>
 		  </form>
       </div>

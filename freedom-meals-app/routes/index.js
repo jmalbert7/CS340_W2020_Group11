@@ -121,7 +121,7 @@ loginpage.post('/', (req, res) =>{
     var phone = req.body.inputPhoneNumber;
     var password = req.body.inputPassword;
 
-    var sql = "INSERT INTO `Customers` (`first_name`, `last_name`, `email`, `password`, `phone`, `admin`) VALUES (?, ?, ?, ?, ?, '1')"
+    var sql = "INSERT INTO `Customers` (`first_name`, `last_name`, `email`, `password`, `phone`, `admin`) VALUES (?, ?, ?, ?, ?, '1')";
 
     if(first_name && last_name && email && phone && password){
         mysql.pool.query(sql, [first_name, last_name, email, password, phone], function(err, rows, fields){
