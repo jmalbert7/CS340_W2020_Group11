@@ -8,9 +8,10 @@ SELECT `recipe_id`, `recipe_name`, `time`, `difficulty` FROM `Recipes`;
 SELECT `recipe_id`, `recipe_name`, `time`, `difficulty` FROM `Recipes` WHERE `time` < :timeInput;
 
 -- Display order history for a customer with current order status
-SELECT `order_id`, `order_date`, `delivery_date`, `order_status` FROM `Orders`
-JOIN `Customers` ON `Orders`.`customer_id` = `Customers`.`customer_id`
-WHERE `Customers`.`customer_id` = :customerIdInput;
+SELECT Orders.order_id, Orders.order_date, Orders.delivery_date, Orders.order_status, Recipes.recipe_name FROM Orders
+JOIN Recipes_in_Orders ON Orders.order_id = Recipes_in_Orders.order_id
+JOIN Recipes ON Recipes_in_Orders.recipe_id = Recipes.recipe_id
+WHERE customer_id = :customerInput;
 
 -- Check that user is a registered customer when user logs in
 SELECT `customer_id` FROM `Customers`
