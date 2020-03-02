@@ -19,7 +19,6 @@ function searchLinks(){
 	document.getElementById("searchByTime").setAttribute("href", link);
 }
 
-
 //When user clicks 'Add to Cart' in a recipe card, the recipe_id is pushed onto the orderArr array. 
 //'Add to Cart' should not INSERT to Recipes_In_Order because order has not yet been placed
 var orderArr = [];
@@ -28,5 +27,11 @@ function addRecipeToOrder(id){
 	console.log(orderArr);
 }
 
+
+document.getElementById("placeOrderButton").addEventListener("click", function(){
+	orderArr.forEach(recipe => {
+		
+	});
+});
 
 

@@ -11,6 +11,20 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(session({secret:'SuperSecretPassword'}));
 
+//Helper function to displaythe recipes in the cart
+function getRecipe(req, res, next){
+    var recipe_id = req.params.id;
+    var sql = "SELECT recipe_name FROM Recipes WHERE recipe_id = ?";
+    mysql.pool.query('SELECT * FROM Recipes', function (err, rows, fields) {
+        if (err) {
+            next(err);
+            return;
+        }
+        req.name = rows;
+        next();
+    });
+}
+
 //router responds to any requests from the root url
 var homepage = express.Router();
 
@@ -93,7 +107,57 @@ orderpage.get('/', (req, res) => {
         res.render('orders', { title: 'Your Orders', orders});
     });
 });
+
+//This route places the order for the recipes currently in the cart
+orderpage.post('/add/:id', (req, res) =>{
+
+});
 app.use('/orders', orderpage);
+
+/*Begin Ratings Handlers*/
+var ratingpage = express.Router();
+
+//Display user's ratings for all recipes they have ordered
+ratingpage.get('/', (req, res) =>{
+    var recipeRatings = [];
+    console.log('in rating get');
+    console.log(req.session.customer_id);
+    var customer_id = req.session.customer_id;
+    //TODO: Fix this query
+    var sql = "SELECT `Recipe_Ratings`.`rating`, `Recipe_Ratings`.`date_rated` FROM Orders RIGHT JOIN Recipes_in_Orders ON Orders.order_id = Recipes_in_Orders.order_id LEFT JOIN Recipe_Ratings ON Recipes_in_Orders.recipe_id = Recipe_Ratings.recipe_id WHERE Recipe_Ratings.customer_id = ? AND Orders.customer_id = ?";
+    mysql.pool.query(sql, [customer_id, customer_id], function(err, rows, fields){
+        if (err) {
+            next(err);
+            return;
+        }
+        let recipeRatings = rows;
+        console.log(recipeRatings);
+        res.render('rating', { title: 'Your Ratings', recipeRatings});
+    });
+})
+app.use('/rating', ratingpage);
+
+/*Begin Profile Handlers*/
+var profilepage = express.Router();
+
+//Display User's Customer information
+profilepage.get('/', (req, res) =>{
+    var customerInfo = [];
+    console.log('in profile get');
+    console.log(req.session.customer_id);
+    var customer_id = req.session.customer_id;
+    var sql = "SELECT first_name, last_name, email, password, phone, admin FROM Customers WHERE customer_id = ?";
+    mysql.pool.query(sql, [customer_id], function(err, rows, fields){
+        if (err) {
+            next(err);
+            return;
+        }
+        let customerInfo = rows;
+        console.log(customerInfo);
+        res.render('profile', { title: 'Your Profile', customerInfo});
+    });
+});
+app.use('/profile', profilepage);
 
 /*Begin Login Handlers*/
 var loginpage = express.Router();

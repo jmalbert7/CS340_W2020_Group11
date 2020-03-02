@@ -31,11 +31,13 @@ LIMIT 1;
 SELECT AVG(`rating`) FROM `Recipe_Ratings`
 WHERE `recipe_id` = :recipeIdInput;
 
+-- This query does not work
 -- Display recipes the customer has ordered previously and the rating
 -- the customer gave each recipe if it exists
 SELECT `Recipes`.`recipe_name`, `Recipe_Ratings`.`rating`, `Recipe_Ratings`.`date_rated` FROM Orders
 RIGHT JOIN Recipes_in_Orders ON Orders.order_id = Recipes_in_Orders.order_id
 LEFT JOIN Recipe_Ratings ON Recipes_in_Orders.recipe_id = Recipe_Ratings.recipe_id
+JOIN Recipes ON Recipe_Ratings.recipe_id = Recipes.recipe_id
 WHERE Recipe_Ratings.customer_id = :customerIdInput AND Orders.customer_id = :customerIdInput;
 
 -- Delete record from Recipes_in_Orders table
