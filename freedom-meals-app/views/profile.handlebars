@@ -70,12 +70,16 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td>Jane</td>
-					<td>Doe</td>
-					<td>janedoe@oregonstate.edu</td>
+                    {{#each customerInfo}}
+                    {{#if first_name}}
+					<td>{{first_name}}</td>
+					<td>{{last_name}}</td>
+					<td>{{email}}</td>
 					<td>********</td>
-					<td>9197731234</td>
-					<td>No</td>
+					<td>{{phone}}</td>
+					<td>{{admin}}</td>
+                    {{/if}}
+                    {{/each}}
 				</tr>
 			</tbody>
 		</table>
