@@ -55,7 +55,22 @@ homepage.get('/:time', (req, res) => {
 //homepage router to post a new recipe to the recipes table
 homepage.post('/add', (req, res) => {
     console.log('inside add recipe route, customer_id = ' + req.session.customer_id);
-
+	console.log(req.body)
+	var mysql = req.app.get('mysql');
+	var sql = "INSERT INTO Recipes (recipe_name, time, difficulty, directions) VALUES (?,?,?,?)";
+	var inserts = [req.body.recipeName, req.body.time, req.body.difficulty, req.body.directions];
+	sql = mysql.pool.query(sql, inserts, function(error, results, fields){
+		if(error)
+		{
+			console.log(JSON.stringify(error))
+			res.write(JSON.stringify(error));
+			res.end();
+		}
+		else
+		{
+			res.redirect('/recipes');
+		}
+	});
 });
 app.use('/recipes', homepage);
 
