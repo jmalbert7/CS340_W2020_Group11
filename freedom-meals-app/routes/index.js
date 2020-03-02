@@ -77,6 +77,7 @@ app.use('/recipes', homepage);
 /*Begin Order handlers*/
 var orderpage = express.Router();
 
+//Displays order history for customer, customer must be logged in first
 orderpage.get('/', (req, res) => {
     var orders = [];
     console.log(req.session.customer_id);
@@ -96,11 +97,14 @@ app.use('/orders', orderpage);
 
 /*Begin Login Handlers*/
 var loginpage = express.Router();
+
+//Simply displays the login page
 loginpage.get('/', (req, res) =>{
     console.log('in the login router');
     res.render('login', { title: 'Login'})
 });
 
+//Route to sign in an existing user
 loginpage.post('/auth', (req, res) => {
     console.log(req.body);
     var userEmail = req.body.email;
@@ -128,6 +132,7 @@ loginpage.post('/auth', (req, res) => {
     }
 });
 
+//Route to create a new user
 loginpage.post('/', (req, res) =>{
     console.log(req.body);
     var first_name = req.body.inputFirstName;
