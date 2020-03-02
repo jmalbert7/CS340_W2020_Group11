@@ -126,9 +126,18 @@ loginpage.post('/', (req, res) =>{
     if(first_name && last_name && email && phone && password){
         mysql.pool.query(sql, [first_name, last_name, email, password, phone], function(err, rows, fields){
             console.log('customer added');
+            sql = "SELECT `customer_id` FROM `Customers` WHERE `email` = ? AND `password` = ?";
+            mysql.pool.query(sql, [email, password], function(err, rows, fields){
+                console.log(rows);
+                var context = rows;
+                console.log(context[0]);
+                console.log(context[0].customer_id)
+                req.session.customer_id = context[0].customer_id;
+                res.redirect('/recipes');
+            });
         });
     } else {
-        res.send('Please enterall required information');
+        res.send('Please enter all required information');
         res.end();
     }
 });
