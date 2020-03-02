@@ -62,16 +62,19 @@ app.use('/recipes', homepage);
 /*Begin Order handlers*/
 var orderpage = express.Router();
 
-orderpage.get('/orders', (req, res) => {
+orderpage.get('/', (req, res) => {
     var orders = [];
-    var sql = "SELECT order_id, order_date, delivery_date, order_status FROM Orders JOIN Customers ON Orders.customer_id = Customers.customer_id WHERE Customers.customer_id = customerIdInput";
-    mysql.pool.query('', function (err, rows, fields) {
+    console.log(req.session.customer_id);
+    var customer_id = req.session.customer_id;
+    var sql = "SELECT Orders.order_id, Orders.order_date, Orders.delivery_date, Orders.order_status, Recipes.recipe_name FROM Orders JOIN Recipes_in_Orders ON Orders.order_id = Recipes_in_Orders.order_id JOIN Recipes ON Recipes_in_Orders.recipe_id = Recipes.recipe_id WHERE customer_id = ?;";
+    mysql.pool.query(sql, [customer_id], function (err, rows, fields) {
         if (err) {
             next(err);
             return;
         }
-        let recipes = rows;
-        res.render('recipes', { title: 'Browse Recipes', recipes });
+        let orders = rows;
+        console.log(orders);
+        res.render('orders', { title: 'Your Orders', orders});
     });
 });
 app.use('/orders', orderpage);
@@ -82,6 +85,7 @@ loginpage.get('/', (req, res) =>{
     console.log('in the login router');
     res.render('login', { title: 'Login'})
 });
+
 loginpage.post('/auth', (req, res) => {
     console.log(req.body);
     var userEmail = req.body.email;
@@ -96,7 +100,7 @@ loginpage.post('/auth', (req, res) => {
                 req.session.loggedin = true;
                 req.session.customer_id = context[0].customer_id;
                 console.log(req.session.customer_id);
-                //TODO: change to /orders page
+                //TODO: change to /orders page?? Or display a welcome message??
                 res.redirect('/recipes');
             } else{
                 res.send('Incorrect username and or password');
@@ -105,6 +109,26 @@ loginpage.post('/auth', (req, res) => {
         });
     } else {
         res.send('Please enter your email and password');
+        res.end();
+    }
+});
+
+loginpage.post('/', (req, res) =>{
+    console.log(req.body);
+    var first_name = req.body.inputFirstName;
+    var last_name = req.body.inputLastName;
+    var email = req.body.inputEmail;
+    var phone = req.body.inputPhoneNumber;
+    var password = req.body.inputPassword;
+
+    var sql = "INSERT INTO `Customers` (`first_name`, `last_name`, `email`, `password`, `phone`, `admin`) VALUES (?, ?, ?, ?, ?, '1')"
+
+    if(first_name && last_name && email && phone && password){
+        mysql.pool.query(sql, [first_name, last_name, email, password, phone], function(err, rows, fields){
+            console.log('customer added');
+        });
+    } else {
+        res.send('Please enterall required information');
         res.end();
     }
 });
