@@ -8,10 +8,9 @@ SELECT `recipe_id`, `recipe_name`, `time`, `difficulty` FROM `Recipes`;
 SELECT `recipe_id`, `recipe_name`, `time`, `difficulty` FROM `Recipes` WHERE `time` < :timeInput;
 
 -- Display order history for a customer with current order status
-SELECT Orders.order_id, Orders.order_date, Orders.delivery_date, Orders.order_status, Recipes.recipe_name FROM Orders
-JOIN Recipes_in_Orders ON Orders.order_id = Recipes_in_Orders.order_id
-JOIN Recipes ON Recipes_in_Orders.recipe_id = Recipes.recipe_id
-WHERE customer_id = :customerInput;
+SELECT `order_id`, `order_date`, `delivery_date`, `order_status` FROM `Orders`
+JOIN `Customers` ON `Orders`.`customer_id` = `Customers`.`customer_id`
+WHERE `Customers`.`customer_id` = :customerIdInput;
 
 -- Check that user is a registered customer when user logs in
 SELECT `customer_id` FROM `Customers`
@@ -31,14 +30,13 @@ LIMIT 1;
 SELECT AVG(`rating`) FROM `Recipe_Ratings`
 WHERE `recipe_id` = :recipeIdInput;
 
--- This query does not work
 -- Display recipes the customer has ordered previously and the rating
 -- the customer gave each recipe if it exists
 SELECT `Recipes`.`recipe_name`, `Recipe_Ratings`.`rating`, `Recipe_Ratings`.`date_rated` FROM Orders
-RIGHT JOIN Recipes_in_Orders ON Orders.order_id = Recipes_in_Orders.order_id
-LEFT JOIN Recipe_Ratings ON Recipes_in_Orders.recipe_id = Recipe_Ratings.recipe_id
-JOIN Recipes ON Recipe_Ratings.recipe_id = Recipes.recipe_id
-WHERE Recipe_Ratings.customer_id = :customerIdInput AND Orders.customer_id = :customerIdInput;
+RIGHT JOIN `Recipes_in_Orders` ON `Orders`.`order_id` = `Recipes_in_Orders`.`order_id`
+LEFT JOIN `Recipe_Ratings` ON `Recipes_in_Orders`.`recipe_id` = `Recipe_Ratings`.`recipe_id`
+JOIN `Recipes` ON `Recipe_Ratings`.`recipe_id` = `Recipes`.`recipe_id`
+WHERE `Recipe_Ratings`.`customer_id` = :customerIdInput AND `Orders`.`customer_id` = :customerIdInput;
 
 -- Delete record from Recipes_in_Orders table
 -- Order ID is retrieved from form/button on order history table

@@ -21,7 +21,7 @@ CREATE TABLE `Customers` (
 `last_name` varchar(255) NOT NULL, 
 `email` varchar(255) NOT NULL,
 `password` varchar(255) NOT NULL,
-`phone` var(14) NOT NULL, 
+`phone` varchar(14) NOT NULL, 
 `admin` tinyint(1) NOT NULL DEFAULT 0, 
 PRIMARY KEY (`customer_id`) 
 );
@@ -111,8 +111,8 @@ INSERT INTO `Recipe_Ratings` (`rating`, `date_rated`, `customer_id`, `recipe_id`
 ('5', '2020-02-05', '2', '2');
 
 
-INSERT INTO `Orders` (`order_id`, `order_date`, `delivery_date`, `order_status`, `customer_id`) VALUES 
-('1001', '2020-02-20', , 'PROCESSED', '4');
+INSERT INTO `Orders` (`order_id`, `order_date`, `order_status`, `customer_id`) VALUES 
+('1001', '2020-02-20', 'PROCESSED', '4');
 INSERT INTO `Recipes_in_Orders` (`order_id`, `recipe_id`) VALUES 
 ((SELECT `order_id` FROM `Orders` WHERE `order_date` = '2020-02-20' AND `customer_id` = '4'), 
 (SELECT `recipe_id` FROM `Recipes` WHERE `recipe_id` = '4'));
@@ -120,14 +120,14 @@ INSERT INTO `Recipes_in_Orders` (`order_id`, `recipe_id`) VALUES
 ((SELECT `order_id` FROM `Orders` WHERE `order_date` = '2020-02-20' AND `customer_id` = '4'), 
 (SELECT `recipe_id` FROM `Recipes` WHERE `recipe_id` = '3'));
 
-INSERT INTO `Orders` (`order_id`, `order_date`, `delivery_date`, `order_status`, `customer_id`) VALUES 
-('1002', '2020-02-20', , 'PROCESSED', '3');
+INSERT INTO `Orders` (`order_id`, `order_date`, `order_status`, `customer_id`) VALUES 
+('1002', '2020-02-20', 'PROCESSED', '3');
 INSERT INTO `Recipes_in_Orders` (`order_id`, `recipe_id`) VALUES 
 ((SELECT `order_id` FROM `Orders` WHERE `order_date` = '2020-02-20' AND `customer_id` = '3'), 
 (SELECT `recipe_id` FROM `Recipes` WHERE `recipe_id` = '3'));
 
-INSERT INTO `Orders` (`order_id`, `order_date`, `delivery_date`, `order_status`, `customer_id`) VALUES 
-('1003', '2020-02-20', , 'PROCESSED', '2');
+INSERT INTO `Orders` (`order_id`, `order_date`, `order_status`, `customer_id`) VALUES 
+('1003', '2020-02-20', 'PROCESSED', '2');
 INSERT INTO `Recipes_in_Orders` (`order_id`, `recipe_id`) VALUES 
 ((SELECT `order_id` FROM `Orders` WHERE `order_date` = '2020-02-20' AND `customer_id` = '2'), 
 (SELECT `recipe_id` FROM `Recipes` WHERE `recipe_id` = '1'));
