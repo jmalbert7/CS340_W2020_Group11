@@ -93,9 +93,10 @@
           <li class="list-group-item">Rating</li>
         </ul>
         <div class="card-footer">
-          <!--TODO: ADD HIDDEN FORM W/ RECIPE ID, add recipe_id to an array -->
-          <button type="submit" class="btn btn-primary my-1" onclick="addRecipeToOrder({{recipe_id}})">Add to
-            Cart</button>
+          <form class="addRecipeToCartForm" action="/recipes" method = "POST" onsubmit="addRecipeToCartFunc(this.hiddenRecipeId.value)">
+            <input id="hiddenRecipeId" type="hidden" name ="hiddenRecipeId" value="{{recipe_id}}">
+            <input type="submit" id="addRecipeToCart" class="btn btn-primary my-1" value="Add to Cart">
+          </form>
         </div>
       </div>
     </div>
@@ -156,6 +157,3 @@
 <!-- Bootstrap core JavaScript -->
 <script src="/vendor/jquery/jquery.min.js"></script>
 <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<!--Freedom Meals JavaScript -->
-<script src="/js/home.js"></script>

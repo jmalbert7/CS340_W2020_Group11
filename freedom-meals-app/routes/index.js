@@ -11,20 +11,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(session({secret:'SuperSecretPassword'}));
 
-//Helper function to displaythe recipes in the cart
-function getRecipe(req, res, next){
-    var recipe_id = req.params.id;
-    var sql = "SELECT recipe_name FROM Recipes WHERE recipe_id = ?";
-    mysql.pool.query('SELECT * FROM Recipes', function (err, rows, fields) {
-        if (err) {
-            next(err);
-            return;
-        }
-        req.name = rows;
-        next();
-    });
-}
-
 //router responds to any requests from the root url
 var homepage = express.Router();
 
@@ -39,7 +25,11 @@ homepage.get('/', (req, res) => {
             id: 1
         }
     ];*/
-    console.log('in the homepage / router')
+    console.log('in the homepage / router');
+    if(!req.session.cart){
+        console.log('new session');
+        req.session.cart = [];
+    }
     var recipes = [];
     mysql.pool.query('SELECT * FROM Recipes', function (err, rows, fields) {
         if (err) {
@@ -64,6 +54,21 @@ homepage.get('/:time', (req, res) => {
         let recipes = rows;
         res.render('recipes', { title: 'Browse Recipes', recipes });
     });
+});
+
+//When user clicks the 'Add to Cart' button a post request is made to save the recipe_id 
+//in the session array that holds the user's recipe selections
+homepage.post('/', (req, res) => {
+    console.log("request body " + req.body.hiddenRecipeId);
+    
+    req.session.cart.push(req.body.hiddenRecipeId);
+    console.log('length ' + req.session.cart.length);
+    req.session.cart.forEach(element => { 
+        console.log("loop " + element); 
+    }); 
+    req.session.save();
+    res.status = 200;
+    res.readystate = 4;
 });
 
 //homepage router to post a new recipe to the recipes table
@@ -93,7 +98,32 @@ var orderpage = express.Router();
 
 //Displays order history for customer, customer must be logged in first
 orderpage.get('/', (req, res) => {
+    //TODO: Render the curent status of the cart
     var orders = [];
+    var cart = [];
+    //cart = req.session.cart;
+    req.session.cart.forEach(element => { 
+        cart.push({recipe_id : element, recipe_name: null});
+    });
+
+    cart.forEach(element => { 
+        console.log("cart " + element.recipe_id);
+    });
+
+    cart.forEach(element => {       
+        var sql2 = "SELECT recipe_name FROM Recipes WHERE recipe_id = ?";
+        mysql.pool.query(sql2, [element.recipe_id], function (err, recipe) {
+        if (err) {
+            next(err);
+            return;
+        }
+        console.log(recipe[0].recipe_name);
+        console.log(element.recipe_name);
+        element.recipe_name = recipe[0].recipe_name;
+        console.log(element.recipe_name);
+        });
+    });
+       
     console.log(req.session.customer_id);
     var customer_id = req.session.customer_id;
     var sql = "SELECT Orders.order_id, Orders.order_date, Orders.delivery_date, Orders.order_status, Recipes.recipe_name FROM Orders JOIN Recipes_in_Orders ON Orders.order_id = Recipes_in_Orders.order_id JOIN Recipes ON Recipes_in_Orders.recipe_id = Recipes.recipe_id WHERE customer_id = ?;";
@@ -104,7 +134,8 @@ orderpage.get('/', (req, res) => {
         }
         let orders = rows;
         console.log(orders);
-        res.render('orders', { title: 'Your Orders', orders});
+        
+        res.render('orders', { title: 'Your Orders', orders, cart});
     });
 });
 

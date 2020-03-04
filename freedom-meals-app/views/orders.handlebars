@@ -65,18 +65,14 @@
 			</tr>
 		  </thead>
 		  <tbody>
+      {{#each cart}}
+      {{#if recipe_name}}
 			<tr>
-			  <td>Recipe 1</td>
+			  <td>{{recipe_name}}</td>
 			  <td><button type="submit" class="btn btn-primary my-1" id="remove">Remove</button></td>
 			</tr>
-			<tr>
-			  <td>Recipe 2</td>
-			  <td><button type="submit" class="btn btn-primary my-1" id="remove">Remove</button></td>
-			</tr>
-			<tr>
-			  <td>Recipe 5</td>
-			  <td><button type="submit" class="btn btn-primary my-1" id="remove">Remove</button></td>
-			</tr>
+      {{/if}}
+      {{/each}}
 		  </tbody>
 		</table>
 	  </div>
