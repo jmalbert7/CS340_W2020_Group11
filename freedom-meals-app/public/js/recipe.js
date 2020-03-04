@@ -19,19 +19,33 @@ function searchLinks(){
 	document.getElementById("searchByTime").setAttribute("href", link);
 }
 
+function addRecipeToCartFunc(data){
+	var req = new XMLHttpRequest();
+	console.log("sent data" + data);
+	var sdata = {"hiddenRecipeId" : data};
+	console.log("sdata" + sdata);
+	console.log(JSON.stringify(sdata));
+	req.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			console.log('success?');
+		}
+	};
+	req.open('POST', '/recipes', true);
+	//req.body.hiddenRecipeId = JSON.parse(data);
+	req.setRequestHeader('Content-Type', 'application/json');
+	
+	req.send(JSON.stringify(sdata));
+	event.preventDefault();
+}
+
 //When user clicks 'Add to Cart' in a recipe card, the recipe_id is pushed onto the orderArr array. 
 //'Add to Cart' should not INSERT to Recipes_In_Order because order has not yet been placed
-var orderArr = [];
+/*var orderArr = [];
 function addRecipeToOrder(id){
 	orderArr.push(id);
 	console.log(orderArr);
-}
+}*/
 
 
-document.getElementById("placeOrderButton").addEventListener("click", function(){
-	orderArr.forEach(recipe => {
-
-	});
-});
 
 
