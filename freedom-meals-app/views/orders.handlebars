@@ -69,7 +69,7 @@
       {{#if recipe_name}}
 			<tr>
 			  <td>{{recipe_name}}</td>
-			  <td><button type="submit" class="btn btn-primary my-1" id="remove">Remove</button></td>
+			  <td><input type="submit" class="btn btn-primary my-1" id="remove" value="Remove"></td>
 			</tr>
       {{/if}}
       {{/each}}
@@ -80,8 +80,7 @@
 	<!-- /.row -->
 
   <div style="text-align: center">
-    <input type="submit" class="btn btn-primary my-1" style="width: 250px; height: 50px;" id="placeOrderButton">Place
-      Your Order</button>
+    <input type="submit" class="btn btn-primary my-1" style="width: 250px; height: 50px;" id="placeOrderButton" value="Place Your Order">
   </div>
   <span>On click, send INSERT command to Orders table. The order along with the recipe(s) orders will be added to the
     Orders and Recipes_in_Orders table, which can be viewed in the "Your Orders" page.</span>
