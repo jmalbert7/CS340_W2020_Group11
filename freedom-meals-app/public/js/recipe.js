@@ -30,7 +30,7 @@ function addRecipeToOrder(id){
 
 document.getElementById("placeOrderButton").addEventListener("click", function(){
 	orderArr.forEach(recipe => {
-		
+
 	});
 });
 
