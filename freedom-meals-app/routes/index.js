@@ -98,10 +98,10 @@ var orderpage = express.Router();
 
 //Displays order history for customer, customer must be logged in first
 orderpage.get('/', (req, res) => {
-    //TODO: Render the curent status of the cart
     var orders = [];
     var cart = [];
-    //cart = req.session.cart;
+    console.log("req body in get request " + req.body.method);
+    
     req.session.cart.forEach(element => { 
         cart.push({recipe_id : element, recipe_name: null});
     });
@@ -137,6 +137,28 @@ orderpage.get('/', (req, res) => {
         
         res.render('orders', { title: 'Your Orders', orders, cart});
     });
+});
+
+//This route removes a recipe from the cart session array when a user 
+orderpage.post('/remove', (req, res) => { 
+    console.log("REMOVE: request body " + req.body.hiddenRecipeId);
+    var value = req.body.hiddenRecipeId;
+    
+    for(var i = 0; i < req.session.cart.length; i++){
+        console.log("in remove loop " + req.session.cart[i])
+        if(req.session.cart[i] === value){
+            req.session.cart.splice(i, 1);
+            console.log("Recipe removed: " + req.body.hiddenRecipeId);
+        }
+    }
+    console.log('length ' + req.session.cart.length);
+    req.session.cart.forEach(element => { 
+        console.log("loop " + element);
+    }); 
+    req.session.save();
+    res.status = 200;
+    res.readystate = 4;
+    res.end();
 });
 
 //This route places the order for the recipes currently in the cart

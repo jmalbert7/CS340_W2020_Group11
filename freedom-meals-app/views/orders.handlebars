@@ -69,7 +69,10 @@
       {{#if recipe_name}}
 			<tr>
 			  <td>{{recipe_name}}</td>
-			  <td><input type="submit" class="btn btn-primary my-1" id="remove" value="Remove"></td>
+        <form onsubmit="removeRecipeFromCart(this.hiddenRecipeIdRemove.value)">
+          <input type="hidden" id="hiddenRecipeIdRemove" name="hiddenRecipeIdRemove" value="{{recipe_id}}">
+          <td><input type="submit" class="btn btn-primary my-1" id="remove" value="Remove"></td>
+        </form>
 			</tr>
       {{/if}}
       {{/each}}
@@ -138,4 +141,4 @@
   <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!--Freedom Meals JavaScript -->
-  <script src="/js/recipe.js"></script>
+  <script src="/js/orders.js"></script>
