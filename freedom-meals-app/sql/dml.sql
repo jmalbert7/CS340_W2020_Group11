@@ -32,7 +32,7 @@ WHERE `recipe_id` = :recipeIdInput;
 
 -- Display recipes the customer has ordered previously and the rating
 -- the customer gave each recipe if it exists
-SELECT * FROM `Orders`  
+SELECT `Recipes`.`recipe_name`, `Recipe_Ratings`.`rating`, `Recipe_Ratings`.`date_rated` FROM `Orders`  
 LEFT JOIN ((`Recipes_in_Orders` LEFT JOIN `Recipes` ON `Recipes_in_Orders`.`recipe_id` = `Recipes`.`recipe_id`) LEFT JOIN `Recipe_Ratings` ON `Recipes_in_Orders`.`recipe_id` = `Recipe_Ratings`.`recipe_id`) 
 ON `Orders`.`order_id` = `Recipes_in_Orders`.`order_id`
 WHERE (`Recipe_Ratings`.`customer_id` = :customerIdInput AND `Orders`.`customer_id` = :customerIdInput) OR
@@ -69,8 +69,8 @@ INSERT INTO `Recipes_in_Orders` (`recipe_id`, `order_id`) VALUES
 (:recipeIdInput, :orderIdInput);
 
 --Add record to Recipe_Ratings when customer adds a rating to a recipe.
-INSERT INTO `Recipe_Rating` (`rating`, `date_rated`, `customer_id`, `recipe_id`) VALUES 
-(:ratingInput, SYSDATE, :customerIdInput, :recipeIdInput);
+INSERT INTO `Recipe_Ratings` (`rating`, `date_rated`, `customer_id`, `recipe_id`) VALUES 
+(:ratingInput, (SYSDATE()), :customerIdInput, :recipeIdInput);
 
 -- Update customer information
 UPDATE `Customers`
@@ -79,7 +79,7 @@ WHERE `customer_id` = :customerIdInput;
 
 -- Update customer recipe rating
 UPDATE `Recipe_Ratings`
-SET `rating` = :ratingInput, `date_rated` = SYSDATE()
+SET `rating` = :ratingInput, `date_rated` = (SYSDATE())
 WHERE `customer_id` = :customerIdInput AND `recipe_id` = :recipeIdInput;
 
 -- Update recipe made by the admin, not customer

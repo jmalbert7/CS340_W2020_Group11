@@ -71,7 +71,7 @@ homepage.post('/', (req, res) => {
     res.readystate = 4;
 });
 
-//homepage router to post a new recipe to the recipes table
+//homepage router to add a new recipe to the recipes table
 homepage.post('/add', (req, res) => {
     console.log('inside add recipe route, customer_id = ' + req.session.customer_id);
 	console.log(req.body)
@@ -126,7 +126,7 @@ orderpage.get('/', (req, res) => {
        
     console.log(req.session.customer_id);
     var customer_id = req.session.customer_id;
-    var sql = "SELECT Orders.order_id, Orders.order_date, Orders.delivery_date, Orders.order_status, Recipes.recipe_name FROM Orders JOIN Recipes_in_Orders ON Orders.order_id = Recipes_in_Orders.order_id JOIN Recipes ON Recipes_in_Orders.recipe_id = Recipes.recipe_id WHERE customer_id = ?;";
+    var sql = "SELECT Orders.order_id, DATE_FORMAT(Orders.order_date, \'%m/%d/%Y\') AS order_date, DATE_FORMAT(Orders.delivery_date, \'%m/%d/%Y\') AS delivery_date, Orders.order_status, Recipes.recipe_name FROM Orders JOIN Recipes_in_Orders ON Orders.order_id = Recipes_in_Orders.order_id JOIN Recipes ON Recipes_in_Orders.recipe_id = Recipes.recipe_id WHERE customer_id = ?;";
     mysql.pool.query(sql, [customer_id], function (err, rows, fields) {
         if (err) {
             next(err);
@@ -174,20 +174,64 @@ var ratingpage = express.Router();
 ratingpage.get('/', (req, res) =>{
     var recipeRatings = [];
     console.log('in rating get');
-    console.log(req.session.customer_id);
+    console.log("customer_id = " + req.session.customer_id);
     var customer_id = req.session.customer_id;
-    //TODO: Fix this query
-    var sql = "SELECT `Recipe_Ratings`.`rating`, `Recipe_Ratings`.`date_rated` FROM Orders RIGHT JOIN Recipes_in_Orders ON Orders.order_id = Recipes_in_Orders.order_id LEFT JOIN Recipe_Ratings ON Recipes_in_Orders.recipe_id = Recipe_Ratings.recipe_id WHERE Recipe_Ratings.customer_id = ? AND Orders.customer_id = ?";
-    mysql.pool.query(sql, [customer_id, customer_id], function(err, rows, fields){
+	var sql = "SELECT Recipes.recipe_id, Recipes.recipe_name, Recipe_Ratings.rating, DATE_FORMAT(Recipe_Ratings.date_rated, \'%m/%d/%Y\') AS date_rated FROM Orders LEFT JOIN ((Recipes_in_Orders LEFT JOIN Recipes ON Recipes_in_Orders.recipe_id = Recipes.recipe_id) LEFT JOIN Recipe_Ratings ON Recipes_in_Orders.recipe_id = Recipe_Ratings.recipe_id) ON Orders.order_id = Recipes_in_Orders.order_id WHERE (Recipe_Ratings.customer_id = ? AND Orders.customer_id = ?) OR (Recipe_Ratings.customer_id IS NULL AND Orders.customer_id = ?)";
+    mysql.pool.query(sql, [customer_id, customer_id, customer_id], function(err, rows, fields){
         if (err) {
-            next(err);
-            return;
+            console.log(JSON.stringify(err));
+			res.end();
         }
         let recipeRatings = rows;
         console.log(recipeRatings);
         res.render('rating', { title: 'Your Ratings', recipeRatings});
     });
-})
+});
+
+//Rating router to add or update rating
+ratingpage.post('/add', (req, res) => {
+    console.log('inside add ratings route, customer_id = ' + req.session.customer_id);
+	console.log(req.body);
+	var mysql = req.app.get('mysql');
+	var customer_id = req.session.customer_id;
+	var ratingType = req.body.ratingType;
+	
+	// If user is adding a new rating...
+	if (ratingType == "NEW")
+	{
+		var sql = "INSERT INTO Recipe_Ratings (`rating`, `date_rated`, `customer_id`, `recipe_id`) VALUES (?, (SYSDATE()), ?, ?)";
+		mysql.pool.query(sql, [req.body.rating, customer_id, req.body.recipeID], function(error, results, fields)
+		{
+			if(error)
+			{
+				console.log(JSON.stringify(error));
+				res.end();
+			}
+			else
+			{
+				res.redirect('/rating');
+			}
+		});
+	}
+	
+	// If user is updating an existing rating...
+	if (ratingType == "EXISTING")
+	{
+		var sql = "UPDATE Recipe_Ratings SET rating = ?, date_rated = (SYSDATE()) WHERE customer_id = ? AND recipe_id = ?";
+		mysql.pool.query(sql, [req.body.rating, customer_id, req.body.recipeID], function(error, results, fields)
+		{
+			if(error)
+			{
+				console.log(JSON.stringify(error));
+				res.end();
+			}
+			else
+			{
+				res.redirect('/rating');
+			}
+		});
+	}
+});
 app.use('/rating', ratingpage);
 
 /*Begin Profile Handlers*/

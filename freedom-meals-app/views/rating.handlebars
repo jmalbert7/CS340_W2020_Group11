@@ -62,33 +62,64 @@
 
   <div class="row" id="ratingHistorySection">
     <div class="col-md-8 mb-5">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Recipe Name</th>
-            <th>Rating</th>
-            <th>Date Rated</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each recipeRatings}}
-          {{#if rating}}
-          <tr>
-            <td>{{recipe_name}}</td>
-            <td>{{rating}}</td>
-            <td>{{date_rated}}</td>
-            <td><a class="btn btn-primary" href="#">Edit Rating</a></td>
-          </tr>
-          {{/if}}
-          {{/each}}
-        </tbody>
-      </table>
+	  <table class="table">
+		<thead>
+		  <tr>
+			<th>Recipe Name</th>
+			<th>Rating</th>
+			<th>Date Rated</th>
+			<th>Action</th>
+		  </tr>
+		</thead>
+		<tbody>
+		  {{#each recipeRatings}}
+		  {{#if rating}}
+		  <tr>
+			<td id="recipeName">{{recipe_name}}</td>
+			<td>{{rating}}</td>
+			<td>{{date_rated}}</td>
+			<td><button type="submit" id={{recipe_id}} onClick="appear(this, 1);" class="btn btn-primary">Edit Rating</button></td>
+		  </tr>
+		  {{else}}
+		  <tr>
+			<td id="recipeName">{{recipe_name}}</td>
+			<td>{{rating}}</td>
+			<td>{{date_rated}}</td>
+			<td><button type="submit" id={{recipe_id}} onClick="appear(this, 2);" class="btn btn-primary">Add Rating</button></td>
+		  </tr>
+		  {{/if}}
+		  {{/each}}
+		</tbody>
+	  </table>
       <br>
-      <span>NEED TO CODE: When button is clicked, IF rating was null, send INSERT command to Recipe_Ratings table WHERE
-        customer_id = this.customer_id AND recipe_id = this.recipe_id. ELSE, send UPDATE command to Recipe_Ratings table
-        WHERE customer_id = this.customer_id AND recipe_id = this.recipe_id.</span>
     </div>
+  </div>
+  <!-- /.row -->
+  
+  <div class="row" id="ratingForm">
+	<form action = "/rating/add" method = "post">
+	  <h5>Add or Change Your Rating</h5>
+	  <div class="form-row">
+		  <div class="form-group col-md-6">
+			<label for="inputRating" id="ratingPrompt"></label>
+			<input type="text" id="rating_type" name="ratingType"></input>
+			<input type="text" id="recipe_id" name="recipeID"></input>
+			<select id="recipe_rating" class="form-control" name="rating">
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+			</select>
+		  </div>
+	  </div>
+	  <div class="form-row">
+		<div class="form-group col-md-6">
+			<button type="submit" class="btn btn-primary" id="submitRating">Submit My Rating</button>
+		</div>
+	  </div>
+	</form>
+	  <br><br>
   </div>
   <!-- /.row -->
 
@@ -101,4 +132,4 @@
 <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <!--Freedom Meals JavaScript -->
-<script src="/js/rating.js"></script>
+<script src="/frontendJS/rating.js"></script>
