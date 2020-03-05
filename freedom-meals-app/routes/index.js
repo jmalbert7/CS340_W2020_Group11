@@ -126,7 +126,7 @@ orderpage.get('/', (req, res) => {
        
     console.log(req.session.customer_id);
     var customer_id = req.session.customer_id;
-    var sql = "SELECT Orders.order_id, DATE_FORMAT(Orders.order_date, \'%m/%d/%Y\') AS order_date, DATE_FORMAT(Orders.delivery_date, \'%m/%d/%Y\') AS delivery_date, Orders.order_status, Recipes.recipe_name FROM Orders JOIN Recipes_in_Orders ON Orders.order_id = Recipes_in_Orders.order_id JOIN Recipes ON Recipes_in_Orders.recipe_id = Recipes.recipe_id WHERE customer_id = ?;";
+    var sql = "SELECT Orders.order_id, DATE_FORMAT(Orders.order_date, \'%m/%d/%Y\') AS order_date, DATE_FORMAT(Orders.delivery_date, \'%m/%d/%Y\') AS delivery_date, Orders.order_status, Recipes.recipe_name FROM Orders JOIN Recipes_in_Orders ON Orders.order_id = Recipes_in_Orders.order_id JOIN Recipes ON Recipes_in_Orders.recipe_id = Recipes.recipe_id WHERE customer_id = ? ORDER BY order_date DESC;";
     mysql.pool.query(sql, [customer_id], function (err, rows, fields) {
         if (err) {
             next(err);
@@ -280,7 +280,6 @@ loginpage.post('/auth', (req, res) => {
                 req.session.loggedin = true;
                 req.session.customer_id = context[0].customer_id;
                 console.log(req.session.customer_id);
-                //TODO: change to /orders page?? Or display a welcome message??
                 res.redirect('/recipes');
             } else{
                 res.send('Incorrect username and or password');

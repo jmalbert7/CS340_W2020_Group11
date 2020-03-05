@@ -1,6 +1,7 @@
-
 /* On load, make Add Recipe section hidden. */
 document.getElementById("addRecipeSection").style.display = "none";
+var jsId = document.cookie.match(/JSESSIONID=[^;]+/);
+console.log(jsId);
 
 /* Make Add Recipe section appear after "Add Recipe" button is clicked. */
 document.getElementById("adminAddRecipeButton").addEventListener("click", function(appear)
@@ -20,6 +21,7 @@ function searchLinks(){
 }
 
 function addRecipeToCartFunc(data){
+	alert("Recipe has been added to cart!");
 	var req = new XMLHttpRequest();
 	console.log("sent data" + data);
 	var sdata = {"hiddenRecipeId" : data};
