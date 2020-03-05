@@ -17,6 +17,7 @@ document.getElementById("searchByTime").addEventListener("click", searchLinks);
 function searchLinks(){
 	var timeSelected = document.getElementById("time").value;
 	var link = "/recipes/" + timeSelected;
+	console.log('link' + link);
 	document.getElementById("searchByTime").setAttribute("href", link);
 }
 
