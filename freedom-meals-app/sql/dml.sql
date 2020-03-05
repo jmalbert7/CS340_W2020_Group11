@@ -32,11 +32,11 @@ WHERE `recipe_id` = :recipeIdInput;
 
 -- Display recipes the customer has ordered previously and the rating
 -- the customer gave each recipe if it exists
-SELECT `Recipes`.`recipe_name`, `Recipe_Ratings`.`rating`, `Recipe_Ratings`.`date_rated` FROM Orders
-RIGHT JOIN `Recipes_in_Orders` ON `Orders`.`order_id` = `Recipes_in_Orders`.`order_id`
-LEFT JOIN `Recipe_Ratings` ON `Recipes_in_Orders`.`recipe_id` = `Recipe_Ratings`.`recipe_id`
-JOIN `Recipes` ON `Recipe_Ratings`.`recipe_id` = `Recipes`.`recipe_id`
-WHERE `Recipe_Ratings`.`customer_id` = :customerIdInput AND `Orders`.`customer_id` = :customerIdInput;
+SELECT * FROM `Orders`  
+LEFT JOIN ((`Recipes_in_Orders` LEFT JOIN `Recipes` ON `Recipes_in_Orders`.`recipe_id` = `Recipes`.`recipe_id`) LEFT JOIN `Recipe_Ratings` ON `Recipes_in_Orders`.`recipe_id` = `Recipe_Ratings`.`recipe_id`) 
+ON `Orders`.`order_id` = `Recipes_in_Orders`.`order_id`
+WHERE (`Recipe_Ratings`.`customer_id` = :customerIdInput AND `Orders`.`customer_id` = :customerIdInput) OR
+(`Recipe_Ratings`.`customer_id` IS NULL AND `Orders`.`customer_id` = :customerIdInput);
 
 -- Delete record from Recipes_in_Orders table
 -- Order ID is retrieved from form/button on order history table
@@ -61,7 +61,7 @@ INSERT INTO `Recipes` (`recipe_name`, `time`, `difficulty`, `directions`) VALUES
 
 -- Add record to Orders table when customer places an order
 INSERT INTO `Orders` (`order_date`, `delivery_date`, `order_status`, `customer_id`) VALUES 
-((SYSDATE()), , 'PROCESSED', :customerIdInput);
+((SYSDATE()), NULL, 'PROCESSED', :customerIdInput);
 
 -- Add record to Recipes_in_Orders immediately after customer places the order
 -- Order ID is retrieved from form/button on Recipes_in_Orders table
