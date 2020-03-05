@@ -55,7 +55,7 @@
       <h2>Select Your Recipes</h2>
       <hr>
       <p>Add a recipe to your order by clicking the 'Add to Cart' button below. You can search for Recipes based on
-        average customer rating.</p>
+        total minutes it takes to prep and cook.</p>
     </div>
   </div>
   <br>
@@ -72,7 +72,7 @@
       <option value="60">Under 60 minutes</option>
       <option value="120">Under 120 minutes</option>
     </select>
-    <a id="searchByTime" class="btn btn-success">Search</a>
+    <button id="searchByTime" class="btn btn-success">Search</button>
   </form>
   <br><br>
 
@@ -113,7 +113,7 @@
   <div class="row" id="addRecipeSection">
     <div>
       <h2>Add Recipe</h2>
-      <p>This is where administrator can add recipes to the Recipes Table.</p>
+      <p>This is where the web administrator can add recipes to the Recipes Table.</p>
       <form action="/recipes/add" method = "post">
         <div class="form-row">
           <div class="form-group col-md-6">
@@ -144,7 +144,7 @@
               placeholder="Include ingredients, steps, and gotchas here.">
           </div>
         </div>
-        <input type="submit" id="addRecipe" class="btn btn-success">Add Recipe</a>
+        <button type="submit" id="addRecipe" class="btn btn-primary">Submit</button>
       </form>
     </div>
   </div>
