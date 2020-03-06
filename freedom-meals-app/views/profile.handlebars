@@ -72,12 +72,14 @@
 				<tr>
                     {{#each customerInfo}}
                     {{#if first_name}}
-					<td>{{first_name}}</td>
-					<td>{{last_name}}</td>
-					<td>{{email}}</td>
-					<td>********</td>
-					<td>{{phone}}</td>
-					<td>{{admin}}</td>
+					
+					<td>{{first_name}}<option id="fname" value="{{first_name}}"></option></td>
+					<td>{{last_name}}<option id="lname" value="{{last_name}}"></option></td>
+					<td>{{email}}<option id="email" value="{{email}}"></option></td>
+					<td>*******<option id="pword" value="{{password}}"></option></td>
+					<td>{{phone}}<option id="phone" value="{{phone}}"></option></td>
+					<td>{{admin}}<option id="admin" value="{{admin}}"></option></td>
+					<input id="id" type="hidden" value={{customer_id}}>
                     {{/if}}
                     {{/each}}
 				</tr>
@@ -92,34 +94,36 @@
     <!-- /.row -->
 
 	<div class="row" id="editCustomerForm">
-	  <form> <!--Form modifed from a template at https://getbootstrap.com/docs/4.0/components/forms/-->
+	  <form onsubmit="editData(editFirstName.value, editLastName.value, editEmail.value, editPhoneNumber.value, editPassword.value, {{admin}})"> <!--Form modifed from a template at https://getbootstrap.com/docs/4.0/components/forms/-->
 		<h5>Your Information</h5>
 		<div class="form-row">
 		  <div class="form-group col-md-6">
-			<label for="inputFirstName">First Name</label>
-			<input type="text" class="form-control" id="firstName">
+			<label for="editFirstName">First Name</label>
+			<input type="text" class="form-control" name="editFirstName" id="editFirstName">
 		  </div>
 		  <div class="form-group col-md-6">
-			<label for="inputLastName">Last Name</label>
-			<input type="text" class="form-control" id="lastName">
+			<label for="editLastName">Last Name</label>
+			<input type="text" class="form-control" name="editLastName" id="editLastName">
 		  </div>
 		</div>
 		<div class="form-row">
 		  <div class="form-group col-md-6">
-			<label for="inputEmail">Email</label>
-			<input type="email" class="form-control" id="email">
+			<label for="editEmail">Email</label>
+			<input type="email" class="form-control" name="editEmail" id="editEmail">
 		  </div>
 		  <div class="form-group col-md-6">
-			<label for="inputPhoneNumber">Phone Number</label>
-			<input type="text" class="form-control" id="phoneNumber">
+			<label for="editPhoneNumber">Phone Number</label>
+			<input type="text" class="form-control" name="editPhoneNumber" id="editPhoneNumber">
 		  </div>
 		</div>
 		<div class="form-row">
 		  <div class="form-group col-md-6">
-			<label for="inputPassword">Change Your Password</label>
-			<input type="password" class="form-control" id="password" placeholder="Type in current password if you do not want to change your password.">
+			<label for="editPassword">Change Your Password</label>
+			<input type="password" class="form-control" name="editPassword" id="editPassword">
 		  </div>
 		</div>
+		<input type="hidden" id="editId" name="editId">
+		<input type="hidden" id="editAdmin" name="editAdmin">
 		<button type="submit" class="btn btn-primary" id="updateCustomerButton">Update My Information</button>
 		<span>On click, send UPDATE command to Customers table WHERE customer_id = this.customer_id. The above table repopulates with updated information.</span>
 	  </form>
