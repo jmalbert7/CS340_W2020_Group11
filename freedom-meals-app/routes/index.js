@@ -93,8 +93,8 @@ homepage.post('/add', (req, res) => {
     console.log('inside add recipe route, customer_id = ' + req.session.customer_id);
     console.log(req.body)
     var mysql = req.app.get('mysql');
-    var sql = "INSERT INTO Recipes (recipe_name, time, difficulty, directions) VALUES (?,?,?,?)";
-    var inserts = [req.body.recipeName, req.body.time, req.body.difficulty, req.body.directions];
+    var sql = "INSERT INTO Recipes (recipe_name, time, difficulty, ingredients) VALUES (?,?,?,?)";
+    var inserts = [req.body.recipeName, req.body.time, req.body.difficulty, req.body.ingredients];
     sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
         if (error) {
             console.log(JSON.stringify(error))
@@ -218,17 +218,18 @@ orderpage.post('/add', (req, res) =>{
 					}
 					else
 					{
-						// Clear the cart.
+						/*// Clear the cart.
 						for (var j = req.session.cart.length - 1; j >= 0 ; j--)
 						{
 							req.session.cart.splice(j, 1);
-						}
+						}*/
 						
 						// For some unknown reason when redirecting to orders page gives me errors.
-						res.end();
+						
 					}
 				});
-			}
+            }
+            res.render('/orders');
 		}
 	});
 });
