@@ -50,7 +50,6 @@
       <div class="col-md-8 mb-5">
         <h2>View and Manage Your Profile Information</h2>
         <hr>
-		<p>Table will be built using JavaScript. Table will be populated with data extracted from JSON string received from backend server via a SELECT command to Customers table WHERE customer_id = this.customer_id.</p>
 	  </div>
     </div>
     <!-- /.row -->
@@ -87,7 +86,12 @@
 		</table>
 		<!--Change <a></a> to <button></button>. When button is clicked, open a popup form. 
 		SOURCE: https://www.w3docs.com/snippets/javascript/how-to-create-a-popup-form-with-css-and-javascript.html-->
-		<button class="btn btn-primary" id="editCustomerButton">Edit My Information</button>
+		<form action='/profile/update' method = >
+			<input type="hidden" value="{{customer_id}}">
+			<input type="submit" class="btn btn-primary" id="editCustomerButton" value="Edit My Information">
+		</form>
+		{{/if}}
+        {{/each}}
       	<br><br>
 	  </div>
     </div>

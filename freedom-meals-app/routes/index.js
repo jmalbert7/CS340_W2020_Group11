@@ -11,6 +11,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(session({ secret: 'SuperSecretPassword' }));
 
+function checkIfLoggedIn(loggedin) {
+    if (loggedin === false || loggedin == null) {
+        return false;
+    }
+    return true;
+}
+
 //router responds to any requests from the root url
 var homepage = express.Router();
 
@@ -106,8 +113,15 @@ var orderpage = express.Router();
 
 //Displays order history for customer, customer must be logged in first
 orderpage.get('/', (req, res) => {
+    var loggedin = req.session.loggedin;
+    /*if (!checkIfLoggedIn(loggedin)) {
+        req.session.lastLink = '/orders';
+        req.session.save();
+        res.redirect('/login');
+    }*/
+    var orders = [];
     var cart = [];
-    console.log("req body in get request " + req.body.method);
+    console.log("req body in orderpage get request " + req.body.method);
 
     req.session.cart.forEach(element => {
         cart.push({ recipe_id: element, recipe_name: null });
@@ -385,6 +399,10 @@ profilepage.post('/edit', (req, res) => {
 
 
 });
+
+profilepage.post('/update', (req, res) => {
+
+});
 app.use('/profile', profilepage);
 
 /*Begin Login Handlers*/
@@ -410,8 +428,13 @@ loginpage.post('/auth', (req, res) => {
                 console.log(context[0]);
                 req.session.loggedin = true;
                 req.session.customer_id = context[0].customer_id;
+                req.session.save();
                 console.log(req.session.customer_id);
-                res.redirect('/recipes');
+                if (req.session.lastLink != null) {
+                    res.redirect(req.session.lastLink);
+                } else {
+                    res.redirect('/recipes');
+                }
             } else {
                 res.send('Incorrect username and or password');
             }
@@ -443,7 +466,9 @@ loginpage.post('/', (req, res) => {
                 var context = rows;
                 console.log(context[0]);
                 console.log(context[0].customer_id)
+                req.session.loggedin = true;
                 req.session.customer_id = context[0].customer_id;
+                req.session.save();
                 res.redirect('/recipes');
             });
         });
