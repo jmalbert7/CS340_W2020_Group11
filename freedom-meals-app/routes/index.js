@@ -23,16 +23,6 @@ var homepage = express.Router();
 
 //homepage router will retrieve all recipes from the Recipes table
 homepage.get('/', (req, res) => {
-    /*let recipes = [
-        {
-            name: "lasagne",
-            description: "meaty, cheesy",
-            difficulty: "intermediate",
-            time: 120,
-            id: 1
-        }
-    ];*/
-	
 	var sessionID;
 	
     console.log('in the homepage / router');
@@ -41,7 +31,8 @@ homepage.get('/', (req, res) => {
         req.session.cart = [];
     }
     var recipes = [];
-    mysql.pool.query('SELECT * FROM Recipes', function (err, rows, fields) {
+    var sql = "SELECT recipe_name, time, difficulty, IFNULL(TRUNCATE(AVG(`rating`), 1), 'Not Yet Rated') AS rating FROM Recipes LEFT JOIN Recipe_Ratings ON Recipes.recipe_id=Recipe_Ratings.recipe_id GROUP BY Recipes.recipe_id";
+    mysql.pool.query(sql, function (err, rows, fields) {
         if (err) {
             next(err);
             return;
@@ -52,8 +43,8 @@ homepage.get('/', (req, res) => {
 		{
 			sessionID = req.session.customer_id;
 			console.log("Session ID: " + sessionID);
-		}
-		
+        }
+        		
         res.render('recipes', { title: 'Browse Recipes', recipes, sessionID});
     });
 });
@@ -218,18 +209,17 @@ orderpage.post('/add', (req, res) =>{
 					}
 					else
 					{
-						/*// Clear the cart.
+						// Clear the cart.
 						for (var j = req.session.cart.length - 1; j >= 0 ; j--)
 						{
 							req.session.cart.splice(j, 1);
-						}*/
+						}
 						
 						// For some unknown reason when redirecting to orders page gives me errors.
-						
+						res.end();
 					}
 				});
-            }
-            res.render('/orders');
+			}
 		}
 	});
 });

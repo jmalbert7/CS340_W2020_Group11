@@ -92,7 +92,7 @@
           <li class="list-group-item">Difficulty: {{difficulty}} out of 3</li>
           <li class="list-group-item">Time: {{time}} minutes</li>
           <!--TODO: get rating from recipe_ratings-->
-          <li class="list-group-item">Rating</li>
+          <li class="list-group-item">Rating: {{rating}}</li>
         </ul>
         <div class="card-footer">
           <form class="addRecipeToCartForm" action="/recipes" method = "POST" onsubmit="addRecipeToCartFunc(this.hiddenRecipeId.value)">

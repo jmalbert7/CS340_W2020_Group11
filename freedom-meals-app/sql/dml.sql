@@ -1,7 +1,10 @@
 -- The : character is used to denote user submitted data and data from backend code
 
--- Select all recipes to display on Browse Recipes page
-SELECT `recipe_id`, `recipe_name`, `time`, `difficulty` FROM `Recipes`;
+-- Select all recipes to display on Browse Recipes page. Also retrieves the average rating that 
+-- exists for the recipe
+SELECT `recipe_name`, `time`, `difficulty`, IFNULL(TRUNCATE(AVG(`rating`), 1), 'Not Yet Rated') AS `rating` FROM `Recipes` 
+LEFT JOIN `Recipe_Ratings` ON `Recipes`.`recipe_id`=`Recipe_Ratings`.`recipe_id`
+GROUP BY `Recipes`.`recipe_id`;
 
 -- Select recipes that meet search criteria user entered in time dropdown
 -- to display on Browse Recipes page
@@ -25,10 +28,6 @@ SELECT `order_id` FROM `Orders`
 WHERE `customer_id` = :customerIdInput
 ORDER BY `order_date` DESC
 LIMIT 1;
-
--- Get average rating for each recipe
-SELECT AVG(`rating`) FROM `Recipe_Ratings`
-WHERE `recipe_id` = :recipeIdInput;
 
 -- Display recipes the customer has ordered previously and the rating
 -- the customer gave each recipe if it exists
