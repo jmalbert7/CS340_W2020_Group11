@@ -289,7 +289,7 @@ ratingpage.get('/', (req, res) => {
     console.log('in rating get');
     console.log("customer_id = " + req.session.customer_id);
     var customer_id = req.session.customer_id;
-    var sql = "SELECT Recipes.recipe_id, Recipes.recipe_name, Recipe_Ratings.rating, DATE_FORMAT(Recipe_Ratings.date_rated, \'%m/%d/%Y\') AS date_rated FROM Orders LEFT JOIN ((Recipes_in_Orders LEFT JOIN Recipes ON Recipes_in_Orders.recipe_id = Recipes.recipe_id) LEFT JOIN Recipe_Ratings ON Recipes_in_Orders.recipe_id = Recipe_Ratings.recipe_id) ON Orders.order_id = Recipes_in_Orders.order_id WHERE (Recipe_Ratings.customer_id = ? AND Orders.customer_id = ?) OR (Recipe_Ratings.customer_id IS NULL AND Orders.customer_id = ?)";
+    var sql = "SELECT Recipes.recipe_id, Recipes.recipe_name, Recipe_Ratings.rating, DATE_FORMAT(Recipe_Ratings.date_rated, \'%m/%d/%Y\') AS date_rated FROM Orders LEFT JOIN ((Recipes_in_Orders LEFT JOIN Recipes ON Recipes_in_Orders.recipe_id = Recipes.recipe_id) LEFT JOIN Recipe_Ratings ON Recipes_in_Orders.recipe_id = Recipe_Ratings.recipe_id) ON Orders.order_id = Recipes_in_Orders.order_id WHERE (NOT Recipes_in_Orders.order_id IS NULL) AND ((Recipe_Ratings.customer_id = ? AND Orders.customer_id = ?) OR (Recipe_Ratings.customer_id IS NULL AND Orders.customer_id = ?)) ORDER BY Orders.order_date DESC";
     mysql.pool.query(sql, [customer_id, customer_id, customer_id], function (err, rows, fields) {
         if (err) {
             console.log(JSON.stringify(err));
