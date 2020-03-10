@@ -223,7 +223,7 @@ orderpage.post('/add', (req, res) =>{
 						{
 							req.session.cart.splice(j, 1);
 						}
-						
+
 						// For some unknown reason when redirecting to orders page gives me errors.
 						res.end();
 					}
