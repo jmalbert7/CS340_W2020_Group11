@@ -31,7 +31,7 @@ homepage.get('/', (req, res) => {
         req.session.cart = [];
     }
     var recipes = [];
-    var sql = "SELECT Recipes.recipe_id, recipe_name, time, difficulty, IFNULL(TRUNCATE(AVG(`rating`), 1), 'Not Yet Rated') AS rating FROM Recipes LEFT JOIN Recipe_Ratings ON Recipes.recipe_id=Recipe_Ratings.recipe_id GROUP BY Recipes.recipe_id";
+    var sql = "SELECT Recipes.recipe_id, recipe_name, time, difficulty, IFNULL(TRUNCATE(AVG(rating), 1), 'Not Yet Rated') AS rating FROM Recipes LEFT JOIN Recipe_Ratings ON Recipes.recipe_id = Recipe_Ratings.recipe_id GROUP BY Recipes.recipe_id";
     mysql.pool.query(sql, function (err, rows, fields) {
         if (err) {
             next(err);
@@ -209,18 +209,26 @@ orderpage.post('/add', (req, res) =>{
 						res.end();
 					}
 					else
-					{
+					{	
 						// Clear the cart.
 						for (var j = req.session.cart.length - 1; j >= 0 ; j--)
 						{
 							req.session.cart.splice(j, 1);
+							
+							if (j == 0)
+							{
+								console.log("Done clearing the cart!");
+								
+								res.redirect('/orders');
+							}
 						}
-
-						// For some unknown reason when redirecting to orders page gives me errors.
-						res.end();
+						
+						// console.log("End of inner FOR-loop - Clearing cart.");
 					}
 				});
 			}
+			
+			console.log("End of outer FOR-loop - Inserting recipes in Recipes_in_Orders table.");
 		}
 	});
 });
