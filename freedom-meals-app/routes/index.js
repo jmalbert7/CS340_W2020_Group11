@@ -69,8 +69,8 @@ homepage.get('/:time', (req, res) => {
 //When user clicks the 'Add to Cart' button a post request is made to save the recipe_id 
 //in the session array that holds the user's recipe selections
 homepage.post('/', (req, res) => {
-    console.log("request body " + req.body.hiddenRecipeId);
 
+    console.log("request body " + req.body.hiddenRecipeId);
     req.session.cart.push(req.body.hiddenRecipeId);
     console.log('length ' + req.session.cart.length);
     req.session.cart.forEach(element => {
@@ -79,6 +79,7 @@ homepage.post('/', (req, res) => {
     req.session.save();
     res.status = 200;
     res.readystate = 4;
+    res.send();
 });
 
 //homepage router to add a new recipe to the recipes table
@@ -475,27 +476,36 @@ loginpage.post('/', (req, res) => {
     var phone = req.body.inputPhoneNumber;
     var password = req.body.inputPassword;
 
-    var sql = "INSERT INTO `Customers` (`first_name`, `last_name`, `email`, `password`, `phone`, `admin`) VALUES (?, ?, ?, ?, ?, '1')";
+    var sql1 = "SELECT email FROM Customers WHERE email = ?";
+    mysql.pool.query(sql1, [email], function (err, rows, fields) {
+        if(rows.length > 0){
+            res.send(email + ' is already registered to an account');
+        }
+        else{
+            console.log('new email');
+            var sql2 = "INSERT INTO `Customers` (`first_name`, `last_name`, `email`, `password`, `phone`, `admin`) VALUES (?, ?, ?, ?, ?, '1')";
 
-    if (first_name && last_name && email && phone && password) {
-        mysql.pool.query(sql, [first_name, last_name, email, password, phone], function (err, rows, fields) {
-            console.log('customer added');
-            sql = "SELECT `customer_id` FROM `Customers` WHERE `email` = ? AND `password` = ?";
-            mysql.pool.query(sql, [email, password], function (err, rows, fields) {
-                console.log(rows);
-                var context = rows;
-                console.log(context[0]);
-                console.log(context[0].customer_id)
-                req.session.loggedin = true;
-                req.session.customer_id = context[0].customer_id;
-                req.session.save();
-                res.redirect('/recipes');
-            });
-        });
-    } else {
-        res.send('Please enter all required information');
-        res.end();
-    }
+            if (first_name && last_name && email && phone && password) {
+                mysql.pool.query(sql2, [first_name, last_name, email, password, phone], function (err, rows, fields) {
+                    console.log('customer added');
+                    sql = "SELECT `customer_id` FROM `Customers` WHERE `email` = ? AND `password` = ?";
+                    mysql.pool.query(sql, [email, password], function (err, rows, fields) {
+                        console.log(rows);
+                        var context = rows;
+                        console.log(context[0]);
+                        console.log(context[0].customer_id)
+                        req.session.loggedin = true;
+                        req.session.customer_id = context[0].customer_id;
+                        req.session.save();
+                        res.redirect('/recipes');
+                    });
+                });
+            } else {
+                res.send('Please enter all required information');
+                res.end();
+            }
+        }
+    }); 
 });
 app.use('/login', loginpage);
 
