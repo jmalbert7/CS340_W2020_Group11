@@ -168,7 +168,7 @@ orderpage.post('/remove', (req, res) => {
     var value = req.body.hiddenRecipeId;
 
     for (var i = 0; i < req.session.cart.length; i++) {
-        console.log("in remove loop " + req.session.cart[i])
+        console.log("in remove loop " + req.session.cart[i]);
         if (req.session.cart[i] === value) {
             req.session.cart.splice(i, 1);
             console.log("Recipe removed: " + req.body.hiddenRecipeId);
