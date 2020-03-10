@@ -1,7 +1,10 @@
 -- The : character is used to denote user submitted data and data from backend code
 
--- Select all recipes to display on Browse Recipes page
-SELECT `recipe_id`, `recipe_name`, `time`, `difficulty` FROM `Recipes`;
+-- Select all recipes to display on Browse Recipes page. Also retrieves the average rating that 
+-- exists for the recipe
+SELECT `recipe_name`, `time`, `difficulty`, IFNULL(TRUNCATE(AVG(`rating`), 1), 'Not Yet Rated') AS `rating` FROM `Recipes` 
+LEFT JOIN `Recipe_Ratings` ON `Recipes`.`recipe_id`=`Recipe_Ratings`.`recipe_id`
+GROUP BY `Recipes`.`recipe_id`;
 
 -- Select recipes that meet search criteria user entered in time dropdown
 -- to display on Browse Recipes page
@@ -26,17 +29,14 @@ WHERE `customer_id` = :customerIdInput
 ORDER BY `order_date` DESC
 LIMIT 1;
 
--- Get average rating for each recipe
-SELECT AVG(`rating`) FROM `Recipe_Ratings`
-WHERE `recipe_id` = :recipeIdInput;
-
 -- Display recipes the customer has ordered previously and the rating
 -- the customer gave each recipe if it exists
-SELECT `Recipes`.`recipe_name`, `Recipe_Ratings`.`rating`, `Recipe_Ratings`.`date_rated` FROM `Orders`  
+SELECT DISTINCT `Recipes`.`recipe_name`, `Recipe_Ratings`.`rating`, `Recipe_Ratings`.`date_rated` FROM `Orders`  
 LEFT JOIN ((`Recipes_in_Orders` LEFT JOIN `Recipes` ON `Recipes_in_Orders`.`recipe_id` = `Recipes`.`recipe_id`) LEFT JOIN `Recipe_Ratings` ON `Recipes_in_Orders`.`recipe_id` = `Recipe_Ratings`.`recipe_id`) 
 ON `Orders`.`order_id` = `Recipes_in_Orders`.`order_id`
-WHERE (`Recipe_Ratings`.`customer_id` = :customerIdInput AND `Orders`.`customer_id` = :customerIdInput) OR
-(`Recipe_Ratings`.`customer_id` IS NULL AND `Orders`.`customer_id` = :customerIdInput);
+WHERE (NOT `Recipes_in_Orders`.`order_id` IS NULL) AND ((`Recipe_Ratings`.`customer_id` = :customerIdInput AND `Orders`.`customer_id` = :customerIdInput) OR
+(`Recipe_Ratings`.`customer_id` IS NULL AND `Orders`.`customer_id` = :customerIdInput))
+ORDER BY `Orders`.`order_date` DESC
 
 -- Delete record from Recipes_in_Orders table
 -- Order ID is retrieved from form/button on order history table

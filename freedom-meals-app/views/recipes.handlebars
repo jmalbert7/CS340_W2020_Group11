@@ -92,7 +92,7 @@
           <li class="list-group-item">Difficulty: {{difficulty}} out of 3</li>
           <li class="list-group-item">Time: {{time}} minutes</li>
           <!--TODO: get rating from recipe_ratings-->
-          <li class="list-group-item">Rating</li>
+          <li class="list-group-item">Rating: {{rating}}</li>
         </ul>
         <div class="card-footer">
           <form class="addRecipeToCartForm" action="/recipes" method = "POST" onsubmit="addRecipeToCartFunc(this.hiddenRecipeId.value)">
@@ -141,9 +141,9 @@
 
         <div class="form-row">
           <div class="form-group col-md-6">
-            <label for="inputDirections">Directions</label>
-            <input type="text" class="form-control" name="directions"
-              placeholder="Include ingredients, steps, and gotchas here.">
+            <label for="inputIngredients">Ingredients</label>
+            <input type="text" class="form-control" name="ingredients"
+              placeholder="Include ingredients here.">
           </div>
         </div>
         <button type="submit" id="addRecipe" class="btn btn-primary">Submit</button>

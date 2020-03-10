@@ -23,16 +23,6 @@ var homepage = express.Router();
 
 //homepage router will retrieve all recipes from the Recipes table
 homepage.get('/', (req, res) => {
-    /*let recipes = [
-        {
-            name: "lasagne",
-            description: "meaty, cheesy",
-            difficulty: "intermediate",
-            time: 120,
-            id: 1
-        }
-    ];*/
-	
 	var sessionID;
 	
     console.log('in the homepage / router');
@@ -41,7 +31,8 @@ homepage.get('/', (req, res) => {
         req.session.cart = [];
     }
     var recipes = [];
-    mysql.pool.query('SELECT * FROM Recipes', function (err, rows, fields) {
+    var sql = "SELECT recipe_name, time, difficulty, IFNULL(TRUNCATE(AVG(`rating`), 1), 'Not Yet Rated') AS rating FROM Recipes LEFT JOIN Recipe_Ratings ON Recipes.recipe_id=Recipe_Ratings.recipe_id GROUP BY Recipes.recipe_id";
+    mysql.pool.query(sql, function (err, rows, fields) {
         if (err) {
             next(err);
             return;
@@ -52,8 +43,8 @@ homepage.get('/', (req, res) => {
 		{
 			sessionID = req.session.customer_id;
 			console.log("Session ID: " + sessionID);
-		}
-		
+        }
+        		
         res.render('recipes', { title: 'Browse Recipes', recipes, sessionID});
     });
 });
@@ -93,8 +84,8 @@ homepage.post('/add', (req, res) => {
     console.log('inside add recipe route, customer_id = ' + req.session.customer_id);
     console.log(req.body)
     var mysql = req.app.get('mysql');
-    var sql = "INSERT INTO Recipes (recipe_name, time, difficulty, directions) VALUES (?,?,?,?)";
-    var inserts = [req.body.recipeName, req.body.time, req.body.difficulty, req.body.directions];
+    var sql = "INSERT INTO Recipes (recipe_name, time, difficulty, ingredients) VALUES (?,?,?,?)";
+    var inserts = [req.body.recipeName, req.body.time, req.body.difficulty, req.body.ingredients];
     sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
         if (error) {
             console.log(JSON.stringify(error))
@@ -298,7 +289,7 @@ ratingpage.get('/', (req, res) => {
     console.log('in rating get');
     console.log("customer_id = " + req.session.customer_id);
     var customer_id = req.session.customer_id;
-    var sql = "SELECT Recipes.recipe_id, Recipes.recipe_name, Recipe_Ratings.rating, DATE_FORMAT(Recipe_Ratings.date_rated, \'%m/%d/%Y\') AS date_rated FROM Orders LEFT JOIN ((Recipes_in_Orders LEFT JOIN Recipes ON Recipes_in_Orders.recipe_id = Recipes.recipe_id) LEFT JOIN Recipe_Ratings ON Recipes_in_Orders.recipe_id = Recipe_Ratings.recipe_id) ON Orders.order_id = Recipes_in_Orders.order_id WHERE (Recipe_Ratings.customer_id = ? AND Orders.customer_id = ?) OR (Recipe_Ratings.customer_id IS NULL AND Orders.customer_id = ?)";
+    var sql = "SELECT Recipes.recipe_id, Recipes.recipe_name, Recipe_Ratings.rating, DATE_FORMAT(Recipe_Ratings.date_rated, \'%m/%d/%Y\') AS date_rated FROM Orders LEFT JOIN ((Recipes_in_Orders LEFT JOIN Recipes ON Recipes_in_Orders.recipe_id = Recipes.recipe_id) LEFT JOIN Recipe_Ratings ON Recipes_in_Orders.recipe_id = Recipe_Ratings.recipe_id) ON Orders.order_id = Recipes_in_Orders.order_id WHERE (NOT Recipes_in_Orders.order_id IS NULL) AND ((Recipe_Ratings.customer_id = ? AND Orders.customer_id = ?) OR (Recipe_Ratings.customer_id IS NULL AND Orders.customer_id = ?)) ORDER BY Orders.order_date DESC";
     mysql.pool.query(sql, [customer_id, customer_id, customer_id], function (err, rows, fields) {
         if (err) {
             console.log(JSON.stringify(err));
@@ -367,6 +358,37 @@ profilepage.get('/', (req, res) => {
         console.log(customerInfo);
         res.render('profile', { title: 'Your Profile', customerInfo });
     });
+});
+
+profilepage.post('/edit', (req, res) => {
+    var customerInfo = [];
+    console.log('in profile POST');
+    console.log(req.body.customer_id +" " + req.body.first_name + " " + req.body.last_name + " " + req.body.email + " " + req.body.password + " " + req.body.phone + " " + req.body.admin);
+
+    var sql = "SELECT first_name, last_name, email, password, phone FROM Customers WHERE customer_id = ?";
+    mysql.pool.query(sql, [req.body.customer_id], function (err, result) {
+        if (err) {
+            next(err);
+            return;
+        }
+        if (result.length == 1) {
+            var curVals = result[0];
+            console.log("curvals " + curVals);
+            var sql2 = "UPDATE Customers SET first_name=?, last_name=?, email=?, password=?, phone=? WHERE customer_id=?";
+            mysql.pool.query(sql2, 
+                [req.body.first_name || curVals.first_name, req.body.last_name || curVals.last_name, req.body.email || curVals.email, req.body.password || curVals.password,  req.body.phone || curVals.phone, req.body.customer_id],
+                function(err, result){
+                    if(err){
+                        next(err);
+                        return;
+                    }
+                    console.log('result');
+                    res.render('profile');
+            });
+        }
+    });
+
+
 });
 
 profilepage.post('/update', (req, res) => {
