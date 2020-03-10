@@ -31,11 +31,12 @@ LIMIT 1;
 
 -- Display recipes the customer has ordered previously and the rating
 -- the customer gave each recipe if it exists
-SELECT DISTINCT `Recipes`.`recipe_name`, `Recipe_Ratings`.`rating`, `Recipe_Ratings`.`date_rated` FROM `Orders`  
-LEFT JOIN ((`Recipes_in_Orders` LEFT JOIN `Recipes` ON `Recipes_in_Orders`.`recipe_id` = `Recipes`.`recipe_id`) LEFT JOIN `Recipe_Ratings` ON `Recipes_in_Orders`.`recipe_id` = `Recipe_Ratings`.`recipe_id`) 
-ON `Orders`.`order_id` = `Recipes_in_Orders`.`order_id`
-WHERE (NOT `Recipes_in_Orders`.`order_id` IS NULL) AND ((`Recipe_Ratings`.`customer_id` = :customerIdInput AND `Orders`.`customer_id` = :customerIdInput) OR
-(`Recipe_Ratings`.`customer_id` IS NULL AND `Orders`.`customer_id` = :customerIdInput))
+SELECT `Recipes`.`recipe_id`, `Recipes`.`recipe_name`, `Recipe_Ratings`.`rating`, DATE_FORMAT(`Recipe_Ratings`.`date_rated`, \'%m/%d/%Y\') AS `date_rated` FROM `Recipes_in_Orders` JOIN
+`Recipes` ON `Recipes_in_Orders`.`recipe_id`=`Recipes`.`recipe_id`
+LEFT JOIN `Orders` ON `Recipes_in_Orders`.`order_id`=`Orders`.`order_id`
+LEFT JOIN `Recipe_Ratings` ON (`Orders`.`customer_id`=`Recipe_Ratings`.`customer_id` AND `Recipes_in_Orders`.`recipe_id`=`Recipe_Ratings`.`recipe_id`)
+WHERE `Orders`.`customer_id`= :customerIdInput
+GROUP BY `Recipes`.`recipe_name`
 ORDER BY `Orders`.`order_date` DESC
 
 -- Delete record from Recipes_in_Orders table
