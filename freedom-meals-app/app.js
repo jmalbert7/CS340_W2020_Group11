@@ -17,7 +17,7 @@ app.set('mysql', mysql);
 
 //When any request to app is received, use the routes file
 app.use('/', routes);
-app.use(express.static('public'));
+app.use(express.static(__dirname + "/public"));
 
 app.use(function(req,res){
     res.status(404);

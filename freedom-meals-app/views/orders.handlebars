@@ -1,0 +1,158 @@
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/recipes">Freedom Meals</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/recipes">Home
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="/orders">Your Orders</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/rating">Your Ratings</a>
+          </li>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/profile">Your Profile</a>
+          </li>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <!--Exercpted code on inserting background image from https://www.w3schools.com/html/html_images_background.asp -->
+  <header class="bg-primary py-5 mb-5"
+    style="background-image: url('images/banner.jpg'); background-repeat: no-repeat; background-size: cover;">
+    <div class="container h-100">
+      <div class="row h-100 align-items-start">
+        <div class="col-lg-4 order-2">
+        </div>
+        <div class="col order-1">
+          <h1 class="display-4 text-white mt-5 mb-2" style="font-weight: 400">Freedom Meals</h1>
+          <p class="lead mb-5 text-white-50" style="font-weight: 400">
+            <font color="white">Meal planning, your way.</font>
+          </p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Content -->
+  <div class="container">
+	
+	<div class="row">
+	  <div class="col-md-8 mb-5">
+		<!--TODO: Table rows should be added after customer selects 'checkout' button, query Orders_in_Recipes table-->
+		<h2>View and Manage Your Cart</h2>
+		<hr>
+		<br><br>
+		<table class="table">
+		  <thead>
+			<tr>
+			  <th scope="col">Recipe</th>
+			  <th></th>
+			</tr>
+		  </thead>
+		  <tbody>
+      {{#each cart}}
+      {{#if recipe_name}}
+			<tr>
+			  <td>{{recipe_name}}</td>
+        <form onsubmit="removeRecipeFromCart(this.hiddenRecipeIdRemove.value)">
+          <input type="hidden" id="hiddenRecipeIdRemove" name="hiddenRecipeIdRemove" value="{{recipe_id}}">
+          <td><input type="submit" class="btn btn-primary my-1" id="remove" value="Remove"></td>
+        </form>
+			</tr>
+      {{/if}}
+      {{/each}}
+		  </tbody>
+		</table>
+	  </div>
+	</div>
+	<!-- /.row -->
+
+  <div style="text-align: center">
+  <form action = "/orders/add" method = "post">
+    <input type="submit" class="btn btn-primary my-1" style="width: 250px; height: 50px;" id="placeOrderButton" value="Place Your Order"></input>
+  </form>
+  </div>
+  <span>On click, send INSERT command to Orders table. The order along with the recipe(s) orders will be added to the
+    Orders and Recipes_in_Orders table, which can be viewed in the "Your Orders" page.</span>
+
+  <br></br>
+  
+  <div class="row">
+    <div class="col-md-8 mb-5">
+      <h2>View and Manage Your Orders</h2>
+      <hr>
+      <p>Table will be built using JavaScript. Table will be populated with data extracted from JSON string received
+        from backend server. Send SELECT command to Recipes_in_Orders table JOIN Recipe_Ratings table ON recipe_id WHERE
+        customer_id = this.customer_id AND order_id = this.order_id ORDER BY order_id DESC.</p>
+    </div>
+  </div>
+  <!-- /.row -->
+
+  <div>
+    <!--TODO: Table rows should be added after customer clicks "Checkout" button; query Order and Recipes_in_Orders tables.-->
+	<form action = "/orders/cancel" method = "post">	
+		<table class="table">
+		  <thead>
+			<tr>
+			  <th>Order Number</th>
+			  <th>Recipe Name</th>
+			  <th>Order Date</th>
+			  <th>Delivery Date</th>
+			  <th>Order Status</th>
+			  <th>Action</th>
+			</tr>
+		  </thead>
+		  <tbody>
+			{{#each orders}}
+			{{#if delivery_date}}
+			<tr>
+			  <td>{{order_id}}</td>
+			  <td>{{recipe_name}}</td>
+			  <td>{{order_date}}</td>
+			  <td>{{delivery_date}}</td>
+			  <td>{{order_status}}</td>
+			  <td></td>
+			</tr>
+			{{else}}
+			<tr>
+			  <td>{{order_id}}</td>
+			  <td>{{recipe_name}}</td>
+			  <td>{{order_date}}</td>
+			  <td></td>
+			  <td>{{order_status}}</td>
+			  <td>
+				<button type="submit" class="btn btn-primary" name="orderID" value={{order_id}}>Cancel Order #{{order_id}}</button>
+			  </td>
+			</tr>
+			{{/if}}
+			{{/each}}
+		  </tbody>
+		</table>
+	</form>
+  </div>
+  <!-- /.row -->
+
+ </div>
+  <!-- /.container -->
+
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!--Freedom Meals JavaScript -->
+  <script src="/frontendJS/orders.js"></script>

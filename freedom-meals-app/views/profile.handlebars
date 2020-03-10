@@ -1,0 +1,145 @@
+<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/recipes">Freedom Meals</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/recipes">Home
+				<span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/orders">Your Orders</a>
+          </li>
+		  <li class="nav-item">
+            <a class="nav-link" href="/rating">Your Ratings</a>
+          </li>
+		  </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="/profile">Your Profile</a>
+          </li>
+		  </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <!--Exercpted code on inserting background image from https://www.w3schools.com/html/html_images_background.asp -->
+	<header class="bg-primary py-5 mb-5" style="background-image: url('images/banner.jpg'); background-repeat: no-repeat; background-size: cover;">
+    <div class="container h-100">
+      <div class="row h-100 align-items-start">
+        <div class="col-lg-4 order-2">
+        </div>
+        <div class="col order-1">
+          <h1 class="display-4 text-white mt-5 mb-2" style="font-weight: 400">Freedom Meals</h1>
+          <p class="lead mb-5 text-white-50" style="font-weight: 400"><font color="white">Meal planning, your way.</font></p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Content -->
+  <div class="container">
+  
+    <div class="row" id="header">
+      <div class="col-md-8 mb-5">
+        <h2>View and Manage Your Profile Information</h2>
+        <hr>
+	  </div>
+    </div>
+    <!-- /.row -->
+
+    <div class="row" id="customerInformationSection">
+      <div class="col-md-8 mb-5">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Email Address</th>
+					<th>Password</th>
+					<th>Phone Number</th>
+					<th>Admin?</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+                    {{#each customerInfo}}
+                    {{#if first_name}}
+					
+					<td>{{first_name}}<option id="fname" value="{{first_name}}"></option></td>
+					<td>{{last_name}}<option id="lname" value="{{last_name}}"></option></td>
+					<td>{{email}}<option id="email" value="{{email}}"></option></td>
+					<td>*******<option id="pword" value="{{password}}"></option></td>
+					<td>{{phone}}<option id="phone" value="{{phone}}"></option></td>
+					<td>{{admin}}<option id="admin" value="{{admin}}"></option></td>
+					<input id="id" type="hidden" value={{customer_id}}>
+                    {{/if}}
+                    {{/each}}
+				</tr>
+			</tbody>
+		</table>
+		<!--Change <a></a> to <button></button>. When button is clicked, open a popup form. 
+		SOURCE: https://www.w3docs.com/snippets/javascript/how-to-create-a-popup-form-with-css-and-javascript.html-->
+		<form action='/profile/update' method = >
+			<input type="hidden" value="{{customer_id}}">
+			<input type="submit" class="btn btn-primary" id="editCustomerButton" value="Edit My Information">
+		</form>
+      	<br><br>
+	  </div>
+    </div>
+    <!-- /.row -->
+
+	<div class="row" id="editCustomerForm">
+	  <form onsubmit="editData(editFirstName.value, editLastName.value, editEmail.value, editPhoneNumber.value, editPassword.value, {{admin}})"> <!--Form modifed from a template at https://getbootstrap.com/docs/4.0/components/forms/-->
+		<h5>Your Information</h5>
+		<div class="form-row">
+		  <div class="form-group col-md-6">
+			<label for="editFirstName">First Name</label>
+			<input type="text" class="form-control" name="editFirstName" id="editFirstName">
+		  </div>
+		  <div class="form-group col-md-6">
+			<label for="editLastName">Last Name</label>
+			<input type="text" class="form-control" name="editLastName" id="editLastName">
+		  </div>
+		</div>
+		<div class="form-row">
+		  <div class="form-group col-md-6">
+			<label for="editEmail">Email</label>
+			<input type="email" class="form-control" name="editEmail" id="editEmail">
+		  </div>
+		  <div class="form-group col-md-6">
+			<label for="editPhoneNumber">Phone Number</label>
+			<input type="text" class="form-control" name="editPhoneNumber" id="editPhoneNumber">
+		  </div>
+		</div>
+		<div class="form-row">
+		  <div class="form-group col-md-6">
+			<label for="editPassword">Change Your Password</label>
+			<input type="password" class="form-control" name="editPassword" id="editPassword">
+		  </div>
+		</div>
+		<input type="hidden" id="editId" name="editId">
+		<input type="hidden" id="editAdmin" name="editAdmin">
+		<button type="submit" class="btn btn-primary" id="updateCustomerButton">Update My Information</button>
+		<span>On click, send UPDATE command to Customers table WHERE customer_id = this.customer_id. The above table repopulates with updated information.</span>
+	  </form>
+	  <br><br>
+	</div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+
+  
+  <!-- Bootstrap core JavaScript -->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  
+  <!--Freedom Meals JavaScript -->
+  <script src="/frontendJS/profile.js"></script>
