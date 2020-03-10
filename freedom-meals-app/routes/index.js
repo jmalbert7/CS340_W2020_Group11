@@ -12,10 +12,11 @@ app.use(bodyParser.json());
 app.use(session({ secret: 'SuperSecretPassword' }));
 
 function checkIfLoggedIn(loggedin) {
-    if (loggedin === false || loggedin == null) {
-        return false;
+    if (loggedin === true) {
+        return true;
     }
-    return true;
+    console.log('not logged in');
+        return false;
 }
 
 //router responds to any requests from the root url
@@ -106,52 +107,55 @@ var orderpage = express.Router();
 //Displays order history for customer, customer must be logged in first
 orderpage.get('/', (req, res) => {
     var loggedin = req.session.loggedin;
-    /*if (!checkIfLoggedIn(loggedin)) {
+    console.log('LOGGEDIN= ' + loggedin);
+    if (!checkIfLoggedIn(loggedin)) {
         req.session.lastLink = '/orders';
         req.session.save();
         res.redirect('/login');
-    }*/
-    var orders = [];
-    var cart = [];
-    console.log("req body in orderpage get request " + req.body.method);
-
-    req.session.cart.forEach(element => {
-        cart.push({ recipe_id: element, recipe_name: null });
-    });
-
-    cart.forEach(element => {
-        console.log("cart " + element.recipe_id);
-    });
-
-    cart.forEach(element => {
-        var sql2 = "SELECT recipe_name FROM Recipes WHERE recipe_id = ?";
-        mysql.pool.query(sql2, [element.recipe_id], function (err, recipe) {
-            if (err) {
-                next(err);
-                return;
-            }
-            
-            console.log(element.recipe_name);
-            element.recipe_name = recipe[0].recipe_name;
-            console.log(element.recipe_name);
+    } else{
+        var orders = [];
+        var cart = [];
+        console.log("req body in orderpage get request " + req.body.method);
+    
+        req.session.cart.forEach(element => {
+            cart.push({ recipe_id: element, recipe_name: null });
         });
-    });
-
-    console.log(req.session.customer_id);
-    var customer_id = req.session.customer_id;
-	var orders = [];
-    var sql = "SELECT Orders.order_id, DATE_FORMAT(Orders.order_date, \'%m/%d/%Y\') AS order_date, DATE_FORMAT(Orders.delivery_date, \'%m/%d/%Y\') AS delivery_date, Orders.order_status, Recipes.recipe_name FROM Orders JOIN Recipes_in_Orders ON Orders.order_id = Recipes_in_Orders.order_id JOIN Recipes ON Recipes_in_Orders.recipe_id = Recipes.recipe_id WHERE customer_id = ? ORDER BY Orders.order_id DESC;";
-    mysql.pool.query(sql, [customer_id], function (err, rows, fields) {
-        if (err) {
-			console.log(JSON.stringify(err));
-            res.end();
-        }
-		else{
-			let orders = rows;
-			console.log(orders);
-			res.render('orders', { title: 'Your Orders', cart, orders});
-		}
-    });
+    
+        cart.forEach(element => {
+            console.log("cart " + element.recipe_id);
+        });
+    
+        cart.forEach(element => {
+            var sql2 = "SELECT recipe_name FROM Recipes WHERE recipe_id = ?";
+            mysql.pool.query(sql2, [element.recipe_id], function (err, recipe) {
+                if (err) {
+                    next(err);
+                    return;
+                }
+                
+                console.log(element.recipe_name);
+                element.recipe_name = recipe[0].recipe_name;
+                console.log(element.recipe_name);
+            });
+        });
+    
+        console.log(req.session.customer_id);
+        var customer_id = req.session.customer_id;
+        var orders = [];
+        var sql = "SELECT Orders.order_id, DATE_FORMAT(Orders.order_date, \'%m/%d/%Y\') AS order_date, DATE_FORMAT(Orders.delivery_date, \'%m/%d/%Y\') AS delivery_date, Orders.order_status, Recipes.recipe_name FROM Orders JOIN Recipes_in_Orders ON Orders.order_id = Recipes_in_Orders.order_id JOIN Recipes ON Recipes_in_Orders.recipe_id = Recipes.recipe_id WHERE customer_id = ? ORDER BY Orders.order_id DESC;";
+        mysql.pool.query(sql, [customer_id], function (err, rows, fields) {
+            if (err) {
+                console.log(JSON.stringify(err));
+                res.end();
+            }
+            else{
+                let orders = rows;
+                console.log(orders);
+                res.render('orders', { title: 'Your Orders', cart, orders});
+            }
+        });
+    }
+    
 });
 
 //This route removes a recipe from the cart session array when a user 
@@ -294,20 +298,28 @@ var ratingpage = express.Router();
 
 //Display user's ratings for all recipes they have ordered
 ratingpage.get('/', (req, res) => {
-    var recipeRatings = [];
-    console.log('in rating get');
-    console.log("customer_id = " + req.session.customer_id);
-    var customer_id = req.session.customer_id;
-    var sql = "SELECT `Recipes`.`recipe_id`, `Recipes`.`recipe_name`, `Recipe_Ratings`.`rating`, DATE_FORMAT(`Recipe_Ratings`.`date_rated`, \'%m/%d/%Y\') AS `date_rated` FROM `Recipes_in_Orders` JOIN `Recipes` ON `Recipes_in_Orders`.`recipe_id`=`Recipes`.`recipe_id` LEFT JOIN `Orders` ON `Recipes_in_Orders`.`order_id`=`Orders`.`order_id` LEFT JOIN `Recipe_Ratings` ON (`Orders`.`customer_id`=`Recipe_Ratings`.`customer_id` AND `Recipes_in_Orders`.`recipe_id`=`Recipe_Ratings`.`recipe_id`) WHERE `Orders`.`customer_id`= ? GROUP BY `Recipes`.`recipe_name` ORDER BY `Orders`.`order_date` DESC";
-    mysql.pool.query(sql, [customer_id], function (err, rows, fields) {
-        if (err) {
-            console.log(JSON.stringify(err));
-            res.end();
-        }
-        let recipeRatings = rows;
-        console.log(recipeRatings);
-        res.render('rating', { title: 'Your Ratings', recipeRatings });
-    });
+    var loggedin = req.session.loggedin;
+    console.log('LOGGEDIN= ' + loggedin);
+    if (!checkIfLoggedIn(loggedin)) {
+        req.session.lastLink = '/rating';
+        req.session.save();
+        res.redirect('/login');
+    } else{
+        var recipeRatings = [];
+        console.log('in rating get');
+        console.log("customer_id = " + req.session.customer_id);
+        var customer_id = req.session.customer_id;
+        var sql = "SELECT `Recipes`.`recipe_id`, `Recipes`.`recipe_name`, `Recipe_Ratings`.`rating`, DATE_FORMAT(`Recipe_Ratings`.`date_rated`, \'%m/%d/%Y\') AS `date_rated` FROM `Recipes_in_Orders` JOIN `Recipes` ON `Recipes_in_Orders`.`recipe_id`=`Recipes`.`recipe_id` LEFT JOIN `Orders` ON `Recipes_in_Orders`.`order_id`=`Orders`.`order_id` LEFT JOIN `Recipe_Ratings` ON (`Orders`.`customer_id`=`Recipe_Ratings`.`customer_id` AND `Recipes_in_Orders`.`recipe_id`=`Recipe_Ratings`.`recipe_id`) WHERE `Orders`.`customer_id`= ? GROUP BY `Recipes`.`recipe_name` ORDER BY `Orders`.`order_date` DESC";
+        mysql.pool.query(sql, [customer_id], function (err, rows, fields) {
+            if (err) {
+                console.log(JSON.stringify(err));
+                res.end();
+            }
+            let recipeRatings = rows;
+            console.log(recipeRatings);
+            res.render('rating', { title: 'Your Ratings', recipeRatings });
+        });
+    }
 });
 
 //Rating router to add or update rating
@@ -353,20 +365,28 @@ var profilepage = express.Router();
 
 //Display User's Customer information
 profilepage.get('/', (req, res) => {
-    var customerInfo = [];
-    console.log('in profile get');
-    console.log(req.session.customer_id);
-    var customer_id = req.session.customer_id;
-    var sql = "SELECT customer_id, first_name, last_name, email, password, phone, admin FROM Customers WHERE customer_id = ?";
-    mysql.pool.query(sql, [customer_id], function (err, rows, fields) {
-        if (err) {
-            next(err);
-            return;
-        }
-        let customerInfo = rows;
-        console.log(customerInfo);
-        res.render('profile', { title: 'Your Profile', customerInfo });
-    });
+    var loggedin = req.session.loggedin;
+    console.log('LOGGEDIN= ' + loggedin);
+    if (!checkIfLoggedIn(loggedin)) {
+        req.session.lastLink = '/profile';
+        req.session.save();
+        res.redirect('/login');
+    } else{
+        var customerInfo = [];
+        console.log('in profile get');
+        console.log(req.session.customer_id);
+        var customer_id = req.session.customer_id;
+        var sql = "SELECT customer_id, first_name, last_name, email, password, phone, admin FROM Customers WHERE customer_id = ?";
+        mysql.pool.query(sql, [customer_id], function (err, rows, fields) {
+            if (err) {
+                next(err);
+                return;
+            }
+            let customerInfo = rows;
+            console.log(customerInfo);
+            res.render('profile', { title: 'Your Profile', customerInfo });
+        });
+    }
 });
 
 profilepage.post('/edit', (req, res) => {
