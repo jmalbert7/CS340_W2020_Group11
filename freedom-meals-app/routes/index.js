@@ -31,7 +31,7 @@ homepage.get('/', (req, res) => {
         req.session.cart = [];
     }
     var recipes = [];
-    var sql = "SELECT recipe_name, time, difficulty, IFNULL(TRUNCATE(AVG(`rating`), 1), 'Not Yet Rated') AS rating FROM Recipes LEFT JOIN Recipe_Ratings ON Recipes.recipe_id=Recipe_Ratings.recipe_id GROUP BY Recipes.recipe_id";
+    var sql = "SELECT Recipes.recipe_id, recipe_name, time, difficulty, IFNULL(TRUNCATE(AVG(`rating`), 1), 'Not Yet Rated') AS rating FROM Recipes LEFT JOIN Recipe_Ratings ON Recipes.recipe_id=Recipe_Ratings.recipe_id GROUP BY Recipes.recipe_id";
     mysql.pool.query(sql, function (err, rows, fields) {
         if (err) {
             next(err);
@@ -44,7 +44,7 @@ homepage.get('/', (req, res) => {
 			sessionID = req.session.customer_id;
 			console.log("Session ID: " + sessionID);
         }
-        		
+        console.log(recipes);		
         res.render('recipes', { title: 'Browse Recipes', recipes, sessionID});
     });
 });
@@ -54,7 +54,8 @@ homepage.get('/:time', (req, res) => {
     var recipes = [];
     var timeCriteria = req.params.time;
     console.log('in the homepage /time router');
-    mysql.pool.query('SELECT * FROM Recipes WHERE time <= ?', [timeCriteria], function (err, rows, fields) {
+    var sql = "SELECT Recipes.recipe_id, recipe_name, time, difficulty, IFNULL(TRUNCATE(AVG(`rating`), 1), 'Not Yet Rated') AS rating FROM Recipes LEFT JOIN Recipe_Ratings ON Recipes.recipe_id=Recipe_Ratings.recipe_id WHERE time <= ? GROUP BY Recipes.recipe_id";
+    mysql.pool.query(sql, [timeCriteria], function (err, rows, fields) {
         if (err) {
             next(err);
             return;
