@@ -16,7 +16,7 @@ function checkIfLoggedIn(loggedin) {
         return true;
     }
     console.log('not logged in');
-        return false;
+    return false;
 }
 
 //router responds to any requests from the root url
@@ -24,8 +24,8 @@ var homepage = express.Router();
 
 //homepage router will retrieve all recipes from the Recipes table
 homepage.get('/', (req, res) => {
-	var sessionID;
-	
+    var sessionID;
+
     console.log('in the homepage / router');
     if (!req.session.cart) {
         console.log('new session');
@@ -39,14 +39,13 @@ homepage.get('/', (req, res) => {
             return;
         }
         let recipes = rows;
-		
-		if (req.session.customer_id)
-		{
-			sessionID = req.session.customer_id;
-			console.log("Session ID: " + sessionID);
+
+        if (req.session.customer_id) {
+            sessionID = req.session.customer_id;
+            console.log("Session ID: " + sessionID);
         }
-        console.log(recipes);		
-        res.render('recipes', { title: 'Browse Recipes', recipes, sessionID});
+        console.log(recipes);
+        res.render('recipes', { title: 'Browse Recipes', recipes, sessionID });
     });
 });
 
@@ -113,19 +112,19 @@ orderpage.get('/', (req, res) => {
         req.session.lastLink = '/orders';
         req.session.save();
         res.redirect('/login');
-    } else{
+    } else {
         var orders = [];
         var cart = [];
         console.log("req body in orderpage get request " + req.body.method);
-    
+
         req.session.cart.forEach(element => {
             cart.push({ recipe_id: element, recipe_name: null });
         });
-    
+
         cart.forEach(element => {
             console.log("cart " + element.recipe_id);
         });
-    
+
         cart.forEach(element => {
             var sql2 = "SELECT recipe_name FROM Recipes WHERE recipe_id = ?";
             mysql.pool.query(sql2, [element.recipe_id], function (err, recipe) {
@@ -133,13 +132,13 @@ orderpage.get('/', (req, res) => {
                     next(err);
                     return;
                 }
-                
+
                 console.log(element.recipe_name);
                 element.recipe_name = recipe[0].recipe_name;
                 console.log(element.recipe_name);
             });
         });
-    
+
         console.log(req.session.customer_id);
         var customer_id = req.session.customer_id;
         var orders = [];
@@ -149,14 +148,14 @@ orderpage.get('/', (req, res) => {
                 console.log(JSON.stringify(err));
                 res.end();
             }
-            else{
+            else {
                 let orders = rows;
                 console.log(orders);
-                res.render('orders', { title: 'Your Orders', cart, orders});
+                res.render('orders', { title: 'Your Orders', cart, orders });
             }
         });
     }
-    
+
 });
 
 //This route removes a recipe from the cart session array when a user 
@@ -182,83 +181,72 @@ orderpage.post('/remove', (req, res) => {
 });
 
 //This route places the order for the recipes currently in the cart
-orderpage.post('/add', (req, res) =>{
+orderpage.post('/add', (req, res) => {
     //check for items in cart
     console.log(req.session.cart);
-    if(req.session.cart.length > 0){
+    if (req.session.cart.length > 0) {
         // Add record to Orders table.
         var customer_id = req.session.customer_id;
         var order_id;
         var recipe_id;
 
         var sql = "INSERT INTO Orders (order_date, order_status, customer_id) VALUES ((SYSDATE()), 'PROCESSED', ?)";
-        mysql.pool.query(sql, [customer_id], function(err, rows, fields){
-            if(err)
-            {
+        mysql.pool.query(sql, [customer_id], function (err, rows, fields) {
+            if (err) {
                 console.log(JSON.stringify(err));
                 res.end();
             }
-            else
-            {
+            else {
                 // Get order_id value.
                 order_id = rows.insertId;
-                
+
                 // Add records in Recipes_in_Orders table.
-                for (var i = 0; i < req.session.cart.length; i++)
-                {
+                for (var i = 0; i < req.session.cart.length; i++) {
                     recipe_id = req.session.cart[i];
                     // console.log("recipe_id to add to Recipes_in_Orders table: " + recipe_id);
                     var sql = "INSERT INTO Recipes_in_Orders (recipe_id, order_id) VALUES (?, ?)";
-                    mysql.pool.query(sql, [recipe_id, order_id], function(err, rows, fields){
-                        if(err)
-                        {
+                    mysql.pool.query(sql, [recipe_id, order_id], function (err, rows, fields) {
+                        if (err) {
                             console.log(JSON.stringify(err));
                             res.end();
                         }
-                        else
-                        {	
+                        else {
                             // Clear the cart.
-                            for (var j = req.session.cart.length - 1; j >= 0 ; j--)
-                            {
+                            for (var j = req.session.cart.length - 1; j >= 0; j--) {
                                 req.session.cart.splice(j, 1);
-                                
-                                if (j == 0)
-                                {
+                                if (j == 0) {
                                     console.log("Done clearing the cart!");
-                                    
+
                                     res.redirect('/orders');
                                 }
                             }
-                            
-                            // console.log("End of inner FOR-loop - Clearing cart.");
                         }
                     });
                 }
-                
                 console.log("End of outer FOR-loop - Inserting recipes in Recipes_in_Orders table.");
             }
         });
-    } else{
+    } else {
         res.send('Please add some items to your cart before trying to place an order');
-    }	
+    }
 });
 
 //This route cancels an order requested by the customer.
-orderpage.post('/remove', (req, res) => { 
+orderpage.post('/remove', (req, res) => {
     console.log("REMOVE: request body " + req.body.hiddenRecipeId);
     var value = req.body.hiddenRecipeId;
-    
-    for(var i = 0; i < req.session.cart.length; i++){
+
+    for (var i = 0; i < req.session.cart.length; i++) {
         console.log("in remove loop " + req.session.cart[i])
-        if(req.session.cart[i] === value){
+        if (req.session.cart[i] === value) {
             req.session.cart.splice(i, 1);
             console.log("Recipe removed: " + req.body.hiddenRecipeId);
         }
     }
     console.log('length ' + req.session.cart.length);
-    req.session.cart.forEach(element => { 
+    req.session.cart.forEach(element => {
         console.log("loop " + element);
-    }); 
+    });
     req.session.save();
     res.status = 200;
     res.readystate = 4;
@@ -266,35 +254,31 @@ orderpage.post('/remove', (req, res) => {
 });
 
 //This route places the order for the recipes currently in the cart
-orderpage.post('/cancel', (req, res) =>{
+orderpage.post('/cancel', (req, res) => {
 
-	// Delete records from Recipes_in_Orders table.
-	var customer_id = req.session.customer_id;
-	var order_id = req.body.orderID;
-	var sql = "DELETE FROM Recipes_in_Orders WHERE order_id = ?"; 
-	mysql.pool.query(sql, [order_id], function(err, rows, fields){
-		if(err)
-		{
-			console.log(JSON.stringify(err));
-			res.end();
-		}
-		else
-		{
-			// Update record in Orders table.
-			sql = "UPDATE Orders SET order_status = 'CANCELED' WHERE order_id = ?";
-			mysql.pool.query(sql, [order_id], function(err, rows, fields){
-				if(err)
-				{
-					console.log(JSON.stringify(err));
-					res.end();
-				}
-				else
-				{
-					res.redirect('/orders');
-				}
-			});
-		}
-	});
+    // Delete records from Recipes_in_Orders table.
+    var customer_id = req.session.customer_id;
+    var order_id = req.body.orderID;
+    var sql = "DELETE FROM Recipes_in_Orders WHERE order_id = ?";
+    mysql.pool.query(sql, [order_id], function (err, rows, fields) {
+        if (err) {
+            console.log(JSON.stringify(err));
+            res.end();
+        }
+        else {
+            // Update record in Orders table.
+            sql = "UPDATE Orders SET order_status = 'CANCELED' WHERE order_id = ?";
+            mysql.pool.query(sql, [order_id], function (err, rows, fields) {
+                if (err) {
+                    console.log(JSON.stringify(err));
+                    res.end();
+                }
+                else {
+                    res.redirect('/orders');
+                }
+            });
+        }
+    });
 });
 
 app.use('/orders', orderpage);
@@ -310,7 +294,7 @@ ratingpage.get('/', (req, res) => {
         req.session.lastLink = '/rating';
         req.session.save();
         res.redirect('/login');
-    } else{
+    } else {
         var recipeRatings = [];
         console.log('in rating get');
         console.log("customer_id = " + req.session.customer_id);
@@ -377,7 +361,7 @@ profilepage.get('/', (req, res) => {
         req.session.lastLink = '/profile';
         req.session.save();
         res.redirect('/login');
-    } else{
+    } else {
         var customerInfo = [];
         console.log('in profile get');
         console.log(req.session.customer_id);
@@ -398,7 +382,7 @@ profilepage.get('/', (req, res) => {
 profilepage.post('/edit', (req, res) => {
     var customerInfo = [];
     console.log('in profile POST');
-    console.log(req.body.customer_id +" " + req.body.first_name + " " + req.body.last_name + " " + req.body.email + " " + req.body.password + " " + req.body.phone + " " + req.body.admin);
+    console.log(req.body.customer_id + " " + req.body.first_name + " " + req.body.last_name + " " + req.body.email + " " + req.body.password + " " + req.body.phone + " " + req.body.admin);
 
     var sql = "SELECT first_name, last_name, email, password, phone FROM Customers WHERE customer_id = ?";
     mysql.pool.query(sql, [req.body.customer_id], function (err, result) {
@@ -410,16 +394,16 @@ profilepage.post('/edit', (req, res) => {
             var curVals = result[0];
             console.log("curvals " + curVals);
             var sql2 = "UPDATE Customers SET first_name=?, last_name=?, email=?, password=?, phone=? WHERE customer_id=?";
-            mysql.pool.query(sql2, 
-                [req.body.first_name || curVals.first_name, req.body.last_name || curVals.last_name, req.body.email || curVals.email, req.body.password || curVals.password,  req.body.phone || curVals.phone, req.body.customer_id],
-                function(err, result){
-                    if(err){
+            mysql.pool.query(sql2,
+                [req.body.first_name || curVals.first_name, req.body.last_name || curVals.last_name, req.body.email || curVals.email, req.body.password || curVals.password, req.body.phone || curVals.phone, req.body.customer_id],
+                function (err, result) {
+                    if (err) {
                         next(err);
                         return;
                     }
                     console.log('result');
                     res.render('profile');
-            });
+                });
         }
     });
 
@@ -483,10 +467,10 @@ loginpage.post('/', (req, res) => {
 
     var sql1 = "SELECT email FROM Customers WHERE email = ?";
     mysql.pool.query(sql1, [email], function (err, rows, fields) {
-        if(rows.length > 0){
+        if (rows.length > 0) {
             res.send(email + ' is already registered to an account');
         }
-        else{
+        else {
             console.log('new email');
             var sql2 = "INSERT INTO `Customers` (`first_name`, `last_name`, `email`, `password`, `phone`, `admin`) VALUES (?, ?, ?, ?, ?, '1')";
 
@@ -510,7 +494,7 @@ loginpage.post('/', (req, res) => {
                 res.end();
             }
         }
-    }); 
+    });
 });
 app.use('/login', loginpage);
 
