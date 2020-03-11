@@ -11,11 +11,11 @@ GROUP BY `Recipes`.`recipe_id`;
 SELECT `recipe_id`, `recipe_name`, `time`, `difficulty` FROM `Recipes` WHERE `time` < :timeInput;
 
 -- Display order history for a customer with current order status
-SELECT `Orders`.`order_id`, DATE_FORMAT(`Orders`.`order_date`, '%m/%d/%Y') AS `order_date`, DATE_FORMAT(`Orders`.`delivery_date`, '%m/%d/%Y') AS `delivery_date`, `Orders`.`order_status`, `Recipes`.`recipe_name` FROM `Orders` 
-JOIN `Recipes_in_Orders` ON `Orders`.`order_id` = `Recipes_in_Orders`.`order_id` 
-JOIN `Recipes` ON `Recipes_in_Orders`.`recipe_id` = `Recipes`.`recipe_id` 
-WHERE `customer_id` = :customerIdInput
-ORDER BY `Orders`.`order_id` DESC;
+SELECT `Orders`.`order_id`, DATE_FORMAT(`Orders`.`order_date`, '%m/%d/%Y') AS `order_date`, DATE_FORMAT(`Orders`.`delivery_date`, '%m/%d/%Y') AS `delivery_date`, `Orders`.`order_status`, `Recipes`.`recipe_name` FROM Orders
+LEFT JOIN `Recipes_in_Orders` ON `Orders`.`order_id`=`Recipes_in_Orders`.`order_id`
+LEFT JOIN `Recipes` ON `Recipes_in_Orders`.`recipe_id`=`Recipes`.`recipe_id`
+WHERE `Orders`.`customer_id` = :customerIdInput
+ORDER BY `Orders`.`order_id` DESC
 
 -- Check that user is a registered customer when user logs in
 SELECT `customer_id` FROM `Customers`

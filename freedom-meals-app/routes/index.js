@@ -142,7 +142,7 @@ orderpage.get('/', (req, res) => {
         console.log(req.session.customer_id);
         var customer_id = req.session.customer_id;
         var orders = [];
-        var sql = "SELECT Orders.order_id, DATE_FORMAT(Orders.order_date, \'%m/%d/%Y\') AS order_date, DATE_FORMAT(Orders.delivery_date, \'%m/%d/%Y\') AS delivery_date, Orders.order_status, Recipes.recipe_name FROM Orders JOIN Recipes_in_Orders ON Orders.order_id = Recipes_in_Orders.order_id JOIN Recipes ON Recipes_in_Orders.recipe_id = Recipes.recipe_id WHERE customer_id = ? ORDER BY Orders.order_id DESC;";
+        var sql = "SELECT Orders.order_id, DATE_FORMAT(Orders.order_date, \'%m/%d/%Y\') AS order_date, DATE_FORMAT(Orders.delivery_date, \'%m/%d/%Y\') AS delivery_date, Orders.order_status, Recipes.recipe_name FROM Orders LEFT JOIN Recipes_in_Orders ON Orders.order_id=Recipes_in_Orders.order_id LEFT JOIN Recipes ON Recipes_in_Orders.recipe_id=Recipes.recipe_id WHERE Orders.customer_id = ? ORDER BY Orders.order_id DESC";
         mysql.pool.query(sql, [customer_id], function (err, rows, fields) {
             if (err) {
                 console.log(JSON.stringify(err));
