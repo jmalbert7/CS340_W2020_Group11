@@ -183,59 +183,64 @@ orderpage.post('/remove', (req, res) => {
 
 //This route places the order for the recipes currently in the cart
 orderpage.post('/add', (req, res) =>{
+    //check for items in cart
+    console.log(req.session.cart);
+    if(req.session.cart.length > 0){
+        // Add record to Orders table.
+        var customer_id = req.session.customer_id;
+        var order_id;
+        var recipe_id;
 
-	// Add record to Orders table.
-	var customer_id = req.session.customer_id;
-	var order_id;
-	var recipe_id;
-	
-	var sql = "INSERT INTO Orders (order_date, order_status, customer_id) VALUES ((SYSDATE()), 'PROCESSED', ?)";
-	mysql.pool.query(sql, [customer_id], function(err, rows, fields){
-		if(err)
-		{
-			console.log(JSON.stringify(err));
-			res.end();
-		}
-		else
-		{
-			// Get order_id value.
-			order_id = rows.insertId;
-			
-			// Add records in Recipes_in_Orders table.
-			for (var i = 0; i < req.session.cart.length; i++)
-			{
-				recipe_id = req.session.cart[i];
-				// console.log("recipe_id to add to Recipes_in_Orders table: " + recipe_id);
-				var sql = "INSERT INTO Recipes_in_Orders (recipe_id, order_id) VALUES (?, ?)";
-				mysql.pool.query(sql, [recipe_id, order_id], function(err, rows, fields){
-					if(err)
-					{
-						console.log(JSON.stringify(err));
-						res.end();
-					}
-					else
-					{	
-						// Clear the cart.
-						for (var j = req.session.cart.length - 1; j >= 0 ; j--)
-						{
-							req.session.cart.splice(j, 1);
-							
-							if (j == 0)
-							{
-								console.log("Done clearing the cart!");
-								
-								res.redirect('/orders');
-							}
-						}
-						
-						// console.log("End of inner FOR-loop - Clearing cart.");
-					}
-				});
-			}
-			
-			console.log("End of outer FOR-loop - Inserting recipes in Recipes_in_Orders table.");
-		}
-	});
+        var sql = "INSERT INTO Orders (order_date, order_status, customer_id) VALUES ((SYSDATE()), 'PROCESSED', ?)";
+        mysql.pool.query(sql, [customer_id], function(err, rows, fields){
+            if(err)
+            {
+                console.log(JSON.stringify(err));
+                res.end();
+            }
+            else
+            {
+                // Get order_id value.
+                order_id = rows.insertId;
+                
+                // Add records in Recipes_in_Orders table.
+                for (var i = 0; i < req.session.cart.length; i++)
+                {
+                    recipe_id = req.session.cart[i];
+                    // console.log("recipe_id to add to Recipes_in_Orders table: " + recipe_id);
+                    var sql = "INSERT INTO Recipes_in_Orders (recipe_id, order_id) VALUES (?, ?)";
+                    mysql.pool.query(sql, [recipe_id, order_id], function(err, rows, fields){
+                        if(err)
+                        {
+                            console.log(JSON.stringify(err));
+                            res.end();
+                        }
+                        else
+                        {	
+                            // Clear the cart.
+                            for (var j = req.session.cart.length - 1; j >= 0 ; j--)
+                            {
+                                req.session.cart.splice(j, 1);
+                                
+                                if (j == 0)
+                                {
+                                    console.log("Done clearing the cart!");
+                                    
+                                    res.redirect('/orders');
+                                }
+                            }
+                            
+                            // console.log("End of inner FOR-loop - Clearing cart.");
+                        }
+                    });
+                }
+                
+                console.log("End of outer FOR-loop - Inserting recipes in Recipes_in_Orders table.");
+            }
+        });
+    } else{
+        res.send('Please add some items to your cart before trying to place an order');
+    }	
 });
 
 //This route cancels an order requested by the customer.
