@@ -25,7 +25,7 @@ function searchLinks(){
 //Function to call correct route to add a recipe into a user's cart. To avoid SQL duplication errors
 //the user cannot add 2 of the same recipe to their cart, so after the request returns successfully
 //the recipe tile is updated to that the user cannot add that same recipe to their cart
-function addRecipeToCartFunc(data, form){
+function addRecipeToCartFunc(data){
 	console.log(form);
 	alert("Recipe has been added to cart!");
 	var req = new XMLHttpRequest();
@@ -36,15 +36,6 @@ function addRecipeToCartFunc(data, form){
 	req.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			console.log('success?');
-			var formId = 'form' + data;
-			console.log('formID = ' + formId);
-			var cartId = 'addRecipeToCart' + data;
-			console.log('cartID = ' + cartId);
-			document.getElementById(formId).setAttribute('onsubmit', null);
-			document.getElementById(formId).setAttribute('method', null);
-			document.getElementById(formId).setAttribute('action', null);
-			document.getElementById(cartId).setAttribute('value', 'In Cart!');
-			document.getElementById(cartId).setAttribute('type', null);
 		}
 	};
 	req.open('POST', '/recipes', true);
