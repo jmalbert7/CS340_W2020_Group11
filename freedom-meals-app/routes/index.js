@@ -204,8 +204,8 @@ orderpage.post('/add', (req, res) => {
                 for (var i = 0; i < req.session.cart.length; i++) {
                     recipe_id = req.session.cart[i];
                     // console.log("recipe_id to add to Recipes_in_Orders table: " + recipe_id);
-                    var sql = "INSERT INTO Recipes_in_Orders (recipe_id, order_id) VALUES (?, ?)";
-                    mysql.pool.query(sql, [recipe_id, order_id], function (err, rows, fields) {
+                    var sql = "INSERT INTO Recipes_in_Orders (recipe_id, order_id, item_number) VALUES (?, ?, ?)";
+                    mysql.pool.query(sql, [recipe_id, order_id, i+1], function (err, rows, fields) {
                         if (err) {
                             console.log(JSON.stringify(err));
                             res.end();
