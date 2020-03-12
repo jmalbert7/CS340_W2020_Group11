@@ -21,7 +21,12 @@ function searchLinks(){
 	document.getElementById("searchByTime").setAttribute("href", link);
 }
 
-function addRecipeToCartFunc(data){
+
+//Function to call correct route to add a recipe into a user's cart. To avoid SQL duplication errors
+//the user cannot add 2 of the same recipe to their cart, so after the request returns successfully
+//the recipe tile is updated to that the user cannot add that same recipe to their cart
+function addRecipeToCartFunc(data, form){
+	console.log(form);
 	alert("Recipe has been added to cart!");
 	var req = new XMLHttpRequest();
 	console.log("sent data" + data);
@@ -31,6 +36,15 @@ function addRecipeToCartFunc(data){
 	req.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			console.log('success?');
+			var formId = 'form' + data;
+			console.log('formID = ' + formId);
+			var cartId = 'addRecipeToCart' + data;
+			console.log('cartID = ' + cartId);
+			document.getElementById(formId).setAttribute('onsubmit', null);
+			document.getElementById(formId).setAttribute('method', null);
+			document.getElementById(formId).setAttribute('action', null);
+			document.getElementById(cartId).setAttribute('value', 'In Cart!');
+			document.getElementById(cartId).setAttribute('type', null);
 		}
 	};
 	req.open('POST', '/recipes', true);
@@ -41,13 +55,6 @@ function addRecipeToCartFunc(data){
 	event.preventDefault();
 }
 
-//When user clicks 'Add to Cart' in a recipe card, the recipe_id is pushed onto the orderArr array. 
-//'Add to Cart' should not INSERT to Recipes_In_Order because order has not yet been placed
-/*var orderArr = [];
-function addRecipeToOrder(id){
-	orderArr.push(id);
-	console.log(orderArr);
-}*/
 
 
 

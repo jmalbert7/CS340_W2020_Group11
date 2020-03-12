@@ -25,7 +25,8 @@
       </ul>
     </div>
 	{{#if sessionID}}
-	<span></span>
+    <!--TODO: Add route for logout-->
+    <a class="btn btn-primary" href="/login">Log Out</a>
 	{{else}}
     <a class="btn btn-primary" href="/login">Log In</a>
 	{{/if}}
@@ -95,9 +96,9 @@
           <li class="list-group-item">Rating: {{rating}}</li>
         </ul>
         <div class="card-footer">
-          <form class="addRecipeToCartForm" action="/recipes" method = "POST" onsubmit="addRecipeToCartFunc(this.hiddenRecipeId.value)">
+          <form id="form{{recipe_id}}" class="addRecipeToCartForm" action="/recipes" method = "POST" onsubmit="addRecipeToCartFunc(this.hiddenRecipeId.value, this)">
             <input id="hiddenRecipeId" type="hidden" name ="hiddenRecipeId" value="{{recipe_id}}">
-            <input type="submit" id="addRecipeToCart" class="btn btn-primary my-1" value="Add to Cart">
+            <input type="submit" id="addRecipeToCart{{recipe_id}}" class="btn btn-primary my-1" value="Add to Cart">
           </form>
         </div>
       </div>
