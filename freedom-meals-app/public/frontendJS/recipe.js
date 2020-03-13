@@ -26,7 +26,7 @@ function searchLinks(){
 //the user cannot add 2 of the same recipe to their cart, so after the request returns successfully
 //the recipe tile is updated to that the user cannot add that same recipe to their cart
 function addRecipeToCartFunc(data){
-	console.log(form);
+	//console.log(form);
 	alert("Recipe has been added to cart!");
 	var req = new XMLHttpRequest();
 	console.log("sent data" + data);
