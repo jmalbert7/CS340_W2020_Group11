@@ -1,5 +1,8 @@
 /* Insert code here for ratings page. */
 
+var jsId = document.cookie.match(/JSESSIONID=[^;]+/);
+console.log(jsId);
+
 /* On load, make Rating Form and recipe rating data attributes hidden. */
 document.getElementById("ratingForm").style.display = "none";
 document.getElementById("recipe_id").style.display = "none";

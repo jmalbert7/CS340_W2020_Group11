@@ -1,5 +1,8 @@
 /* Insert code here for orders page. */
 
+var jsId = document.cookie.match(/JSESSIONID=[^;]+/);
+console.log(jsId);
+
 function removeRecipeFromCart(recipe_id){
     var req = new XMLHttpRequest();
     console.log('REMOVE');

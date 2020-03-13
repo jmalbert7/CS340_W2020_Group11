@@ -106,6 +106,8 @@ var orderpage = express.Router();
 
 //Displays order history for customer, customer must be logged in first
 orderpage.get('/', (req, res) => {
+    var sessionID;
+    sessionID = req.session.customer_id;
     var loggedin = req.session.loggedin;
     console.log('LOGGEDIN= ' + loggedin);
     if (!checkIfLoggedIn(loggedin)) {
@@ -151,7 +153,7 @@ orderpage.get('/', (req, res) => {
             else {
                 let orders = rows;
                 console.log(orders);
-                res.render('orders', { title: 'Your Orders', cart, orders });
+                res.render('orders', { title: 'Your Orders', cart, orders, sessionID });
             }
         });
     }
@@ -288,6 +290,8 @@ var ratingpage = express.Router();
 
 //Display user's ratings for all recipes they have ordered
 ratingpage.get('/', (req, res) => {
+    var sessionID;
+    sessionID = req.session.customer_id;
     var loggedin = req.session.loggedin;
     console.log('LOGGEDIN= ' + loggedin);
     if (!checkIfLoggedIn(loggedin)) {
@@ -307,7 +311,7 @@ ratingpage.get('/', (req, res) => {
             }
             let recipeRatings = rows;
             console.log(recipeRatings);
-            res.render('rating', { title: 'Your Ratings', recipeRatings });
+            res.render('rating', { title: 'Your Ratings', recipeRatings, sessionID });
         });
     }
 });
@@ -355,6 +359,8 @@ var profilepage = express.Router();
 
 //Display User's Customer information
 profilepage.get('/', (req, res) => {
+    var sessionID;
+    sessionID = req.session.customer_id;
     var loggedin = req.session.loggedin;
     console.log('LOGGEDIN= ' + loggedin);
     if (!checkIfLoggedIn(loggedin)) {
@@ -374,7 +380,7 @@ profilepage.get('/', (req, res) => {
             }
             let customerInfo = rows;
             console.log(customerInfo);
-            res.render('profile', { title: 'Your Profile', customerInfo });
+            res.render('profile', { title: 'Your Profile', customerInfo, sessionID });
         });
     }
 });
@@ -421,8 +427,13 @@ var loginpage = express.Router();
 //Simply displays the login page
 loginpage.get('/', (req, res) => {
     console.log('in the login router');
-    res.render('login', { title: 'Login' })
+    res.render('login', { title: 'Login' });
 });
+
+loginpage.get('/logout', (req, res) =>{
+    req.session.destroy();
+    res.render('login', { title: 'Login' });
+})
 
 //Route to sign in an existing user
 loginpage.post('/auth', (req, res) => {

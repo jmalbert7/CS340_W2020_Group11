@@ -25,6 +25,12 @@
 		  </li>
         </ul>
       </div>
+	{{#if sessionID}}
+	<!--TODO: Add route for logout-->
+	<a class="btn btn-primary" href="/login/logout">Log Out</a>
+	{{else}}
+	<a class="btn btn-primary" href="/login">Log In</a>
+	{{/if}}
     </div>
   </nav>
 

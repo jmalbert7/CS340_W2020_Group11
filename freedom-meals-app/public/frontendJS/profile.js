@@ -1,5 +1,8 @@
 /* Insert code here for profile.html page. */
 
+var jsId = document.cookie.match(/JSESSIONID=[^;]+/);
+console.log(jsId);
+
 /* On load, make Edit Customer Information hidden. */
 document.getElementById("editCustomerForm").style.display = "none";
 
