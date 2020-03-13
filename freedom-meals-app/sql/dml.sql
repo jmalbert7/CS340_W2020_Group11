@@ -68,8 +68,8 @@ INSERT INTO `Orders` (`order_date`, `delivery_date`, `order_status`, `customer_i
 
 -- Add record to Recipes_in_Orders immediately after customer places the order
 -- Order ID is retrieved from form/button on Recipes_in_Orders table
-INSERT INTO `Recipes_in_Orders` (`recipe_id`, `order_id`) VALUES 
-(:recipeIdInput, :orderIdInput);
+INSERT INTO `Recipes_in_Orders` (`recipe_id`, `order_id`, `item_number`) VALUES 
+(:recipeIdInput, :orderIdInput, :itemNumberInput);
 
 --Add record to Recipe_Ratings when customer adds a rating to a recipe.
 INSERT INTO `Recipe_Ratings` (`rating`, `date_rated`, `customer_id`, `recipe_id`) VALUES 

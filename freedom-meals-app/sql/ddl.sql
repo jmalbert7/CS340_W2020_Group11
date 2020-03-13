@@ -49,8 +49,9 @@ FOREIGN KEY (`recipe_id`) REFERENCES `Recipes` (`recipe_id`)
 
 CREATE TABLE `Recipes_in_Orders` ( 
 `order_id` int(11) NOT NULL, 
-`recipe_id` int(11) NOT NULL, 
-PRIMARY KEY (`order_id`,`recipe_id`), 
+`recipe_id` int(11) NOT NULL,
+`item_number` int(11),
+PRIMARY KEY (`order_id`,`recipe_id`,`item_number`), 
 FOREIGN KEY (`order_id`) REFERENCES `Orders` (`order_id`), 
 FOREIGN KEY (`recipe_id`) REFERENCES `Recipes` (`recipe_id`) 
 );
