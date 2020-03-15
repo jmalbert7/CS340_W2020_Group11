@@ -1,3 +1,5 @@
+/* Front-end JavaScript code for the Recipes HTML (home) page. */
+
 /* On load, make Add Recipe section hidden. */
 document.getElementById("addRecipeSection").style.display = "none";
 var jsId = document.cookie.match(/JSESSIONID=[^;]+/);

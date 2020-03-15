@@ -1,4 +1,4 @@
-/* Insert code here for ratings page. */
+/* Front-end JavaScript code for the Recipe Ratings HTML page. */
 
 var jsId = document.cookie.match(/JSESSIONID=[^;]+/);
 console.log(jsId);

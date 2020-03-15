@@ -91,6 +91,8 @@
     <input type="submit" class="btn btn-primary my-1" style="width: 250px; height: 50px;" id="placeOrderButton" value="Place Your Order"></input>
   </form>
   </div>
+  <span>On click, send INSERT command to Orders table. The order along with the recipe(s) orders will be added to the
+    Orders and Recipes_in_Orders table, which can be viewed in the "Your Orders" page.</span>
 
   <br></br>
   
@@ -98,12 +100,14 @@
     <div class="col-md-8 mb-5">
       <h2>View and Manage Your Orders</h2>
       <hr>
+      <p>Table will be built using JavaScript. Table will be populated with data extracted from JSON string received
+        from backend server. Send SELECT command to Recipes_in_Orders table JOIN Recipe_Ratings table ON recipe_id WHERE
+        customer_id = this.customer_id AND order_id = this.order_id ORDER BY order_id DESC.</p>
     </div>
   </div>
   <!-- /.row -->
 
   <div>
-    <!--TODO: Table rows should be added after customer clicks "Checkout" button; query Order and Recipes_in_Orders tables.-->
 	<form action = "/orders/cancel" method = "post">	
 		<table class="table">
 		  <thead>
@@ -135,7 +139,7 @@
 			  <td></td>
 			  <td>{{order_status}}</td>
 			  <td>
-				<button type="submit" class="btn btn-primary" name="orderID" value={{order_id}}>Cancel Order #{{order_id}}</button>
+				<button type="submit" class="btn btn-primary" name="orderID" value={{order_id}} data-status={{order_status}}>Cancel Order #{{order_id}}</button>
 			  </td>
 			</tr>
 			{{/if}}

@@ -1,4 +1,4 @@
-/* Insert code here for profile.html page. */
+/* Front-end JavaScript code for the Profile HTML page. */
 
 var jsId = document.cookie.match(/JSESSIONID=[^;]+/);
 console.log(jsId);

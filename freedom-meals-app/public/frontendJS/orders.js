@@ -1,7 +1,18 @@
-/* Insert code here for orders page. */
+/* Front-end JavaScript code for the Orders HTML page. */
 
 var jsId = document.cookie.match(/JSESSIONID=[^;]+/);
 console.log(jsId);
+
+/* Hide button on orders that have been cancelled by the user. */
+var listOfButtons = document.getElementsByTagName("button");
+// console.log(listOfButtons);
+for (var i = 0; i < listOfButtons.length; i++)
+{
+	if(listOfButtons[i].dataset.status == "CANCELED")
+	{
+		listOfButtons[i].style.display = "none";
+	}
+}
 
 function removeRecipeFromCart(recipe_id){
     var req = new XMLHttpRequest();
