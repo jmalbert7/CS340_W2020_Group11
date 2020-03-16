@@ -3,6 +3,7 @@
 /* On load, make Add Recipe section hidden. */
 document.getElementById("addRecipeSection").style.display = "none";
 var jsId = document.cookie.match(/JSESSIONID=[^;]+/);
+console.log(jsId);
 
 /* Make Add Recipe section appear after "Add Recipe" button is clicked. */
 document.getElementById("adminAddRecipeButton").addEventListener("click", function(appear)
@@ -30,10 +31,13 @@ function addRecipeToCartFunc(data){
 	//console.log(form);
 	alert("Recipe has been added to cart!");
 	var req = new XMLHttpRequest();
+	console.log("sent data" + data);
 	var sdata = {"hiddenRecipeId" : data};
+	console.log("sdata" + sdata);
+	console.log(JSON.stringify(sdata));
 	req.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
-			console.log('success');
+			console.log('success?');
 		}
 	};
 	req.open('POST', '/recipes', true);

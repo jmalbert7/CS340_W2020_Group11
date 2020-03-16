@@ -49,12 +49,14 @@ function editData(fname, lname, email, phone, password, admin){
 	customerData.password = password;
 	customerData.phone = phone;
 	customerData.admin = admin;
+	console.log("edit customer" + customerData.customer_id);
 
 	req.open("POST", "/profile/edit", true);
 	req.setRequestHeader('Content-Type', 'application/json');
     req.onload = function(){
         if(req.status >= 200 && req.status < 400){
             var response = req.responseText;
+			console.log("editData");
 			location.reload();
         }
     }

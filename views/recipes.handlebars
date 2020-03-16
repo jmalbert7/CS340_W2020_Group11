@@ -25,6 +25,7 @@
       </ul>
     </div>
 	{{#if sessionID}}
+    <!--TODO: Add route for logout-->
     <a class="btn btn-primary" href="/login/logout">Log Out</a>
 	{{else}}
     <a class="btn btn-primary" href="/login">Log In</a>
@@ -91,6 +92,7 @@
         <ul class="list-group list-group-flush">
           <li class="list-group-item">Difficulty: {{difficulty}} out of 3</li>
           <li class="list-group-item">Time: {{time}} minutes</li>
+          <!--TODO: get rating from recipe_ratings-->
           <li class="list-group-item">Rating: {{rating}}</li>
         </ul>
         <div class="card-footer">
@@ -114,6 +116,7 @@
   <div class="row" id="addRecipeSection">
     <div>
       <h2>Add Recipe</h2>
+      <p>This is where the web administrator can add recipes to the Recipes Table.</p>
       <form action="/recipes/add" method = "post">
         <div class="form-row">
           <div class="form-group col-md-6">
