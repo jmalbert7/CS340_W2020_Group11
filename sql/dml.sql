@@ -33,7 +33,7 @@ LIMIT 1;
 
 -- Display recipes the customer has ordered previously and the rating
 -- the customer gave each recipe if it exists
-SELECT `Recipes`.`recipe_id`, `Recipes`.`recipe_name`, `Recipe_Ratings`.`rating`, DATE_FORMAT(`Recipe_Ratings`.`date_rated`, \'%m/%d/%Y\') AS `date_rated` FROM `Recipes_in_Orders` JOIN
+SELECT `Recipes`.`recipe_id`, `Recipes`.`recipe_name`, `Recipe_Ratings`.`rating`, DATE_FORMAT(`Recipe_Ratings`.`date_rated`, '%m/%d/%Y') AS `date_rated` FROM `Recipes_in_Orders` JOIN
 `Recipes` ON `Recipes_in_Orders`.`recipe_id`=`Recipes`.`recipe_id`
 LEFT JOIN `Orders` ON `Recipes_in_Orders`.`order_id`=`Orders`.`order_id`
 LEFT JOIN `Recipe_Ratings` ON (`Orders`.`customer_id`=`Recipe_Ratings`.`customer_id` AND `Recipes_in_Orders`.`recipe_id`=`Recipe_Ratings`.`recipe_id`)
