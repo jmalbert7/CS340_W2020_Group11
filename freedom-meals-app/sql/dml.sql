@@ -85,7 +85,4 @@ UPDATE `Recipe_Ratings`
 SET `rating` = :ratingInput, `date_rated` = (SYSDATE())
 WHERE `customer_id` = :customerIdInput AND `recipe_id` = :recipeIdInput;
 
--- Update recipe made by the admin, not customer
-UPDATE `Recipes`
-SET `recipe_name` = :recipenameInput, `time` = :recipetimeInput, `difficulty` = :recipedifficultyInput, `directions` = :recipedirectionsInput
-WHERE `recipe_id` = :recipeIdInput;
+
