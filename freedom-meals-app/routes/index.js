@@ -346,11 +346,35 @@ ratingpage.post('/add', (req, res) => {
                 console.log(JSON.stringify(error));
                 res.end();
             }
-            else {
-                res.redirect('/rating');
+            else 
+			{
+                // If user is removing an existing rating...
+				{
+					if (req.body.rating == 0)
+					{
+						var sql = "UPDATE Recipe_Ratings SET customer_id = NULL WHERE customer_id = ? AND recipe_id = ?";
+						mysql.pool.query(sql, [customer_id, req.body.recipeID], function (error, results, fields) {
+							if (error) {
+								console.log(JSON.stringify(error));
+								res.end();
+							}
+							else
+							{
+								res.redirect('/rating');
+							}
+						});
+					}
+					
+					else
+					{
+						res.redirect('/rating');
+					}
+				}	
             }
         });
     }
+	
+	
 });
 app.use('/rating', ratingpage);
 
