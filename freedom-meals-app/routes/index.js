@@ -432,7 +432,7 @@ loginpage.get('/', (req, res) => {
 
 loginpage.get('/logout', (req, res) =>{
     req.session.destroy();
-    res.render('login', { title: 'Login' });
+    res.redirect('/login');
 })
 
 //Route to sign in an existing user
