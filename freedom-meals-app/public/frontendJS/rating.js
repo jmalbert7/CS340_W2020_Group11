@@ -14,7 +14,6 @@ function appear(clickedButton, type)
 	// Declare local variables used inside this function.
 	var recipeId = clickedButton.getAttribute("id");
 	// console.log(recipeId);
-	console.log(clickedButton);
 	var recipeName = clickedButton.parentNode.parentNode.firstElementChild.textContent;
 	// console.log(recipeName);
 	var ratingType;
