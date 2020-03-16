@@ -11,7 +11,7 @@ CREATE TABLE `Recipes` (
 `recipe_name` varchar(255) NOT NULL, 
 `time` int(11) NOT NULL, 
 `difficulty` int(11) NOT NULL, 
-`directions` varchar(1024) NOT NULL, 
+`ingredients` varchar(1024) NOT NULL, 
 PRIMARY KEY (`recipe_id`)
 );
 
@@ -71,35 +71,25 @@ INSERT INTO `Customers` (`first_name`, `last_name`, `email`, `password`, `phone`
 INSERT INTO `Customers` (`first_name`, `last_name`, `email`, `password`, `phone`, `admin`) VALUES 
 ('Jane', 'Doe', 'jdoe@gmail.com', 'janePassword', '919-333-7564', '0');
 
-INSERT INTO `Recipes` (`recipe_name`, `time`, `difficulty`, `directions`) VALUES
+INSERT INTO `Recipes` (`recipe_name`, `time`, `difficulty`, `ingredients`) VALUES
 ('Speedy Teriyaki Salmon', '30','2', 
-'Four 6-ounce skinless salmon fillets, 2 cups teriyaki sauce, 1 tablespoon vegetable oil, ...
-Add the salmon to a shallow dish and pour the teriyaki sauce over the fillets. Using a pair of tongs
-flip the fillets to coat them completely in the sauce. In a large skillet...');
+'Four 6-ounce skinless salmon fillets, 2 cups teriyaki sauce, 1 tablespoon vegetable oil');
 
-INSERT INTO `Recipes` (`recipe_name`, `time`, `difficulty`, `directions`) VALUES
+INSERT INTO `Recipes` (`recipe_name`, `time`, `difficulty`, `ingredients`) VALUES
 ('Chicken with Brussels Sprouts and Apple Cider Sauce', '50', '1', 
-'1 pound Brussels sprouts, 2 sweet apples (such as Gala), 1 red onion, ...
-Position racks in the upper and lower thirds of the oven; preheat to 450 degrees F. Toss the Brussels sprouts, 
-apples, red onion and rosemary sprigs with the olive oil, 1/2 teaspoon salt and a few grinds of pepper on a baking sheet...');
+'1 pound Brussels sprouts, 2 sweet apples (such as Gala), 1 red onion');
 
-INSERT INTO `Recipes` (`recipe_name`, `time`, `difficulty`, `directions`) VALUES
+INSERT INTO `Recipes` (`recipe_name`, `time`, `difficulty`, `ingredients`) VALUES
 ('Sausage Beans and Broccoli Rabe Soup', '30', '1',
-'2 tablespoons extra-virgin olive oil, 1 1/4 pounds Italian bulk sweet sausage, ...
-Heat medium soup pot over medium-high heat. Add the olive oil and sausage and brown. Add veggies,
- bay leaf and beans. Season with salt and pepper. Cook mixture 5 minutes to begin to soften the vegetables...');
+'2 tablespoons extra-virgin olive oil, 1 1/4 pounds Italian bulk sweet sausage');
  
-INSERT INTO `Recipes` (`recipe_name`, `time`, `difficulty`, `directions`) VALUES
+INSERT INTO `Recipes` (`recipe_name`, `time`, `difficulty`, `ingredients`) VALUES
 ('Chunky Chicken Chowder', '100', '2', 
-'4 chicken thighs, bone in, skin removed, Kosher salt and freshly ground black pepper, ...
-Cut the flaps from the thighs and cube the meat leaving some meat on the bone. Season the chicken with salt and pepper. 
-Add 2 tablespoons of the butter and the oil to a large stock pot on medium-high heat. When the butter is melted and oil is hot...');
+'4 chicken thighs, bone in, skin removed, Kosher salt and freshly ground black pepper');
 
-INSERT INTO `Recipes` (`recipe_name`, `time`, `difficulty`, `directions`) VALUES
+INSERT INTO `Recipes` (`recipe_name`, `time`, `difficulty`, `ingredients`) VALUES
 ('Creamy Orzo with Mushrooms', '70', '1', 
-'8 ounces cremini mushrooms thinly sliced, 3 tablespoons extra-virgin olive oil, Kosher salt and freshly ground pepper, ...
-Preheat the oven to 425 degrees F. Toss the mushrooms with 2 tablespoons olive oil, a pinch of salt and a few grinds of pepper on a baking sheet.
-Spread out in a single layer. Roast stirring halfway through until well browned and crisp around the edges...');
+'8 ounces cremini mushrooms thinly sliced, 3 tablespoons extra-virgin olive oil, Kosher salt and freshly ground pepper');
 
 
 INSERT INTO `Recipe_Ratings` (`rating`, `date_rated`, `customer_id`, `recipe_id`) VALUES 
@@ -114,27 +104,27 @@ INSERT INTO `Recipe_Ratings` (`rating`, `date_rated`, `customer_id`, `recipe_id`
 
 INSERT INTO `Orders` (`order_id`, `order_date`, `order_status`, `customer_id`) VALUES 
 ('1001', '2020-02-20', 'PROCESSED', '4');
-INSERT INTO `Recipes_in_Orders` (`order_id`, `recipe_id`) VALUES 
+INSERT INTO `Recipes_in_Orders` (`order_id`, `recipe_id`, `item_number`) VALUES 
 ((SELECT `order_id` FROM `Orders` WHERE `order_date` = '2020-02-20' AND `customer_id` = '4'), 
-(SELECT `recipe_id` FROM `Recipes` WHERE `recipe_id` = '4'));
-INSERT INTO `Recipes_in_Orders` (`order_id`, `recipe_id`) VALUES 
+(SELECT `recipe_id` FROM `Recipes` WHERE `recipe_id` = '4'), '1');
+INSERT INTO `Recipes_in_Orders` (`order_id`, `recipe_id`, `item_number`) VALUES 
 ((SELECT `order_id` FROM `Orders` WHERE `order_date` = '2020-02-20' AND `customer_id` = '4'), 
-(SELECT `recipe_id` FROM `Recipes` WHERE `recipe_id` = '3'));
+(SELECT `recipe_id` FROM `Recipes` WHERE `recipe_id` = '3'), '2');
 
 INSERT INTO `Orders` (`order_id`, `order_date`, `order_status`, `customer_id`) VALUES 
 ('1002', '2020-02-20', 'PROCESSED', '3');
-INSERT INTO `Recipes_in_Orders` (`order_id`, `recipe_id`) VALUES 
+INSERT INTO `Recipes_in_Orders` (`order_id`, `recipe_id`, `item_number`) VALUES 
 ((SELECT `order_id` FROM `Orders` WHERE `order_date` = '2020-02-20' AND `customer_id` = '3'), 
-(SELECT `recipe_id` FROM `Recipes` WHERE `recipe_id` = '3'));
+(SELECT `recipe_id` FROM `Recipes` WHERE `recipe_id` = '3'), '1');
 
 INSERT INTO `Orders` (`order_id`, `order_date`, `order_status`, `customer_id`) VALUES 
 ('1003', '2020-02-20', 'PROCESSED', '2');
-INSERT INTO `Recipes_in_Orders` (`order_id`, `recipe_id`) VALUES 
+INSERT INTO `Recipes_in_Orders` (`order_id`, `recipe_id`, `item_number`) VALUES 
 ((SELECT `order_id` FROM `Orders` WHERE `order_date` = '2020-02-20' AND `customer_id` = '2'), 
-(SELECT `recipe_id` FROM `Recipes` WHERE `recipe_id` = '1'));
-INSERT INTO `Recipes_in_Orders` (`order_id`, `recipe_id`) VALUES 
+(SELECT `recipe_id` FROM `Recipes` WHERE `recipe_id` = '1'), '1');
+INSERT INTO `Recipes_in_Orders` (`order_id`, `recipe_id`, `item_number`) VALUES 
 ((SELECT `order_id` FROM `Orders` WHERE `order_date` = '2020-02-20' AND `customer_id` = '2'), 
-(SELECT `recipe_id` FROM `Recipes` WHERE `recipe_id` = '2'));
-INSERT INTO `Recipes_in_Orders` (`order_id`, `recipe_id`) VALUES 
+(SELECT `recipe_id` FROM `Recipes` WHERE `recipe_id` = '2'), '2');
+INSERT INTO `Recipes_in_Orders` (`order_id`, `recipe_id`, `item_number`) VALUES 
 ((SELECT `order_id` FROM `Orders` WHERE `order_date` = '2020-02-20' AND `customer_id` = '2'), 
-(SELECT `recipe_id` FROM `Recipes` WHERE `recipe_id` = '3'));
+(SELECT `recipe_id` FROM `Recipes` WHERE `recipe_id` = '3'), '3');
